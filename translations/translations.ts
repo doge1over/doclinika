@@ -5,10 +5,9 @@ export const translations = {
         email: 'info@doclinika.ru',
 
         // Hero
-        heroTitle: 'Доклинические исследования и разработка препаратов',
-        heroDescription: 'Современная лабораторная база для полного цикла исследований. Более 20 лет опыта в фармацевтической отрасли.',
-        newsButton: 'Новости и события',
-        learnMoreButton: 'Узнать больше',
+        heroTitle: 'НПО «ДОМ ФАРМАЦИИ» – Ваш надежный проводник в области разработки препаратов и проведения доклинических исследований!',
+        heroDescription: 'НПО «ДОМ ФАРМАЦИИ» – это крупнейший научно-исследовательский центр России, объединивший в себе питомник и виварий мирового уровня, современные лаборатории, оснащенные высокотехнологичным оборудованием, образовательный центр. В штате компании более 190 человек: научные сотрудники, эксперты, ветеринарные врачи.',
+        aboutButton: 'О нас',
 
         // Cards
         card1Title: 'Доклинические исследования',
@@ -84,10 +83,9 @@ export const translations = {
         email: 'info@doclinika.ru',
 
         // Hero
-        heroTitle: 'Preclinical Research and Drug Development',
-        heroDescription: 'Modern laboratory facilities for a full research cycle. Over 20 years of experience in the pharmaceutical industry.',
-        newsButton: 'News and Events',
-        learnMoreButton: 'Learn More',
+        heroTitle: 'NPO "DOM FARMATSII" – Your reliable guide in drug development and preclinical research!',
+        heroDescription: 'NPO "DOM FARMATSII" is Russia\'s largest research center, combining a world-class breeding facility and vivarium, modern laboratories equipped with high-tech equipment, and an educational center. The company employs over 190 people: researchers, experts, and veterinarians.',
+        aboutButton: 'About Us',
 
         // Cards
         card1Title: 'Preclinical Research',
