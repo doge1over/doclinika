@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 
 interface Partner {
     id: number
@@ -49,17 +49,24 @@ export default function PartnersCarousel({ lang }: PartnersCarouselProps) {
     }
 
     return (
-        <section className="bg-white py-16 pb-12">
-            <div className="max-w-7xl mx-auto px-6">
-                <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+        <section className="relative bg-gradient-to-br from-gray-50 to-gray-100 py-10 pb-20 overflow-hidden">
+            {/* Новый фон - геометрические фигуры */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-20 left-20 w-72 h-72 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+                <div className="absolute top-40 right-20 w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+                <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+            </div>
+
+            <div className="relative max-w-7xl mx-auto px-6">
+                <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
                     {lang === 'ru' ? 'Наши партнеры' : 'Our Partners'}
                 </h2>
 
                 <div className="relative">
-                    {/* Кнопка влево - ВНЕ карусели */}
+                    {/* Кнопка влево */}
                     <button
                         onClick={scrollLeft}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gray-900 hover:bg-gray-800 text-white p-3 rounded-full shadow-lg transition-all hover:scale-105"
+                        className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 bg-gray-900 hover:bg-gray-800 text-white p-3 rounded-full shadow-lg transition-all hover:scale-105"
                         aria-label="Scroll left"
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,10 +74,10 @@ export default function PartnersCarousel({ lang }: PartnersCarouselProps) {
                         </svg>
                     </button>
 
-                    {/* Кнопка вправо - ВНЕ карусели */}
+                    {/* Кнопка вправо */}
                     <button
                         onClick={scrollRight}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gray-900 hover:bg-gray-800 text-white p-3 rounded-full shadow-lg transition-all hover:scale-105"
+                        className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 bg-gray-900 hover:bg-gray-800 text-white p-3 rounded-full shadow-lg transition-all hover:scale-105"
                         aria-label="Scroll right"
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -78,45 +85,42 @@ export default function PartnersCarousel({ lang }: PartnersCarouselProps) {
                         </svg>
                     </button>
 
-                    {/* Карусель - СУЖЕНА для кнопок */}
-                    <div className="mx-16 pb-8">
+                    {/* Карусель - ПОКАЗЫВАЕТ РОВНО 4 БЛОКА */}
+                    <div className="overflow-visible px-8 pt-4 pb-6 relative">
                         <div
                             ref={carouselRef}
-                            className="flex gap-8 overflow-x-auto scroll-smooth hide-scrollbar py-4"
+                            className="flex gap-5 overflow-x-scroll scroll-smooth hide-scrollbar snap-x snap-mandatory pb-8"
                             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                         >
                             {duplicatedPartners.map((partner, index) => (
                                 <div
                                     key={`${partner.id}-${index}`}
-                                    className="flex-shrink-0 w-72 bg-gray-50 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all group"
+                                    className="flex-shrink-0 w-[calc((100%-60px)/4)] bg-white rounded-2xl p-5 shadow-[0_10px_20px_-10px_rgba(0,0,0,0.15)] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] transition-shadow duration-300 group snap-start"
                                 >
                                     <div className="flex flex-col items-center text-center">
-                                        {/* Логотип */}
-                                        <div
-                                            className="w-32 h-32 mb-4 bg-white rounded-xl flex items-center justify-center shadow-md cursor-pointer overflow-hidden"
-                                            onClick={() => setSelectedImage(partner.logo)}
-                                        >
+                                        {/* Логотип - БЕЗ клика - УМЕНЬШЕН */}
+                                        <div className="w-24 h-24 mb-3 bg-gray-50 rounded-xl flex items-center justify-center shadow-md overflow-hidden">
                                             <img
                                                 src={partner.logo}
                                                 alt={partner.name}
-                                                className="w-24 h-24 object-contain hover:scale-110 transition-transform"
+                                                className="w-20 h-20 object-contain"
                                             />
                                         </div>
 
-                                        {/* Название */}
-                                        <h3 className="text-lg font-bold text-gray-900 mb-3 min-h-[56px] flex items-center">
+                                        {/* Название - УМЕНЬШЕН */}
+                                        <h3 className="text-base font-bold text-gray-900 mb-3 min-h-[48px] flex items-center justify-center">
                                             {partner.name}
                                         </h3>
 
-                                        {/* Фото - УВЕЛИЧЕНО */}
+                                        {/* Фото - УМЕНЬШЕН для 4 блоков */}
                                         <div
-                                            className="w-full h-64 bg-gray-200 rounded-lg overflow-hidden cursor-pointer shadow-md"
+                                            className="w-full h-80 bg-gray-100 rounded-lg overflow-hidden cursor-pointer shadow-md border-2 border-gray-200 hover:border-blue-400 transition-colors"
                                             onClick={() => setSelectedImage(partner.photo)}
                                         >
                                             <img
                                                 src={partner.photo}
                                                 alt={partner.name}
-                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                                             />
                                         </div>
                                     </div>
@@ -151,10 +155,37 @@ export default function PartnersCarousel({ lang }: PartnersCarouselProps) {
                 </div>
             )}
 
-            {/* Скрытие скроллбара */}
+            {/* Скрытие скроллбара + Анимация blob */}
             <style jsx>{`
                 .hide-scrollbar::-webkit-scrollbar {
                     display: none;
+                }
+
+                @keyframes blob {
+                    0% {
+                        transform: translate(0px, 0px) scale(1);
+                    }
+                    33% {
+                        transform: translate(30px, -50px) scale(1.1);
+                    }
+                    66% {
+                        transform: translate(-20px, 20px) scale(0.9);
+                    }
+                    100% {
+                        transform: translate(0px, 0px) scale(1);
+                    }
+                }
+
+                .animate-blob {
+                    animation: blob 7s infinite;
+                }
+
+                .animation-delay-2000 {
+                    animation-delay: 2s;
+                }
+
+                .animation-delay-4000 {
+                    animation-delay: 4s;
                 }
             `}</style>
         </section>
