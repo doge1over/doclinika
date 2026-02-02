@@ -31,19 +31,39 @@ interface PartnersCarouselProps {
 
 export default function PartnersCarousel({ lang }: PartnersCarouselProps) {
     const [selectedImage, setSelectedImage] = useState<string | null>(null)
+    const [currentIndex, setCurrentIndex] = useState(0)
     const carouselRef = useRef<HTMLDivElement>(null)
 
     const duplicatedPartners = [...partners, ...partners]
 
     const scrollLeft = () => {
         if (carouselRef.current) {
-            carouselRef.current.scrollBy({ left: -300, behavior: 'smooth' })
+            const isMobile = window.innerWidth < 640
+            if (isMobile) {
+                // На мобильных переключаем по одному блоку
+                const newIndex = Math.max(0, currentIndex - 1)
+                setCurrentIndex(newIndex)
+                const cardWidth = carouselRef.current.offsetWidth
+                carouselRef.current.scrollTo({ left: newIndex * cardWidth, behavior: 'smooth' })
+            } else {
+                carouselRef.current.scrollBy({ left: -300, behavior: 'smooth' })
+            }
         }
     }
 
     const scrollRight = () => {
         if (carouselRef.current) {
-            carouselRef.current.scrollBy({ left: 300, behavior: 'smooth' })
+            const isMobile = window.innerWidth < 640
+            if (isMobile) {
+                // На мобильных переключаем по одному блоку
+                const maxIndex = duplicatedPartners.length - 1
+                const newIndex = Math.min(maxIndex, currentIndex + 1)
+                setCurrentIndex(newIndex)
+                const cardWidth = carouselRef.current.offsetWidth
+                carouselRef.current.scrollTo({ left: newIndex * cardWidth, behavior: 'smooth' })
+            } else {
+                carouselRef.current.scrollBy({ left: 300, behavior: 'smooth' })
+            }
         }
     }
 
@@ -85,16 +105,16 @@ export default function PartnersCarousel({ lang }: PartnersCarouselProps) {
                     </button>
 
                     {/* Карусель */}
-                    <div className="overflow-hidden sm:overflow-visible px-6 sm:px-8 pt-4 pb-4 sm:pb-6 relative">
+                    <div className="overflow-hidden px-6 sm:px-8 pt-4 pb-4 sm:pb-6 relative">
                         <div
                             ref={carouselRef}
-                            className="flex gap-3 sm:gap-5 overflow-x-scroll scroll-smooth hide-scrollbar snap-x snap-mandatory pb-6 sm:pb-8"
+                            className="flex gap-0 sm:gap-5 overflow-x-hidden sm:overflow-x-scroll scroll-smooth hide-scrollbar sm:snap-x sm:snap-mandatory pb-6 sm:pb-8"
                             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                         >
                             {duplicatedPartners.map((partner, index) => (
                                 <div
                                     key={`${partner.id}-${index}`}
-                                    className="flex-shrink-0 w-full sm:w-[calc((100%-20px)/2)] lg:w-[calc((100%-60px)/4)] bg-white rounded-xl sm:rounded-2xl p-3 sm:p-5 shadow-[0_10px_20px_-10px_rgba(0,0,0,0.15)] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] transition-shadow duration-300 group snap-start"
+                                    className="flex-shrink-0 w-full sm:w-[calc((100%-20px)/2)] lg:w-[calc((100%-60px)/4)] bg-white rounded-xl sm:rounded-2xl p-3 sm:p-5 shadow-[0_10px_20px_-10px_rgba(0,0,0,0.15)] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] transition-shadow duration-300 group sm:snap-start"
                                 >
                                     <div className="flex flex-col items-center text-center">
                                         {/* Логотип */}
@@ -111,7 +131,7 @@ export default function PartnersCarousel({ lang }: PartnersCarouselProps) {
                                             {partner.name}
                                         </h3>
 
-                                        {/* Фото */}
+                                        {/* Фото - формат А4 на мобильных */}
                                         <div
                                             className="w-full h-96 sm:h-80 bg-gray-100 rounded-lg overflow-hidden cursor-pointer shadow-md border-2 border-gray-200 hover:border-blue-400 transition-colors"
                                             onClick={() => setSelectedImage(partner.photo)}
