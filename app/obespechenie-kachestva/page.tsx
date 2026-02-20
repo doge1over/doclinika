@@ -45,30 +45,30 @@ export default function ObespechenieKachestva() {
     const t = translations[lang]
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-            <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-sm">
+        <div className="min-h-screen bg-gradient-to-br from-white to-[#F28F20]/5">
+            <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-[#F28F20]/20 shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3">
                     <div className="flex justify-between items-center h-14 sm:h-16">
                         <Link href="/" className="flex items-center gap-2 sm:gap-4 h-full">
                             <img src="/logo/logo-vector.png" alt="АО НПО ДОМ ФАРМАЦИИ" className="h-10 sm:h-12 w-auto object-contain" />
-                            <div className="hidden md:flex border-l-2 border-gray-300 pl-4 h-12 items-center">
+                            <div className="hidden md:flex border-l-2 border-[#F28F20]/30 pl-4 h-12 items-center">
                                 <h1 className="text-xl font-bold text-gray-900 leading-tight">НПО Дом фармации</h1>
                             </div>
                         </Link>
                         <div className="hidden md:flex items-center gap-4">
                             <div className="hidden lg:flex items-center gap-3">
-                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap">Заявка на ДКИ</Link>
-                                <Link href="/zayavka-nir" className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap">Заявка на Фарм. разработку</Link>
+                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на ДКИ</Link>
+                                <Link href="/zayavka-nir" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на Фарм. разработку</Link>
                             </div>
                             <LanguageSwitcher currentLang={lang} onLanguageChange={setLang} />
                             <div className="text-right">
-                                <a href={`tel:${t.phone}`} className="block text-sm font-semibold text-gray-900 hover:text-blue-600 transition">{t.phone}</a>
-                                <a href={`mailto:${t.email}`} className="block text-xs text-gray-500 hover:text-blue-600 transition">{t.email}</a>
+                                <a href={`tel:${t.phone}`} className="block text-sm font-semibold text-gray-900 hover:text-[#F28F20] transition">{t.phone}</a>
+                                <a href={`mailto:${t.email}`} className="block text-xs text-gray-500 hover:text-[#F28F20] transition">{t.email}</a>
                             </div>
                         </div>
                         <div className="flex md:hidden items-center gap-2">
                             <LanguageSwitcher currentLang={lang} onLanguageChange={setLang} />
-                            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition" aria-label="Меню">
+                            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-gray-700 hover:bg-[#F28F20]/10 rounded-lg transition" aria-label="Меню">
                                 {mobileMenuOpen ? (
                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                                 ) : (
@@ -79,31 +79,31 @@ export default function ObespechenieKachestva() {
                     </div>
                 </div>
                 {mobileMenuOpen && (
-                    <div className="md:hidden bg-white border-t border-gray-200 shadow-lg max-h-[70vh] overflow-y-auto">
+                    <div className="md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[70vh] overflow-y-auto">
                         <div className="px-4 py-4 space-y-3">
-                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white text-center font-medium rounded-lg transition-all">Заявка на доклинику</Link>
-                            <Link href="/zayavka-nir" className="block w-full px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center font-medium rounded-lg transition-all">Заявка на НИР</Link>
-                            <div className="border-t border-gray-200 my-3"></div>
-                            <Link href="/" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition">Главная</Link>
-                            <Link href="/o-nas" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition">О нас</Link>
-                            <Link href="/kontakty" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition">Контакты</Link>
-                            <Link href="/category/news" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition">Новости</Link>
-                            <div className="border-t border-gray-200 my-3"></div>
+                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинику</Link>
+                            <Link href="/zayavka-nir" className="block w-full px-4 py-3 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-center font-medium rounded-lg transition-all">Заявка на НИР</Link>
+                            <div className="border-t border-gray-100 my-3"></div>
+                            <Link href="/" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">Главная</Link>
+                            <Link href="/o-nas" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">О нас</Link>
+                            <Link href="/kontakty" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">Контакты</Link>
+                            <Link href="/category/news" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">Новости</Link>
+                            <div className="border-t border-gray-100 my-3"></div>
                             <div className="px-4 py-2 space-y-2">
-                                <a href={`tel:${t.phone}`} className="flex items-center gap-2 text-gray-700"><span className="text-blue-600">📞</span><span className="font-medium">{t.phone}</span></a>
-                                <a href={`mailto:${t.email}`} className="flex items-center gap-2 text-gray-500 text-sm"><span className="text-blue-600">✉️</span><span>{t.email}</span></a>
+                                <a href={`tel:${t.phone}`} className="flex items-center gap-2 text-gray-700"><span className="text-[#F28F20]">📞</span><span className="font-medium">{t.phone}</span></a>
+                                <a href={`mailto:${t.email}`} className="flex items-center gap-2 text-gray-500 text-sm"><span className="text-[#14B7E0]">✉️</span><span>{t.email}</span></a>
                             </div>
                         </div>
                     </div>
                 )}
             </header>
 
-            <div className="bg-white border-b border-gray-200">
+            <div className="bg-white border-b border-gray-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
                     <nav className="flex items-center text-sm text-gray-500">
-                        <Link href="/" className="hover:text-blue-600 transition">Главная</Link>
-                        <svg className="w-4 h-4 mx-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                        <span className="text-gray-900 font-medium">Обеспечение качества</span>
+                        <Link href="/" className="hover:text-[#F28F20] transition">Главная</Link>
+                        <svg className="w-4 h-4 mx-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                        <span className="text-[#F28F20] font-medium">Обеспечение качества</span>
                     </nav>
                 </div>
             </div>
@@ -111,18 +111,18 @@ export default function ObespechenieKachestva() {
             <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
                 <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
                     <div className="lg:hidden">
-                        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="w-full flex items-center justify-between px-4 py-3 bg-white rounded-xl shadow-md border border-gray-200">
+                        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="w-full flex items-center justify-between px-4 py-3 bg-white rounded-xl shadow-md border border-gray-100 hover:border-[#F28F20] transition">
                             <span className="font-semibold text-gray-900">Меню раздела</span>
-                            <svg className={`w-5 h-5 text-gray-500 transition-transform ${sidebarOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                            <svg className={`w-5 h-5 text-[#F28F20] transition-transform ${sidebarOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                         </button>
                         {sidebarOpen && (
-                            <div className="mt-3 bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+                            <div className="mt-3 bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden">
                                 <nav className="py-2">
                                     {menuItems.map((item, index) => (
                                         item.external ? (
-                                            <a key={index} href={item.href} target="_blank" rel="noopener noreferrer" className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition">{item.title}</a>
+                                            <a key={index} href={item.href} target="_blank" rel="noopener noreferrer" className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] transition">{item.title}</a>
                                         ) : (
-                                            <Link key={index} href={item.href} className={`block px-4 py-2.5 text-sm transition ${item.active ? 'bg-blue-50 text-blue-700 font-medium border-l-4 border-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'}`}>{item.title}</Link>
+                                            <Link key={index} href={item.href} className={`block px-4 py-2.5 text-sm transition ${item.active ? 'bg-[#F28F20]/10 text-[#F28F20] font-medium border-l-4 border-[#F28F20]' : 'text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20]'}`}>{item.title}</Link>
                                         )
                                     ))}
                                 </nav>
@@ -131,16 +131,16 @@ export default function ObespechenieKachestva() {
                     </div>
 
                     <aside className="hidden lg:block w-72 flex-shrink-0">
-                        <div className="sticky top-24 bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-                            <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-5 py-4">
+                        <div className="sticky top-24 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                            <div className="bg-gradient-to-r from-[#F28F20] to-[#14B7E0] px-5 py-4">
                                 <h3 className="text-white font-bold">Меню</h3>
                             </div>
                             <nav className="py-2 max-h-[calc(100vh-200px)] overflow-y-auto">
                                 {menuItems.map((item, index) => (
                                     item.external ? (
-                                        <a key={index} href={item.href} target="_blank" rel="noopener noreferrer" className="block px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition">{item.title}</a>
+                                        <a key={index} href={item.href} target="_blank" rel="noopener noreferrer" className="block px-5 py-2.5 text-sm text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] transition">{item.title}</a>
                                     ) : (
-                                        <Link key={index} href={item.href} className={`block px-5 py-2.5 text-sm transition ${item.active ? 'bg-blue-50 text-blue-700 font-medium border-l-4 border-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'}`}>{item.title}</Link>
+                                        <Link key={index} href={item.href} className={`block px-5 py-2.5 text-sm transition ${item.active ? 'bg-[#F28F20]/10 text-[#F28F20] font-medium border-l-4 border-[#F28F20]' : 'text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20]'}`}>{item.title}</Link>
                                     )
                                 ))}
                             </nav>
@@ -148,45 +148,45 @@ export default function ObespechenieKachestva() {
                     </aside>
 
                     <article className="flex-1 min-w-0">
-                        <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-                            <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-purple-700 px-6 sm:px-8 py-6 sm:py-8">
-                                <h1 className="text-2xl sm:text-3xl font-bold text-white">Обеспечение качества</h1>
+                        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                            <div className="bg-gradient-to-r from-[#F28F20] via-[#F28F20]/90 to-[#14B7E0] px-6 sm:px-8 py-6 sm:py-8">
+                                <h1 className="text-2xl sm:text-3xl font-bold text-white drop-shadow-lg">Обеспечение качества</h1>
                             </div>
 
                             <div className="px-6 sm:px-8 py-6 sm:py-8 space-y-6">
                                 <div>
-                                    <button onClick={() => setPublicationsOpen(!publicationsOpen)} className="w-full flex items-center justify-between px-5 py-4 bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-150 rounded-xl border border-gray-200 transition">
+                                    <button onClick={() => setPublicationsOpen(!publicationsOpen)} className="w-full flex items-center justify-between px-5 py-4 bg-gradient-to-r from-[#F28F20]/10 to-[#14B7E0]/10 hover:from-[#F28F20]/20 hover:to-[#14B7E0]/20 rounded-xl border border-[#F28F20]/20 transition">
                                         <span className="font-semibold text-gray-900">Публикации по теме:</span>
-                                        <svg className={`w-5 h-5 text-gray-500 transition-transform ${publicationsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                                        <svg className={`w-5 h-5 text-[#F28F20] transition-transform ${publicationsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                                     </button>
                                     {publicationsOpen && (
-                                        <div className="mt-4 space-y-4 pl-4 border-l-4 border-blue-200">
+                                        <div className="mt-4 space-y-4 pl-4 border-l-4 border-[#F28F20]">
                                             {publications.map((pub, index) => (
                                                 <div key={index} className="text-sm text-gray-700">
-                                                    <p><span className="font-medium">{pub.authors}</span> {pub.title} {"//"} {pub.journal}{pub.link && (<a href={pub.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline ml-1">[Ссылка]</a>)}</p>
+                                                    <p><span className="font-medium">{pub.authors}</span> {pub.title} {"//"} {pub.journal}{pub.link && (<a href={pub.link} target="_blank" rel="noopener noreferrer" className="text-[#14B7E0] hover:text-[#F28F20] hover:underline ml-1">[Ссылка]</a>)}</p>
                                                 </div>
                                             ))}
                                         </div>
                                     )}
                                 </div>
 
-                                <div className="text-center py-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+                                <div className="text-center py-4 bg-gradient-to-r from-[#F28F20]/10 to-[#14B7E0]/10 rounded-xl border border-[#F28F20]/20">
                                     <p className="text-lg sm:text-xl font-semibold text-gray-800 italic">«Готовы к изменениям без предубеждений, сохраняя фокус и скорость реакций»</p>
                                 </div>
 
-                                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 sm:p-6">
-                                    <p className="text-center text-blue-900 font-medium">Система менеджмента качества сертифицирована на соответствие <strong>Принципам надлежащей лабораторной практики GLP</strong> и стандарту <strong>ISO 9001:2015</strong></p>
+                                <div className="bg-gradient-to-r from-[#14B7E0]/10 to-[#146FA8]/10 border border-[#14B7E0]/20 rounded-xl p-4 sm:p-6">
+                                    <p className="text-center text-gray-800 font-medium">Система менеджмента качества сертифицирована на соответствие <strong className="text-[#F28F20]">Принципам надлежащей лабораторной практики GLP</strong> и стандарту <strong className="text-[#14B7E0]">ISO 9001:2015</strong></p>
                                 </div>
 
                                 <div className="prose prose-lg max-w-none text-gray-700 space-y-4">
-                                    <p className="text-justify leading-relaxed">В соответствии с политикой в области качества <strong>главной целью</strong> деятельности АО «НПО «ДОМ ФАРМАЦИИ» является создание высокой степени удовлетворенности потребителей научным уровнем и сроками оказываемых услуг посредством обеспечения правильности, достоверности и объективности результатов, гарантирующих высокое качество проводимых испытаний, а также формирования устойчивого доверия со стороны потребителя.</p>
+                                    <p className="text-justify leading-relaxed">В соответствии с политикой в области качества <strong className="text-[#F28F20]">главной целью</strong> деятельности АО «НПО «ДОМ ФАРМАЦИИ» является создание высокой степени удовлетворенности потребителей научным уровнем и сроками оказываемых услуг посредством обеспечения правильности, достоверности и объективности результатов, гарантирующих высокое качество проводимых испытаний, а также формирования устойчивого доверия со стороны потребителя.</p>
                                     <p className="text-justify leading-relaxed">Обеспечение качества – основа осуществления главной цели АО «НПО «ДОМ ФАРМАЦИИ» и гарантия качественного выполнения исследований.</p>
                                 </div>
 
                                 <div className="mt-8">
                                     <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 text-center">Что делает служба качества для Вас?</h2>
-                                    <p className="text-center text-gray-700 font-medium mb-6">Строгое соблюдение Принципов надлежащей лабораторной практики и ISO 9001</p>
-                                    <div className="rounded-xl overflow-hidden shadow-lg border border-gray-200">
+                                    <p className="text-center text-gray-700 font-medium mb-6">Строгое соблюдение <span className="text-[#F28F20]">Принципов надлежащей лабораторной практики</span> и <span className="text-[#14B7E0]">ISO 9001</span></p>
+                                    <div className="rounded-xl overflow-hidden shadow-lg border-2 border-[#F28F20]/20 hover:border-[#F28F20]/50 transition-colors">
                                         <img src="/images/Snimok.jpg" alt="Схема обеспечения качества" className="w-full h-auto" />
                                     </div>
                                 </div>
@@ -201,31 +201,31 @@ export default function ObespechenieKachestva() {
                 </div>
             </main>
 
-            <footer className="bg-white border-t border-gray-200 mt-12 shadow-inner">
+            <footer className="bg-gradient-to-br from-gray-900 to-gray-800 mt-12">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-12 mb-8 sm:mb-12">
                         <div>
-                            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 sm:mb-6">{t.footerInfo}</h3>
-                            <ul className="space-y-3 sm:space-y-4 text-sm text-gray-600">
-                                <li><Link href="/o-nas" className="hover:text-gray-900 transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full"></span>{t.footerAbout}</Link></li>
-                                <li><Link href="/category/news" className="hover:text-gray-900 transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full"></span>{t.footerNews}</Link></li>
-                                <li><Link href="/kontakty" className="hover:text-gray-900 transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full"></span>{t.footerContacts}</Link></li>
+                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerInfo}</h3>
+                            <ul className="space-y-3 sm:space-y-4 text-sm text-gray-300">
+                                <li><Link href="/o-nas" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerAbout}</Link></li>
+                                <li><Link href="/category/news" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerNews}</Link></li>
+                                <li><Link href="/kontakty" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerContacts}</Link></li>
                             </ul>
                         </div>
                         <div>
-                            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 sm:mb-6">{t.footerOurContacts}</h3>
-                            <div className="space-y-3 sm:space-y-4 text-sm text-gray-600">
-                                <p className="flex items-center gap-3"><span className="text-blue-600">📞</span><a href={`tel:${t.phone}`} className="hover:text-gray-900 transition font-medium">{t.phone}</a></p>
-                                <p className="flex items-center gap-3"><span className="text-blue-600">✉️</span><a href={`mailto:${t.email}`} className="hover:text-gray-900 transition break-all">{t.email}</a></p>
-                                <p className="flex items-start gap-3 leading-relaxed"><span className="text-blue-600 mt-0.5">📍</span><span>{t.footerAddress}</span></p>
+                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerOurContacts}</h3>
+                            <div className="space-y-3 sm:space-y-4 text-sm text-gray-300">
+                                <p className="flex items-center gap-3"><span className="text-[#F28F20]">📞</span><a href={`tel:${t.phone}`} className="hover:text-[#F28F20] transition font-medium">{t.phone}</a></p>
+                                <p className="flex items-center gap-3"><span className="text-[#14B7E0]">✉️</span><a href={`mailto:${t.email}`} className="hover:text-[#14B7E0] transition break-all">{t.email}</a></p>
+                                <p className="flex items-start gap-3 leading-relaxed"><span className="text-[#146FA8] mt-0.5">📍</span><span>{t.footerAddress}</span></p>
                             </div>
                         </div>
                         <div className="sm:col-span-2 md:col-span-1">
-                            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 sm:mb-6">{t.footerHowToGet}</h3>
+                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerHowToGet}</h3>
                             <iframe src="https://yandex.ru/map-widget/v1/?lang=ru_RU&scroll=true&source=constructor-api&um=constructor%3Adc7b04b68a41ad1bdf18c8112ff573806757e0f708dfd54378d8ba4859993f58" width="100%" height="180" frameBorder="0" allowFullScreen={true} className="rounded-xl sm:rounded-2xl shadow-lg" title="Карта" />
                         </div>
                     </div>
-                    <div className="pt-6 sm:pt-8 border-t border-gray-200 text-center text-xs sm:text-sm text-gray-500">
+                    <div className="pt-6 sm:pt-8 border-t border-gray-700 text-center text-xs sm:text-sm text-gray-400">
                         <p className="font-medium">{t.footerCopyright}</p>
                     </div>
                 </div>
