@@ -74,7 +74,7 @@ export default function PartnersCarousel({ lang }: PartnersCarouselProps) {
     }
 
     return (
-        <section className="relative bg-gradient-to-br from-white to-gray-50 py-8 sm:py-10 pb-16 sm:pb-20 overflow-hidden">
+        <section className="relative bg-white py-8 sm:py-10 pb-16 sm:pb-20 overflow-hidden">
             {/* Фон с новыми цветами */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-20 left-20 w-48 sm:w-72 h-48 sm:h-72 bg-[#F28F20]/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>

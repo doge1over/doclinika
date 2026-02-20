@@ -35,7 +35,7 @@ export default function Kontakty() {
     const t = translations[lang]
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-white to-[#F28F20]/5">
+        <div className="min-h-screen bg-white">
             {/* Header */}
             <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-[#F28F20]/20 shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3">
