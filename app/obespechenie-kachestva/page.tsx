@@ -57,8 +57,8 @@ export default function ObespechenieKachestva() {
                         </Link>
                         <div className="hidden md:flex items-center gap-4">
                             <div className="hidden lg:flex items-center gap-3">
-                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на ДКИ</Link>
-                                <Link href="/zayavka-nir" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на Фарм. разработку</Link>
+                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на доклинику</Link>
+                                <Link href="/zayavka-nir" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на НИР</Link>
                             </div>
                             <LanguageSwitcher currentLang={lang} onLanguageChange={setLang} />
                             <div className="text-right">
@@ -132,7 +132,7 @@ export default function ObespechenieKachestva() {
 
                     <aside className="hidden lg:block w-72 flex-shrink-0">
                         <div className="sticky top-24 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-                            <div className="bg-gradient-to-r from-[#F28F20] to-[#14B7E0] px-5 py-4">
+                            <div className="px-5 py-4" style={{ background: "linear-gradient(to right, #F28F20, #e07d10)" }}>
                                 <h3 className="text-white font-bold">Меню</h3>
                             </div>
                             <nav className="py-2 max-h-[calc(100vh-200px)] overflow-y-auto">
@@ -149,15 +149,15 @@ export default function ObespechenieKachestva() {
 
                     <article className="flex-1 min-w-0">
                         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-                            <div className="bg-gradient-to-r from-[#F28F20] via-[#F28F20]/90 to-[#14B7E0] px-6 sm:px-8 py-6 sm:py-8">
+                            <div className="px-6 sm:px-8 py-6 sm:py-8" style={{ background: "linear-gradient(to right, #F28F20, #e07d10)" }}>
                                 <h1 className="text-2xl sm:text-3xl font-bold text-white drop-shadow-lg">Обеспечение качества</h1>
                             </div>
 
                             <div className="px-6 sm:px-8 py-6 sm:py-8 space-y-6">
                                 <div>
-                                    <button onClick={() => setPublicationsOpen(!publicationsOpen)} className="w-full flex items-center justify-between px-5 py-4 bg-gradient-to-r from-[#F28F20]/10 to-[#14B7E0]/10 hover:from-[#F28F20]/20 hover:to-[#14B7E0]/20 rounded-xl border border-[#F28F20]/20 transition">
+                                    <button onClick={() => setPublicationsOpen(!publicationsOpen)} className="w-full flex items-center justify-between px-5 py-4 bg-gradient-to-r from-[#F28F20]/5 to-[#14B7E0]/5 hover:from-[#F28F20]/10 hover:to-[#14B7E0]/10 rounded-xl border border-gray-200 transition">
                                         <span className="font-semibold text-gray-900">Публикации по теме:</span>
-                                        <svg className={`w-5 h-5 text-[#F28F20] transition-transform ${publicationsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                                        <svg className={`w-5 h-5 text-gray-500 transition-transform ${publicationsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                                     </button>
                                     {publicationsOpen && (
                                         <div className="mt-4 space-y-4 pl-4 border-l-4 border-[#F28F20]">
@@ -171,7 +171,8 @@ export default function ObespechenieKachestva() {
                                 </div>
 
                                 <div className="text-center py-4 bg-gradient-to-r from-[#F28F20]/10 to-[#14B7E0]/10 rounded-xl border border-[#F28F20]/20">
-                                    <p className="text-lg sm:text-xl font-semibold text-gray-800 italic">«Готовы к изменениям без предубеждений, сохраняя фокус и скорость реакций»</p>
+                                    <p className="text-lg sm:text-xl font-semibold text-gray-800 italic">«Готовы к изменениям без предубеждений,</p>
+                                    <p className="text-lg sm:text-xl font-semibold text-gray-800 italic">сохраняя фокус и скорость реакций»</p>
                                 </div>
 
                                 <div className="bg-gradient-to-r from-[#14B7E0]/10 to-[#146FA8]/10 border border-[#14B7E0]/20 rounded-xl p-4 sm:p-6">

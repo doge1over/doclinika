@@ -90,8 +90,8 @@ export default function ZayavkaDKI() {
                         </Link>
                         <div className="hidden md:flex items-center gap-4">
                             <div className="hidden lg:flex items-center gap-3">
-                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap">Заявка на ДКИ</Link>
-                                <Link href="/zayavka-nir" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap">Заявка на Фарм. разработку</Link>
+                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap">Заявка на доклинику</Link>
+                                <Link href="/zayavka-nir" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap">Заявка на НИР</Link>
                             </div>
                             <LanguageSwitcher currentLang={lang} onLanguageChange={setLang} />
                             <div className="text-right">
@@ -114,8 +114,8 @@ export default function ZayavkaDKI() {
                 {mobileMenuOpen && (
                     <div className="md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[70vh] overflow-y-auto">
                         <div className="px-4 py-4 space-y-3">
-                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на ДКИ</Link>
-                            <Link href="/zayavka-nir" className="block w-full px-4 py-3 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-center font-medium rounded-lg transition-all">Заявка на Фарм. разработку</Link>
+                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинику</Link>
+                            <Link href="/zayavka-nir" className="block w-full px-4 py-3 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-center font-medium rounded-lg transition-all">Заявка на НИР</Link>
                             <div className="border-t border-gray-100 my-3"></div>
                             <Link href="/" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 rounded-lg transition">Главная</Link>
                             <Link href="/o-nas" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 rounded-lg transition">О нас</Link>
@@ -142,7 +142,7 @@ export default function ZayavkaDKI() {
 
             <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-                    <div className="bg-gradient-to-r from-[#F28F20] via-[#F28F20]/90 to-[#14B7E0] px-6 sm:px-8 py-6 sm:py-8">
+                    <div className="px-6 sm:px-8 py-6 sm:py-8" style={{ background: "linear-gradient(to right, #F28F20, #e07d10)" }}>
                         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Заявка на проведение доклинических исследований</h1>
                         <p className="text-white/90 text-sm">Сертификат на соответствие ГОСТ 33044-2014 № 19.0291.026 • Система менеджмента сертифицирована с 2016 г.</p>
                     </div>
@@ -190,11 +190,11 @@ export default function ZayavkaDKI() {
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Планируемое исследование</label>
                                     <div className="flex flex-wrap gap-4">
                                         <label className="flex items-center gap-2 cursor-pointer">
-                                            <input type="radio" name="researchType" value="regulatory" checked={formData.researchType === 'regulatory'} onChange={handleInputChange} className="w-4 h-4 text-[#F28F20] focus:ring-[#F28F20]" />
+                                            <input type="radio" name="researchType" value="regulatory" checked={formData.researchType === 'regulatory'} onChange={handleInputChange} onFocus={(e) => e.target.blur()} className="w-4 h-4 text-[#F28F20] focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Регуляторное</span>
                                         </label>
                                         <label className="flex items-center gap-2 cursor-pointer">
-                                            <input type="radio" name="researchType" value="exploratory" checked={formData.researchType === 'exploratory'} onChange={handleInputChange} className="w-4 h-4 text-[#F28F20] focus:ring-[#F28F20]" />
+                                            <input type="radio" name="researchType" value="exploratory" checked={formData.researchType === 'exploratory'} onChange={handleInputChange} onFocus={(e) => e.target.blur()} className="w-4 h-4 text-[#F28F20] focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Поисковое</span>
                                         </label>
                                     </div>
@@ -208,11 +208,11 @@ export default function ZayavkaDKI() {
                             <div className="space-y-6">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-[#F28F20]/10 transition cursor-pointer">
-                                        <input type="checkbox" name="developProgram" checked={formData.developProgram} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20]" />
+                                        <input type="checkbox" name="developProgram" checked={formData.developProgram} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20] focus:ring-offset-0" />
                                         <span className="text-gray-700">Разработка программы доклинических исследований</span>
                                     </label>
                                     <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-[#F28F20]/10 transition cursor-pointer">
-                                        <input type="checkbox" name="prepareLiteratureReview" checked={formData.prepareLiteratureReview} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20]" />
+                                        <input type="checkbox" name="prepareLiteratureReview" checked={formData.prepareLiteratureReview} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20] focus:ring-offset-0" />
                                         <span className="text-gray-700">Подготовка литературного обзора</span>
                                     </label>
                                 </div>
@@ -221,55 +221,55 @@ export default function ZayavkaDKI() {
                                     <h3 className="text-lg font-semibold text-gray-800 mb-3">Изучение безопасности лекарственных средств и химических веществ:</h3>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                         <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-[#F28F20]/10 transition cursor-pointer">
-                                            <input type="checkbox" name="singleDoseToxicity" checked={formData.singleDoseToxicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20]" />
+                                            <input type="checkbox" name="singleDoseToxicity" checked={formData.singleDoseToxicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Токсичность при однократном введении</span>
                                         </label>
                                         <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-[#F28F20]/10 transition cursor-pointer">
-                                            <input type="checkbox" name="doseRangingStudy" checked={formData.doseRangingStudy} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20]" />
+                                            <input type="checkbox" name="doseRangingStudy" checked={formData.doseRangingStudy} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Поиск токсических доз (dose-ranging study)</span>
                                         </label>
                                         <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-[#F28F20]/10 transition cursor-pointer">
-                                            <input type="checkbox" name="repeatDoseToxicity" checked={formData.repeatDoseToxicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20]" />
+                                            <input type="checkbox" name="repeatDoseToxicity" checked={formData.repeatDoseToxicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Токсичность при многократном введении</span>
                                         </label>
                                         <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-[#F28F20]/10 transition cursor-pointer">
-                                            <input type="checkbox" name="chronicToxicity" checked={formData.chronicToxicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20]" />
+                                            <input type="checkbox" name="chronicToxicity" checked={formData.chronicToxicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Хроническая токсичность</span>
                                         </label>
                                         <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-[#F28F20]/10 transition cursor-pointer">
-                                            <input type="checkbox" name="reproductiveToxicity" checked={formData.reproductiveToxicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20]" />
+                                            <input type="checkbox" name="reproductiveToxicity" checked={formData.reproductiveToxicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Репродуктивная токсичность</span>
                                         </label>
                                         <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-[#F28F20]/10 transition cursor-pointer">
-                                            <input type="checkbox" name="immunotoxicity" checked={formData.immunotoxicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20]" />
+                                            <input type="checkbox" name="immunotoxicity" checked={formData.immunotoxicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Иммунотоксичность при однократном и курсовом введении</span>
                                         </label>
                                         <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-[#F28F20]/10 transition cursor-pointer">
-                                            <input type="checkbox" name="allergenicProperties" checked={formData.allergenicProperties} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20]" />
+                                            <input type="checkbox" name="allergenicProperties" checked={formData.allergenicProperties} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Аллергизующие свойства</span>
                                         </label>
                                         <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-[#F28F20]/10 transition cursor-pointer">
-                                            <input type="checkbox" name="mutagenicity" checked={formData.mutagenicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20]" />
+                                            <input type="checkbox" name="mutagenicity" checked={formData.mutagenicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Мутагенность</span>
                                         </label>
                                         <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-[#F28F20]/10 transition cursor-pointer">
-                                            <input type="checkbox" name="carcinogenicity" checked={formData.carcinogenicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20]" />
+                                            <input type="checkbox" name="carcinogenicity" checked={formData.carcinogenicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Канцерогенность</span>
                                         </label>
                                         <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-[#F28F20]/10 transition cursor-pointer">
-                                            <input type="checkbox" name="localTolerance" checked={formData.localTolerance} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20]" />
+                                            <input type="checkbox" name="localTolerance" checked={formData.localTolerance} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Местная переносимость</span>
                                         </label>
                                         <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-[#F28F20]/10 transition cursor-pointer">
-                                            <input type="checkbox" name="phototoxicity" checked={formData.phototoxicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20]" />
+                                            <input type="checkbox" name="phototoxicity" checked={formData.phototoxicity} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Фототоксичность</span>
                                         </label>
                                         <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-[#F28F20]/10 transition cursor-pointer">
-                                            <input type="checkbox" name="addictivePotential" checked={formData.addictivePotential} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20]" />
+                                            <input type="checkbox" name="addictivePotential" checked={formData.addictivePotential} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Аддиктивный потенциал</span>
                                         </label>
                                         <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-[#F28F20]/10 transition cursor-pointer">
-                                            <input type="checkbox" name="additionalToxStudies" checked={formData.additionalToxStudies} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20]" />
+                                            <input type="checkbox" name="additionalToxStudies" checked={formData.additionalToxStudies} onChange={handleInputChange} className="w-5 h-5 text-[#F28F20] rounded focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Дополнительные токсикологические исследования</span>
                                         </label>
                                     </div>
@@ -319,11 +319,11 @@ export default function ZayavkaDKI() {
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Имеется ли у Вас информация о том, что аналогичные исследования уже проводились?</label>
                                     <div className="flex gap-4">
                                         <label className="flex items-center gap-2 cursor-pointer">
-                                            <input type="radio" name="previousStudiesExist" value="yes" checked={formData.previousStudiesExist === 'yes'} onChange={handleInputChange} className="w-4 h-4 text-[#F28F20] focus:ring-[#F28F20]" />
+                                            <input type="radio" name="previousStudiesExist" value="yes" checked={formData.previousStudiesExist === 'yes'} onChange={handleInputChange} onFocus={(e) => e.target.blur()} className="w-4 h-4 text-[#F28F20] focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Да</span>
                                         </label>
                                         <label className="flex items-center gap-2 cursor-pointer">
-                                            <input type="radio" name="previousStudiesExist" value="no" checked={formData.previousStudiesExist === 'no'} onChange={handleInputChange} className="w-4 h-4 text-[#F28F20] focus:ring-[#F28F20]" />
+                                            <input type="radio" name="previousStudiesExist" value="no" checked={formData.previousStudiesExist === 'no'} onChange={handleInputChange} onFocus={(e) => e.target.blur()} className="w-4 h-4 text-[#F28F20] focus:ring-[#F28F20] focus:ring-offset-0" />
                                             <span className="text-gray-700">Нет</span>
                                         </label>
                                     </div>

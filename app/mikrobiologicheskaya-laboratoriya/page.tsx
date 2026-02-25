@@ -56,8 +56,8 @@ export default function MikrobiologicheskayaLaboratoriya() {
                         </Link>
                         <div className="hidden md:flex items-center gap-4">
                             <div className="hidden lg:flex items-center gap-3">
-                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на ДКИ</Link>
-                                <Link href="/zayavka-nir" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на Фарм. разработку</Link>
+                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на доклинику</Link>
+                                <Link href="/zayavka-nir" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на НИР</Link>
                             </div>
                             <LanguageSwitcher currentLang={lang} onLanguageChange={setLang} />
                             <div className="text-right">
@@ -80,8 +80,8 @@ export default function MikrobiologicheskayaLaboratoriya() {
                 {mobileMenuOpen && (
                     <div className="md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[70vh] overflow-y-auto">
                         <div className="px-4 py-4 space-y-3">
-                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на ДКИ</Link>
-                            <Link href="/zayavka-nir" className="block w-full px-4 py-3 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-center font-medium rounded-lg transition-all">Заявка на Фарм. разработку</Link>
+                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинику</Link>
+                            <Link href="/zayavka-nir" className="block w-full px-4 py-3 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-center font-medium rounded-lg transition-all">Заявка на НИР</Link>
                             <div className="border-t border-gray-100 my-3"></div>
                             <Link href="/" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">Главная</Link>
                             <Link href="/o-nas" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">О нас</Link>
@@ -130,7 +130,7 @@ export default function MikrobiologicheskayaLaboratoriya() {
                     {/* Desktop Sidebar */}
                     <aside className="hidden lg:block w-72 flex-shrink-0">
                         <div className="sticky top-24 bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-                            <div className="bg-gradient-to-r from-[#F28F20] to-[#14B7E0] px-5 py-4">
+                            <div className="px-5 py-4" style={{ background: 'linear-gradient(to right, #F28F20, #e07d10)' }}>
                                 <h3 className="text-white font-bold">Меню</h3>
                             </div>
                             <nav className="py-2 max-h-[calc(100vh-200px)] overflow-y-auto">
@@ -149,7 +149,7 @@ export default function MikrobiologicheskayaLaboratoriya() {
                     <article className="flex-1 min-w-0">
                         <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                             {/* Header */}
-                            <div className="bg-gradient-to-r from-[#F28F20] to-[#14B7E0] px-6 sm:px-8 py-6 sm:py-8">
+                            <div className="px-6 sm:px-8 py-6 sm:py-8" style={{ background: 'linear-gradient(to right, #F28F20, #e07d10)' }}>
                                 <h1 className="text-2xl sm:text-3xl font-bold text-white">Лаборатория микробиологии</h1>
                             </div>
 

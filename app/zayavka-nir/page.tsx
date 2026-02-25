@@ -81,11 +81,27 @@ export default function ZayavkaNIR() {
             <span className="text-gray-700 flex-1 pr-4">{label}</span>
             <div className="flex gap-4 flex-shrink-0">
                 <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="radio" name={name} value="yes" checked={formData[name as keyof typeof formData] === 'yes'} onChange={handleInputChange} className="w-4 h-4 text-[#14B7E0] focus:ring-[#14B7E0]" />
+                    <input
+                        type="radio"
+                        name={name}
+                        value="yes"
+                        checked={formData[name as keyof typeof formData] === 'yes'}
+                        onChange={handleInputChange}
+                        onFocus={(e) => e.target.blur()}
+                        className="w-4 h-4 text-[#14B7E0] focus:ring-[#14B7E0] focus:ring-offset-0"
+                    />
                     <span className="text-gray-700">Да</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="radio" name={name} value="no" checked={formData[name as keyof typeof formData] === 'no'} onChange={handleInputChange} className="w-4 h-4 text-[#14B7E0] focus:ring-[#14B7E0]" />
+                    <input
+                        type="radio"
+                        name={name}
+                        value="no"
+                        checked={formData[name as keyof typeof formData] === 'no'}
+                        onChange={handleInputChange}
+                        onFocus={(e) => e.target.blur()}
+                        className="w-4 h-4 text-[#14B7E0] focus:ring-[#14B7E0] focus:ring-offset-0"
+                    />
                     <span className="text-gray-700">Нет</span>
                 </label>
             </div>
@@ -105,8 +121,8 @@ export default function ZayavkaNIR() {
                         </Link>
                         <div className="hidden md:flex items-center gap-4">
                             <div className="hidden lg:flex items-center gap-3">
-                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap">Заявка на ДКИ</Link>
-                                <Link href="/zayavka-nir" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap">Заявка на Фарм. разработку</Link>
+                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap">Заявка на доклинику</Link>
+                                <Link href="/zayavka-nir" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap">Заявка на НИР</Link>
                             </div>
                             <LanguageSwitcher currentLang={lang} onLanguageChange={setLang} />
                             <div className="text-right">
@@ -129,8 +145,8 @@ export default function ZayavkaNIR() {
                 {mobileMenuOpen && (
                     <div className="md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[70vh] overflow-y-auto">
                         <div className="px-4 py-4 space-y-3">
-                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на ДКИ</Link>
-                            <Link href="/zayavka-nir" className="block w-full px-4 py-3 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-center font-medium rounded-lg transition-all">Заявка на Фарм. разработку</Link>
+                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинику</Link>
+                            <Link href="/zayavka-nir" className="block w-full px-4 py-3 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-center font-medium rounded-lg transition-all">Заявка на НИР</Link>
                             <div className="border-t border-gray-100 my-3"></div>
                             <Link href="/" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 rounded-lg transition">Главная</Link>
                             <Link href="/o-nas" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 rounded-lg transition">О нас</Link>
@@ -157,7 +173,7 @@ export default function ZayavkaNIR() {
 
             <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-                    <div className="bg-gradient-to-r from-[#14B7E0] via-[#14B7E0]/90 to-[#F28F20] px-6 sm:px-8 py-6 sm:py-8">
+                    <div className="px-6 sm:px-8 py-6 sm:py-8" style={{ background: 'linear-gradient(to right, #14B7E0, #0ea5cc)' }}>
                         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Заявка на проведение НИР по фармацевтической разработке</h1>
                         <p className="text-white/80 text-sm">Сертификат на соответствие ГОСТ 33044-2014 № 19.0291.026 • Система менеджмента сертифицирована с 2016 г.</p>
                     </div>
@@ -345,7 +361,7 @@ export default function ZayavkaNIR() {
                         </section>
 
                         <div className="pt-6 border-t border-gray-100">
-                            <button type="submit" className="w-full sm:w-auto px-8 py-4 bg-[#F28F20] hover:bg-[#e07d10] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                            <button type="submit" className="w-full sm:w-auto px-8 py-4 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
                                 Отправить заявку
                             </button>
                             <p className="mt-4 text-sm text-gray-500">* — обязательные поля</p>

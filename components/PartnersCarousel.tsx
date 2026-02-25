@@ -84,7 +84,7 @@ export default function PartnersCarousel({ lang }: PartnersCarouselProps) {
 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
                 <div className="flex items-center justify-center gap-3 mb-6 sm:mb-8">
-                    <div className="w-12 h-1 bg-gradient-to-r from-[#F28F20] to-[#14B7E0] rounded-full"></div>
+                    <div className="w-12 h-1 bg-gradient-to-r from-[#146FA8] to-[#14B7E0] rounded-full"></div>
                     <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-900">
                         {lang === 'ru' ? 'Наши партнеры' : 'Our Partners'}
                     </h2>
