@@ -226,7 +226,7 @@ export default function SvedeniyaObObrazovatelnojOrganizacii() {
                                 {/* Образование */}
                                 <Accordion title="Образование">
                                     <div className="space-y-6">
-                                        {/* Программа 1 */}
+                                        {/* Программа [id] */}
                                         <div className="border-l-4 border-[#F28F20] pl-4">
                                             <p className="font-bold text-gray-900">Программа повышения квалификации «Специалист в области исследований лекарственных средств в соответствии с надлежащей лабораторной практикой (GLP)», 122 часа</p>
                                             <div className="mt-2 space-y-1">

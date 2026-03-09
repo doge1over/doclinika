@@ -218,7 +218,7 @@ export default function Glavnaya() {
                                 {/* Программы */}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
 
-                                    {/* Программа 1 */}
+                                    {/* Программа [id] */}
                                     <div className={`group relative rounded-2xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border ${accessibilityMode && highContrast ? 'bg-black border-yellow-400' : 'bg-white border-gray-100 hover:border-[#F28F20]'}`}>
                                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F28F20] to-[#e07d10] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
                                         <div className="flex items-start gap-4">

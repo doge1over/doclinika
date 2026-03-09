@@ -18,7 +18,7 @@ const partners: Partner[] = [
     { id: 6, name: 'ГЕРОФАРМ', logo: '/partners/logos/Gerofarm-l.jpg', photo: '/partners/photos/Pismo.jpg' },
     { id: 7, name: 'НоваМедика', logo: '/partners/logos/NM_logo_rus_port.jpg', photo: '/partners/photos/Dom-Farmacii_Blagodarnost_02.02.2021-scaled.jpg' },
     { id: 8, name: "Dr.Reddy's", logo: '/partners/logos/Logotip.jpg', photo: '/partners/photos/Blagodarstvennoe-pismo-Reddis.-14042021-scaled.jpg' },
-    { id: 9, name: 'ПОЛИСАН', logo: '/partners/logos/Logotip (1).jpg', photo: '/partners/photos/Blagodarstvennoe-pismo_POLISAN-scaled.jpg' },
+    { id: 9, name: 'ПОЛИСАН', logo: '/partners/logos/Logotip ([id]).jpg', photo: '/partners/photos/Blagodarstvennoe-pismo_POLISAN-scaled.jpg' },
     { id: 10, name: 'Эвалар', logo: '/partners/logos/Evalar.jpg', photo: '/partners/photos/Blagodarstvennoe-pismo_Dom-Farmacii-scaled.jpg' },
     { id: 11, name: 'ФармПак', logo: '/partners/logos/logotip (2).jpg', photo: '/partners/photos/Pismo_FarmPak-scaled.jpg' },
     { id: 12, name: 'НИИ гриппа им. А.А. Смородинцева', logo: '/partners/logos/NII-grippa_logo.png', photo: '/partners/photos/NII-grippa-im.-Smorodenceva-scaled.jpg' },

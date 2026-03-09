@@ -30,7 +30,7 @@ const menuItems = [
 
 const publications = [
     'Karlina M.V., Pozharitskaya O.N., Shikov A.N., Kosman V. M., Makarova M.N., Makarov V.G. LC Method for Quantification of Lutein in Rat Plasma: Validation, and Application to a Pharmacokinetic Study // Chromatographia, 2008, Vol. 68, N 11-12, P. 949-954.',
-    'Гусева С.И., Карлина М.В., Пожарицкая О.Н., Шиков А.Н., Фаустова Н.М. Валидация методики количественного определения диклофенака для оценки биоэквивалентности трансдермальных гелей in vitro // Хим-фарм. Журн. – 2010. – Т.44, №1. – С 43-46.',
+    'Гусева С.И., Карлина М.В., Пожарицкая О.Н., Шиков А.Н., Фаустова Н.М. Валидация методики количественного определения диклофенака для оценки биоэквивалентности трансдермальных гелей in vitro // Хим-фарм. Журн. – 2010. – Т.44, №[id]. – С 43-46.',
     'Pozharitskaya O.N., Kosman V.M., Karlina M. V., Shikov A.N., Makarov V.G., Djachuk G. Method development and validation of an HPLC assay for the detection of hopantenic acid in human plasma and its application to a pharmacokinetic study on volunteers // Acta chromatographica, 2011, Vol. 23, P. 403-414.',
     'Karlina M.V., Pozharitskaya O.N., Kosman V.M. HPLC-UV method for quantification of shisandrol A in rat plasma: validation and application to a pharmacokinetic study // Обзоры по клинической фармакологии и лекарственной терапии, 2012, Т. 10, Вып. 2, Abstracts book of 16-th Int. Congress "Phytopharm 2012", Saint-Petersburg, Russia, 9-11.07.2012, M. 63.',
     'Косман В.М., Фаустова Н.М., Пожарицкая О.Н., Макаров В.Г. Применение и валидация иммуно-ферментного анализа для стандартизации биопрепарата // Разработка и регистрация лекарственных средств. 2015, №2 (11), С. 176-182.',
