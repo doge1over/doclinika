@@ -8,11 +8,11 @@ import Link from 'next/link'
 
 const menuItems = [
     { href: '/o-nas', title: 'О нас' },
-    { href: '/vakansii', title: 'Вакансии' },
+    { href: '/vakansii', title: 'Вакансии', active: true },
     { href: '/doklinicheskie-issledovaniya', title: 'Доклинические исследования' },
     { href: '/himiko-analiticheskie-issledovaniya', title: 'Химико-аналитическая лаборатория' },
     { href: '/gruppa-gistologii-i-patomorfologii', title: 'Лаборатория гистологии и патоморфологии' },
-    { href: '/mikrobiologicheskaya-laboratoriya', title: 'Отдел микробиологии', active: true },
+    { href: '/mikrobiologicheskaya-laboratoriya', title: 'Отдел микробиологии' },
     { href: '/tehnologiya-i-farmakokinetika', title: 'Разработка лекарственных форм' },
     { href: '/gruppa-biohimii-i-gematologii', title: 'Лаборатория биохимии и гематологии' },
     { href: '/laboratornye-zhivotnye', title: 'Лабораторные животные' },
@@ -28,18 +28,10 @@ const menuItems = [
     { href: '/kontakty', title: 'Контакты' },
 ]
 
-const publications = [
-    { authors: 'Крышень К.Л., Мужикян А.А., Алякринская А.А., Ковалева М.А., Макарова М.Н., Макаров В.Г.', title: 'Внутрикожная инъекция бактерий Staphylococcus aureus в скафоконхальный угол ушной раковины как модель акне у лабораторных животных', journal: 'Международный вестник ветеринарии. -2017, № 1. –С. 84-91.', link: '/wp-content/uploads/2014/12/Vnutrikozhnaya-in-ektsiya-bakterij-Staphylococcus-aureus-v-skafokonhal-ny-j-ugol-ushnoj-rakoviny-kak-model-akne-u-laboratorny-h-zhivotny-h.pdf' },
-    { authors: 'Боровкова К.Е., Крышень А.А., Крышень К.Л., Петрова А.В., Макарова М.Н.', title: 'Особенности работы с лабораторными животными в условиях микробиологической лаборатории', journal: 'Лабораторные животные для научных исследований. – 2019, № 1. – С. 1-8.', link: 'https://labanimalsjournal.ru/ru/2618723x-2019-01-09' },
-    { authors: 'Хайбунасова Л.Р., Боровкова К.Е., Салмова Ю.В.', title: 'Бактериальные инфекции легких. Модели на животных', journal: 'Лабораторные животные для научных исследований. – 2020, №2.', link: 'https://labanimalsjournal.ru/ru/2618723x-2020-02-06' },
-    { authors: 'Гущин Я.А., Крышень А.А.', title: 'Апробация модели инфекционного, ассоциированного Helicobacter pylori, воспаления желудочно-кишечного тракта у лабораторных песчанок', journal: 'Лабораторные животные для научных исследований. – 2020, №3.', link: 'https://labanimalsjournal.ru/ru/2618723x-2020-03-08' },
-]
-
-export default function MikrobiologicheskayaLaboratoriya() {
+export default function Vakansii() {
     const [lang, setLang] = useState<Language>('ru')
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [publicationsOpen, setPublicationsOpen] = useState(false)
     const t = translations[lang]
 
     return (
@@ -85,7 +77,13 @@ export default function MikrobiologicheskayaLaboratoriya() {
                             <div className="border-t border-gray-100 my-3"></div>
                             <Link href="/" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">Главная</Link>
                             <Link href="/o-nas" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">О нас</Link>
+                            <Link href="/vakansii" className="block px-4 py-2 text-[#F28F20] bg-[#F28F20]/10 font-medium rounded-lg">Вакансии</Link>
                             <Link href="/kontakty" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">Контакты</Link>
+                            <div className="border-t border-gray-100 my-3"></div>
+                            <div className="px-4 py-2 space-y-2">
+                                <a href={`tel:${t.phone}`} className="flex items-center gap-2 text-gray-700"><svg className="w-4 h-4 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg><span className="font-medium">{t.phone}</span></a>
+                                <a href={`mailto:${t.email}`} className="flex items-center gap-2 text-gray-500 text-sm"><svg className="w-4 h-4 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg><span>{t.email}</span></a>
+                            </div>
                         </div>
                     </div>
                 )}
@@ -97,7 +95,7 @@ export default function MikrobiologicheskayaLaboratoriya() {
                     <nav className="flex items-center text-sm text-gray-500">
                         <Link href="/" className="hover:text-[#F28F20] transition">Главная</Link>
                         <svg className="w-4 h-4 mx-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                        <span className="text-gray-900 font-medium">Отдел микробиологии</span>
+                        <span className="text-gray-900 font-medium">Вакансии</span>
                     </nav>
                 </div>
             </div>
@@ -150,118 +148,52 @@ export default function MikrobiologicheskayaLaboratoriya() {
                         <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                             {/* Header */}
                             <div className="px-6 sm:px-8 py-6 sm:py-8" style={{ background: 'linear-gradient(to right, #F28F20, #e07d10)' }}>
-                                <h1 className="text-2xl sm:text-3xl font-bold text-white">Отдел микробиологии</h1>
+                                <h1 className="text-2xl sm:text-3xl font-bold text-white">Вакансии</h1>
                             </div>
 
                             {/* Content */}
                             <div className="px-6 sm:px-8 py-6 sm:py-8 space-y-6">
 
-                                {/* Публикации */}
-                                <div>
-                                    <button onClick={() => setPublicationsOpen(!publicationsOpen)} className="w-full flex items-center justify-between px-5 py-4 bg-gradient-to-r from-[#F28F20]/5 to-[#14B7E0]/5 hover:from-[#F28F20]/10 hover:to-[#14B7E0]/10 rounded-xl border border-gray-200 transition">
-                                        <span className="font-semibold text-gray-900">Публикации по теме:</span>
-                                        <svg className={`w-5 h-5 text-gray-500 transition-transform ${publicationsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                                    </button>
-                                    {publicationsOpen && (
-                                        <div className="mt-4 space-y-4 pl-4 border-l-4 border-[#F28F20]">
-                                            {publications.map((pub, index) => (
-                                                <div key={index} className="text-sm text-gray-700">
-                                                    <p><span className="font-medium">{pub.authors}</span> {pub.title} // {pub.journal}{pub.link && (<a href={pub.link} target="_blank" rel="noopener noreferrer" className="text-[#F28F20] hover:underline ml-1">[Ссылка]</a>)}</p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
+                                {/* Intro */}
+                                <div className="bg-[#F28F20]/10 border border-[#F28F20]/30 rounded-xl p-4 sm:p-6">
+                                    <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                                        <svg className="w-5 h-5 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                                        Присоединяйтесь к нашей команде!
+                                    </h3>
+                                    <p className="text-gray-700 leading-relaxed">
+                                        АО «НПО «ДОМ ФАРМАЦИИ» — это современный научно-исследовательский центр, где работают профессионалы в области доклинических исследований. Мы ценим каждого сотрудника и предлагаем интересные задачи, комфортные условия труда и возможности для профессионального роста.
+                                    </p>
                                 </div>
 
-                                {/* Основной текст */}
-                                <div className="prose prose-lg max-w-none text-gray-700 space-y-4">
-                                    <p className="text-justify">
-                                        Микробиологическая лаборатория на базе АО «НПО «ДОМ ФАРМАЦИИ» спроектирована и оснащена в соответствии с Санитарными правилами и нормами СанПиН 3.3686-21 «Санитарно-эпидемиологические требования по профилактике инфекционных болезней».
-                                    </p>
-
-                                    <div className="bg-[#14B7E0]/10 border border-[#14B7E0]/30 rounded-xl p-4">
-                                        <p className="text-gray-700 text-sm">
-                                            Информация о лицензиях доступна на странице <Link href="/litsenzii-sertifikaty-udostovereniya" className="text-[#F28F20] hover:underline font-medium">Лицензии, сертификаты, удостоверения</Link>.
-                                        </p>
-                                    </div>
-
-                                    <p className="text-justify">
-                                        В микробиологической лаборатории проводится работа с микроорганизмами III-IV групп патогенности, включая грамположительные и грамотрицательные бактерии, дерматомицеты, дрожжевые и плесневые грибы.
-                                    </p>
-
-                                    {/* Виды деятельности */}
-                                    <div className="bg-[#F28F20]/10 border border-[#F28F20]/30 rounded-xl p-4 sm:p-6">
-                                        <h3 className="text-lg font-bold text-gray-900 mb-3">В лаборатории выделено три основных вида деятельности:</h3>
-                                        <ul className="space-y-2 text-gray-700">
-                                            <li>— Определение антимикробной активности in vivo на мелких лабораторных животных с экспериментальным заражением различными патогенными агентами.</li>
-                                            <li>— Определение антимикробной активности in vitro на тест штаммах микроорганизмов.</li>
-                                            <li>— Специализированные услуги для питомников и вивариев лабораторных животных (бактериологический мониторинг здоровья животных и окружающей среды).</li>
-                                        </ul>
-                                    </div>
-
-                                    {/* In vivo */}
-                                    <h2 className="text-xl font-bold text-gray-900 mt-8 mb-4">Определение антимикробной активности исследуемых образцов в условиях in vivo</h2>
-
-                                    <div className="flex flex-col md:flex-row gap-6">
-                                        <div className="flex-1">
-                                            <p className="text-justify mb-4">
-                                                В лаборатории микробиологии спроектирована и оснащена зона содержания и работы с мелкими лабораторными животными (мыши, крысы, морские свинки, песчанки) в индивидуально-вентилируемых клетках, обеспечивающих изоляцию животных от окружающей среды и защиту персонала.
-                                            </p>
-                                            <p className="text-justify">
-                                                Микробиологические исследования на животных позволяют оценить терапевтическую эффективность при клиническом пути применения антибактериальных и противогрибковых лекарственных средств (ЛС), про- и пребиотиков, адсорбентов, иммуномодуляторов.
-                                            </p>
-                                        </div>
-                                        <div className="md:w-80 flex-shrink-0">
-                                            <img src="/images/IMG_20180503_180110-768x576.jpg" alt="Отдел микробиологии" className="w-full h-auto rounded-xl shadow-md" />
-                                        </div>
-                                    </div>
-
-                                    <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 sm:p-6">
-                                        <h4 className="font-semibold text-gray-900 mb-2">Экспериментальные модели:</h4>
-                                        <p className="text-gray-700">
-                                            острая генерализованная инфекция у мелких животных; хроническая септикопиемия (стафилококковая); пневмония c генерализацией инфекции; экспериментальный пиелонефрит; клостридиальные анаэробные инфекции, Helicobacter pylori и другие.
-                                        </p>
-                                    </div>
-
-                                    {/* In vitro */}
-                                    <h2 className="text-xl font-bold text-gray-900 mt-8 mb-4">Определение антимикробной активности in vitro на тест штаммах микроорганизмов</h2>
-
-                                    <div className="flex flex-col md:flex-row gap-6">
-                                        <div className="flex-1">
-                                            <p className="text-justify mb-4">
-                                                Определение антимикробной активности исследуемых образцов (хим. соединений и др.) в условиях in vitro.
-                                            </p>
-                                            <ul className="space-y-2 text-gray-700">
-                                                <li>— Оценка спектра действия и степени антибактериальной и антифунгальной активности in vitro антибактериальных веществ и противогрибковых лекарственных средств. Определение МПК (минимальной подавляющей концентрации), МБК (минимальной бактерицидной концентрации), МФК (минимальной фунгицидной концентрации) в отношении эталонных штаммов и клинических изолятов грамположительных и грамотрицательных бактерий, дерматомицетов, дрожжевых и плесневых грибов;</li>
-                                                <li>— Оценка мультирезистентности;</li>
-                                                <li>— Скорость формирования устойчивости к новым соединениям;</li>
-                                                <li>— Изучение мишеней и механизмов антибактериального действия соединений;</li>
-                                                <li>— Оценка активности воспроизводимых препаратов.</li>
-                                            </ul>
-                                        </div>
-                                        <div className="md:w-80 flex-shrink-0">
-                                            <img src="/images/IMG_1540-768x576.jpg" alt="Исследования in vitro" className="w-full h-auto rounded-xl shadow-md" />
-                                        </div>
-                                    </div>
-
-                                    {/* Мониторинг */}
-                                    <h2 className="text-xl font-bold text-gray-900 mt-8 mb-4">Бактериологический мониторинг окружающей среды и здоровья животных</h2>
-
-                                    <div className="flex flex-col md:flex-row gap-6">
-                                        <div className="flex-1">
-                                            <p className="text-justify mb-4">
-                                                Бактериологический мониторинг окружающей среды включает в себя контроль эффективности дезинфекции помещений и инвентаря, бактериологическую оценку качества воздуха и воды.
-                                            </p>
-                                            <p className="text-justify">
-                                                Бактериологический мониторинг здоровья лабораторных животных, проводится в смывах, соскобах, трупном материале, полученном от животных в соответствии с международными рекомендациями FELASA, 2014.
-                                            </p>
-                                        </div>
-                                        <div className="md:w-56 flex-shrink-0">
-                                            <img src="/images/IMG_1535-300x225.jpg" alt="Бактериологический мониторинг" className="w-full h-auto rounded-xl shadow-md" />
-                                        </div>
-                                    </div>
-
+                                {/* HH Widget Container */}
+                                <div className="rounded-3xl shadow-lg overflow-hidden w-full">
+                                    <iframe
+                                        srcDoc={`<!DOCTYPE html><html><head><meta charset="utf-8"><style>body{margin:0;padding:0;overflow:hidden;background:#fff;}</style></head><body><script type="module" class="widgetHhScript">import initVacanciesWidget from 'https://widgets.hh.ru/vacanciesWidget/vacanciesWidget.js';initVacanciesWidget({"country":"RU","searchParams":{"employerId":["2543983"],"host":"hh.ru","locale":"RU","perPage":6},"settings":{"locale":"RU","theme":"LIGHT","size":{"width":840,"height":724},"elementsOrder":"NAME_SALARY_AREA_EMPLOYER","isLogoVisible":true,"isRegionVisible":true,"isRegionSearchEnabled":false,"isProfRolesSearchEnabled":false,"isSalaryVisible":true},"version":"1"});</script></body></html>`}
+                                        className="border-0 w-full"
+                                        style={{ height: '724px' }}
+                                        title="Вакансии hh.ru"
+                                    />
                                 </div>
+
+                                {/* Contact Info */}
+                                <div className="bg-[#14B7E0]/10 border border-[#14B7E0]/30 rounded-xl p-4 sm:p-6">
+                                    <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                                        <svg className="w-5 h-5 text-[#14B7E0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                                        Контакты для соискателей
+                                    </h3>
+                                    <p className="text-gray-700 mb-4">
+                                        Если у вас есть вопросы или вы хотите отправить резюме напрямую, свяжитесь с нами:
+                                    </p>
+                                    <div className="flex flex-wrap gap-3">
+                                        <a href="mailto:info@doclinika.ru" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">
+                                            info@doclinika.ru
+                                        </a>
+                                        <a href="tel:+78126037428" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">
+                                            +7 (812) 603-74-28
+                                        </a>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </article>

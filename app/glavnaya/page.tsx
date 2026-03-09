@@ -102,14 +102,14 @@ export default function Glavnaya() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3">
                     <div className="flex justify-between items-center h-14 sm:h-16">
                         <Link href="/" className="flex items-center gap-2 sm:gap-4 h-full">
-                            <img src="/logo/logo-vector.png" alt="АО НПО ДОМ ФАРМАЦИИ" className="h-10 sm:h-12 w-auto object-contain" />
+                            <img src="/logo/logo-vector.png" alt="АО НПО «ДОМ ФАРМАЦИИ»" className="h-10 sm:h-12 w-auto object-contain" />
                             <div className={`hidden md:flex border-l-2 pl-4 h-12 items-center ${accessibilityMode && highContrast ? 'border-yellow-400' : 'border-[#F28F20]/30'}`}>
-                                <h1 className={`text-xl font-bold leading-tight ${accessibilityMode && highContrast ? 'text-yellow-300' : 'text-gray-900'}`}>НПО Дом фармации</h1>
+                                <h1 className={`text-xl font-bold leading-tight ${accessibilityMode && highContrast ? 'text-yellow-300' : 'text-gray-900'}`}>НПО «ДОМ ФАРМАЦИИ»</h1>
                             </div>
                         </Link>
                         <div className="hidden md:flex items-center gap-4">
                             <div className="hidden lg:flex items-center gap-3">
-                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на доклинику</Link>
+                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на доклинические исследования</Link>
                                 <Link href="/zayavka-nir" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на НИР</Link>
                             </div>
                             <LanguageSwitcher currentLang={lang} onLanguageChange={setLang} />
@@ -133,7 +133,7 @@ export default function Glavnaya() {
                 {mobileMenuOpen && (
                     <div className={`md:hidden border-t shadow-lg max-h-[70vh] overflow-y-auto ${accessibilityMode && highContrast ? 'bg-black border-yellow-400' : 'bg-white border-gray-100'}`}>
                         <div className="px-4 py-4 space-y-3">
-                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинику</Link>
+                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинические исследования</Link>
                             <Link href="/zayavka-nir" className="block w-full px-4 py-3 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-center font-medium rounded-lg transition-all">Заявка на НИР</Link>
                             <div className={`border-t my-3 ${accessibilityMode && highContrast ? 'border-yellow-400' : 'border-gray-100'}`}></div>
                             <Link href="/" className={`block px-4 py-2 rounded-lg transition ${accessibilityMode && highContrast ? 'text-yellow-300 hover:bg-yellow-900' : 'text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20]'}`}>Главная</Link>
@@ -216,74 +216,96 @@ export default function Glavnaya() {
                                 </div>
 
                                 {/* Программы */}
-                                <div className={`text-center space-y-6 ${accessibilityMode && highContrast ? 'text-yellow-300' : 'text-gray-700'}`}>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
 
                                     {/* Программа 1 */}
-                                    <div className="space-y-1">
-                                        <p>
-                                            <a href="https://doclinika.ru/wp-content/uploads/2026/01/Programma_perepodgotovka-dlya-sajta-2026.pdf" target="_blank" rel="noopener noreferrer" className="text-[#F28F20] hover:underline">
-                                                Программа профессиональной переподготовки
-                                            </a>
-                                            {' '}(540 часов)
-                                        </p>
-                                        <p className={`font-semibold ${accessibilityMode && highContrast ? 'text-yellow-200' : 'text-gray-900'}`}>
-                                            «Токсикология и фармакология для специалиста<br />
-                                            в области надлежащей лабораторной практики (GLP)»
-                                        </p>
-                                        <p>
-                                            <a href="https://doclinika.ru/wp-content/uploads/2024/03/Dogovor-oferta-perepodgotovka-2024-s-EP.pdf" target="_blank" rel="noopener noreferrer" className="text-[#F28F20] hover:underline font-semibold">
-                                                ДОГОВОР-ОФЕРТА
-                                            </a>
-                                            {' '}по программе профессиональной переподготовки
-                                        </p>
+                                    <div className={`group relative rounded-2xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border ${accessibilityMode && highContrast ? 'bg-black border-yellow-400' : 'bg-white border-gray-100 hover:border-[#F28F20]'}`}>
+                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F28F20] to-[#e07d10] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                                        <div className="flex items-start gap-4">
+                                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${accessibilityMode && highContrast ? 'bg-yellow-900/30' : 'bg-[#F28F20]/10'}`}>
+                                                <svg className="w-6 h-6 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                                            </div>
+                                            <div className="flex-1">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <a href="https://doclinika.ru/wp-content/uploads/2026/01/Programma_perepodgotovka-dlya-sajta-2026.pdf" target="_blank" rel="noopener noreferrer" className={`font-bold hover:text-[#F28F20] transition-colors ${accessibilityMode && highContrast ? 'text-yellow-200' : 'text-gray-900'}`}>
+                                                        Программа профессиональной переподготовки
+                                                    </a>
+                                                    <span className={`text-xs font-bold ml-2 flex-shrink-0 ${accessibilityMode && highContrast ? 'text-yellow-300' : 'text-[#F28F20]'}`}>540 ч.</span>
+                                                </div>
+                                                <p className={`text-sm leading-relaxed ${accessibilityMode && highContrast ? 'text-yellow-300' : 'text-gray-600'}`}>
+                                                    «Токсикология и фармакология для специалиста в области надлежащей лабораторной практики (GLP)»
+                                                </p>
+                                                <a href="https://doclinika.ru/wp-content/uploads/2024/03/Dogovor-oferta-perepodgotovka-2024-s-EP.pdf" target="_blank" rel="noopener noreferrer" className="inline-block mt-3 text-sm font-semibold text-[#F28F20] hover:underline">
+                                                    ДОГОВОР-ОФЕРТА →
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     {/* Программа 2 */}
-                                    <div className="space-y-1">
-                                        <p>
-                                            <a href="https://doclinika.ru/wp-content/uploads/2025/12/Programma-Specialist-dlya-sajta-2026.pdf" target="_blank" rel="noopener noreferrer" className="text-[#F28F20] hover:underline">
-                                                Программа повышения квалификации на 2026 год
-                                            </a>
-                                            {' '}(122 часа)
-                                        </p>
-                                        <p className={`font-semibold ${accessibilityMode && highContrast ? 'text-yellow-200' : 'text-gray-900'}`}>
-                                            «Специалист в области исследований лекарственных средств<br />
-                                            в соответствии с надлежащей лабораторной практикой (GLP)»
-                                        </p>
-                                        <p>
-                                            <a href="https://doclinika.ru/wp-content/uploads/2024/03/Dogovor-oferta-kurs-soglasovannyj.pdf" target="_blank" rel="noopener noreferrer" className="text-[#F28F20] hover:underline font-semibold">
-                                                ДОГОВОР-ОФЕРТА
-                                            </a>
-                                            {' '}по программе повышения квалификации
-                                        </p>
+                                    <div className={`group relative rounded-2xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border ${accessibilityMode && highContrast ? 'bg-black border-yellow-400' : 'bg-white border-gray-100 hover:border-[#14B7E0]'}`}>
+                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#14B7E0] to-[#0ea5cc] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                                        <div className="flex items-start gap-4">
+                                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${accessibilityMode && highContrast ? 'bg-yellow-900/30' : 'bg-[#14B7E0]/10'}`}>
+                                                <svg className="w-6 h-6 text-[#14B7E0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
+                                            </div>
+                                            <div className="flex-1">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <a href="https://doclinika.ru/wp-content/uploads/2025/12/Programma-Specialist-dlya-sajta-2026.pdf" target="_blank" rel="noopener noreferrer" className={`font-bold hover:text-[#14B7E0] transition-colors ${accessibilityMode && highContrast ? 'text-yellow-200' : 'text-gray-900'}`}>
+                                                        Программа повышения квалификации
+                                                    </a>
+                                                    <span className={`text-xs font-bold ml-2 flex-shrink-0 ${accessibilityMode && highContrast ? 'text-yellow-300' : 'text-[#14B7E0]'}`}>122 ч.</span>
+                                                </div>
+                                                <p className={`text-sm leading-relaxed ${accessibilityMode && highContrast ? 'text-yellow-300' : 'text-gray-600'}`}>
+                                                    «Специалист в области исследований лекарственных средств в соответствии с надлежащей лабораторной практикой (GLP)»
+                                                </p>
+                                                <a href="https://doclinika.ru/wp-content/uploads/2024/03/Dogovor-oferta-kurs-soglasovannyj.pdf" target="_blank" rel="noopener noreferrer" className="inline-block mt-3 text-sm font-semibold text-[#14B7E0] hover:underline">
+                                                    ДОГОВОР-ОФЕРТА →
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     {/* Программа 3 */}
-                                    <div className="space-y-1">
-                                        <p>
-                                            <a href="https://doclinika.ru/wp-content/uploads/2025/12/Programma-Auditor-dlya-sajta.pdf" target="_blank" rel="noopener noreferrer" className="text-[#F28F20] hover:underline">
-                                                Программа повышения квалификации
-                                            </a>
-                                            {' '}(42 часа)
-                                        </p>
-                                        <p className={`font-semibold ${accessibilityMode && highContrast ? 'text-yellow-200' : 'text-gray-900'}`}>
-                                            «Аудитор системы менеджмента качества в области<br />
-                                            надлежащей лабораторной практики (GLP)»
-                                        </p>
+                                    <div className={`group relative rounded-2xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border ${accessibilityMode && highContrast ? 'bg-black border-yellow-400' : 'bg-white border-gray-100 hover:border-[#146FA8]'}`}>
+                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#146FA8] to-[#0d5a8a] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                                        <div className="flex items-start gap-4">
+                                            <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-blue-900/10">
+                                                <svg className="w-6 h-6 text-[#146FA8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+                                            </div>
+                                            <div className="flex-1">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <a href="https://doclinika.ru/wp-content/uploads/2025/12/Programma-Auditor-dlya-sajta.pdf" target="_blank" rel="noopener noreferrer" className={`font-bold hover:text-[#146FA8] transition-colors ${accessibilityMode && highContrast ? 'text-yellow-200' : 'text-gray-900'}`}>
+                                                        Программа повышения квалификации
+                                                    </a>
+                                                    <span className={`text-xs font-bold ml-2 flex-shrink-0 ${accessibilityMode && highContrast ? 'text-yellow-300' : 'text-[#146FA8]'}`}>42 ч.</span>
+                                                </div>
+                                                <p className={`text-sm leading-relaxed ${accessibilityMode && highContrast ? 'text-yellow-300' : 'text-gray-600'}`}>
+                                                    «Аудитор системы менеджмента качества в области надлежащей лабораторной практики (GLP)»
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     {/* Программа 4 */}
-                                    <div className="space-y-1">
-                                        <p>
-                                            <a href="https://doclinika.ru/wp-content/uploads/2025/12/Programma-ARRIVE-dlya-sajta-2026.pdf" target="_blank" rel="noopener noreferrer" className="text-[#F28F20] hover:underline">
-                                                Программа повышения квалификации
-                                            </a>
-                                            {' '}(28 часов)
-                                        </p>
-                                        <p className={`font-semibold ${accessibilityMode && highContrast ? 'text-yellow-200' : 'text-gray-900'}`}>
-                                            «Дизайн эксперимента в соответствии<br />
-                                            с принципами ARRIVE»
-                                        </p>
+                                    <div className={`group relative rounded-2xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border ${accessibilityMode && highContrast ? 'bg-black border-yellow-400' : 'bg-white border-gray-100 hover:border-[#F28F20]'}`}>
+                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F28F20] to-[#e07d10] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                                        <div className="flex items-start gap-4">
+                                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${accessibilityMode && highContrast ? 'bg-yellow-900/30' : 'bg-[#F28F20]/10'}`}>
+                                                <svg className="w-6 h-6 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                                            </div>
+                                            <div className="flex-1">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <a href="https://doclinika.ru/wp-content/uploads/2025/12/Programma-ARRIVE-dlya-sajta-2026.pdf" target="_blank" rel="noopener noreferrer" className={`font-bold hover:text-[#F28F20] transition-colors ${accessibilityMode && highContrast ? 'text-yellow-200' : 'text-gray-900'}`}>
+                                                        Программа повышения квалификации
+                                                    </a>
+                                                    <span className={`text-xs font-bold ml-2 flex-shrink-0 ${accessibilityMode && highContrast ? 'text-yellow-300' : 'text-[#F28F20]'}`}>28 ч.</span>
+                                                </div>
+                                                <p className={`text-sm leading-relaxed ${accessibilityMode && highContrast ? 'text-yellow-300' : 'text-gray-600'}`}>
+                                                    «Дизайн эксперимента в соответствии с принципами ARRIVE»
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -317,10 +339,10 @@ export default function Glavnaya() {
                                     {/* Логотипы */}
                                     <div className="flex items-center gap-6 mt-6">
                                         <a href="http://www.obrnadzor.gov.ru/ru/" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 transition">
-                                            <img src="/images/Emblem_of_Rosobrnadzor.png" alt="Рособрнадзор" className="h-16 w-auto" />
+                                            <img src="https://doclinika.ru/wp-content/uploads/2020/10/Emblem_of_Rosobrnadzor.png" alt="Рособрнадзор" className="h-16 w-auto" />
                                         </a>
                                         <a href="https://minobrnauki.gov.ru/" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 transition">
-                                            <img src="/images/Ikonka_Gerb_Polnocvetnoe_vosproizvedenie-973x1024.jpg" alt="Минобрнауки" className="h-16 w-auto" />
+                                            <img src="https://doclinika.ru/wp-content/uploads/2020/10/Ikonka_Gerb_Polnocvetnoe_vosproizvedenie-973x1024.jpg" alt="Минобрнауки" className="h-16 w-auto" />
                                         </a>
                                     </div>
                                 </div>
@@ -348,7 +370,7 @@ export default function Glavnaya() {
                             <div className="space-y-3 sm:space-y-4 text-sm text-gray-300">
                                 <p className="flex items-center gap-3"><svg className="w-4 h-4 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg><a href={`tel:${t.phone}`} className="hover:text-[#F28F20] transition font-medium">{t.phone}</a></p>
                                 <p className="flex items-center gap-3"><svg className="w-4 h-4 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg><a href={`mailto:${t.email}`} className="hover:text-[#F28F20] transition break-all">{t.email}</a></p>
-                                <p className="flex items-start gap-3"><svg className="w-4 h-4 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg><span>{t.footerAddress}</span></p>
+                                <p className="flex items-start gap-3"><svg className="w-4 h-4 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg><span>188663, Россия, Ленинградская область,<br/>Всеволожский район, г.п. Кузьмоловский,<br/>Заводская улица, 3-245</span></p>
                             </div>
                         </div>
                         <div className="sm:col-span-2 md:col-span-1">

@@ -19,14 +19,14 @@ export default function Home() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3">
                     <div className="flex justify-between items-center h-14 sm:h-16">
                         <div className="flex items-center gap-2 sm:gap-4 h-full">
-                            <img src="/logo/logo-vector.png" alt="АО НПО ДОМ ФАРМАЦИИ" className="h-10 sm:h-12 w-auto object-contain" />
+                            <img src="/logo/logo-vector.png" alt="АО НПО «ДОМ ФАРМАЦИИ»" className="h-10 sm:h-12 w-auto object-contain" />
                             <div className="hidden md:flex border-l-2 border-[#F28F20]/30 pl-4 h-12 items-center">
-                                <h1 className="text-xl font-bold text-gray-900 leading-tight">НПО Дом фармации</h1>
+                                <h1 className="text-xl font-bold text-gray-900 leading-tight">НПО «ДОМ ФАРМАЦИИ»</h1>
                             </div>
                         </div>
                         <div className="hidden md:flex items-center gap-4">
                             <div className="hidden lg:flex items-center gap-3">
-                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на доклинику</Link>
+                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на доклинические исследования</Link>
                                 <Link href="/zayavka-nir" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на НИР</Link>
                             </div>
                             <LanguageSwitcher currentLang={lang} onLanguageChange={setLang} />
@@ -50,7 +50,7 @@ export default function Home() {
                 {mobileMenuOpen && (
                     <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
                         <div className="px-4 py-4 space-y-3">
-                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинику</Link>
+                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинические исследования</Link>
                             <Link href="/zayavka-nir" className="block w-full px-4 py-3 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-center font-medium rounded-lg transition-all">Заявка на НИР</Link>
                             <div className="border-t border-gray-100 my-3"></div>
                             <Link href="/o-nas" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">О нас</Link>
@@ -160,7 +160,7 @@ export default function Home() {
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#14B7E0] to-[#0ea5cc] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
                             <div className="relative z-10 flex-1 flex flex-col">
                                 <svg className="w-10 h-10 sm:w-12 sm:h-12 text-[#14B7E0] mb-3 sm:mb-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
-                                <h4 className="text-base sm:text-lg font-bold text-gray-900 mb-2 group-hover:text-[#14B7E0] transition-colors">{t.card12Title}</h4>
+                                <h4 className="text-base sm:text-lg font-bold text-gray-900 mb-2 group-hover:text-[#14B7E0] transition-colors">Сведения об образовательной организации</h4>
                                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed flex-1">{t.card12Desc}</p>
                             </div>
                         </Link>
@@ -297,7 +297,7 @@ export default function Home() {
                             <div className="space-y-3 sm:space-y-4 text-sm text-gray-300">
                                 <p className="flex items-center gap-3"><span className="text-[#F28F20]">📞</span><a href={`tel:${t.phone}`} className="hover:text-[#F28F20] transition font-medium">{t.phone}</a></p>
                                 <p className="flex items-center gap-3"><span className="text-[#F28F20]">✉️</span><a href={`mailto:${t.email}`} className="hover:text-[#F28F20] transition break-all">{t.email}</a></p>
-                                <p className="flex items-start gap-3 leading-relaxed"><span className="text-[#F28F20] mt-0.5">📍</span><span>{t.footerAddress}</span></p>
+                                <p className="flex items-start gap-3 leading-relaxed"><span className="text-[#F28F20] mt-0.5">📍</span><span>188663, Россия, Ленинградская область,<br/>Всеволожский район, г.п. Кузьмоловский,<br/>Заводская улица, 3-245</span></p>
                             </div>
                         </div>
                         <div className="sm:col-span-2 md:col-span-1">

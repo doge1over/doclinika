@@ -12,7 +12,7 @@ const menuItems = [
     { href: '/doklinicheskie-issledovaniya', title: 'Доклинические исследования' },
     { href: '/himiko-analiticheskie-issledovaniya', title: 'Химико-аналитическая лаборатория' },
     { href: '/gruppa-gistologii-i-patomorfologii', title: 'Лаборатория гистологии и патоморфологии' },
-    { href: '/mikrobiologicheskaya-laboratoriya', title: 'Лаборатория микробиологии' },
+    { href: '/mikrobiologicheskaya-laboratoriya', title: 'Отдел микробиологии' },
     { href: '/tehnologiya-i-farmakokinetika', title: 'Разработка лекарственных форм' },
     { href: '/gruppa-biohimii-i-gematologii', title: 'Лаборатория биохимии и гематологии' },
     { href: '/laboratornye-zhivotnye', title: 'Лабораторные животные' },
@@ -41,14 +41,14 @@ export default function Kontakty() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3">
                     <div className="flex justify-between items-center h-14 sm:h-16">
                         <Link href="/" className="flex items-center gap-2 sm:gap-4 h-full">
-                            <img src="/logo/logo-vector.png" alt="АО НПО ДОМ ФАРМАЦИИ" className="h-10 sm:h-12 w-auto object-contain" />
+                            <img src="/logo/logo-vector.png" alt="АО НПО «ДОМ ФАРМАЦИИ»" className="h-10 sm:h-12 w-auto object-contain" />
                             <div className="hidden md:flex border-l-2 border-[#F28F20]/30 pl-4 h-12 items-center">
-                                <h1 className="text-xl font-bold text-gray-900 leading-tight">НПО Дом фармации</h1>
+                                <h1 className="text-xl font-bold text-gray-900 leading-tight">НПО «ДОМ ФАРМАЦИИ»</h1>
                             </div>
                         </Link>
                         <div className="hidden md:flex items-center gap-4">
                             <div className="hidden lg:flex items-center gap-3">
-                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на доклинику</Link>
+                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на доклинические исследования</Link>
                                 <Link href="/zayavka-nir" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на НИР</Link>
                             </div>
                             <LanguageSwitcher currentLang={lang} onLanguageChange={setLang} />
@@ -72,7 +72,7 @@ export default function Kontakty() {
                 {mobileMenuOpen && (
                     <div className="md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[70vh] overflow-y-auto">
                         <div className="px-4 py-4 space-y-3">
-                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинику</Link>
+                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинические исследования</Link>
                             <Link href="/zayavka-nir" className="block w-full px-4 py-3 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-center font-medium rounded-lg transition-all">Заявка на НИР</Link>
                             <div className="border-t border-gray-100 my-3"></div>
                             <Link href="/" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">Главная</Link>
@@ -160,7 +160,8 @@ export default function Kontakty() {
                                         Мы расположены по адресу:
                                     </h3>
                                     <p className="text-gray-700 leading-relaxed">
-                                        188663, Ленинградская обл., Всеволожский р-н, п. Кузьмоловский, Заводская улица, 3-245. Россия, 7 км Токсовского шоссе, в 10 минутах езды от станции метро "Девяткино".
+                                        188663, Ленинградская обл., Всеволожский р-н, п. Кузьмоловский, Заводская улица, 3.<br/>
+                                        7 км Токсовского шоссе, в 10 минутах езды от станции метро "Девяткино".
                                     </p>
                                 </div>
 
@@ -229,9 +230,9 @@ export default function Kontakty() {
                                     </div>
                                 </div>
 
-                                {/* Сайт */}
+                                {/* ВКонтакте */}
                                 <p className="text-gray-700">
-                                    Сайт в сети Интернет: <a href="https://doclinika.ru" className="text-[#F28F20] hover:underline font-semibold">https://doclinika.ru</a>
+                                    Мы в ВКонтакте: <a href="https://vk.com/club147926971" target="_blank" rel="noopener noreferrer" className="text-[#F28F20] hover:underline font-semibold">https://vk.com/club147926971</a>
                                 </p>
 
                                 {/* Заявки */}
@@ -241,12 +242,10 @@ export default function Kontakty() {
                                         Заказ на доклинические исследования Вы можете сделать отправив нам письмо на электронную почту в произвольной форме, или заполнив заявку:
                                     </p>
                                     <div className="flex flex-wrap gap-3">
-                                        <Link href="/zayavka-doklinicheskie" className="inline-flex items-center gap-2 px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white font-medium rounded-lg transition shadow-md hover:shadow-lg">
-                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                                            Заявка на ДКИ
+                                        <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">
+                                            Заявка на доклинические исследования
                                         </Link>
-                                        <Link href="/zayavka-nir" className="inline-flex items-center gap-2 px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white font-medium rounded-lg transition shadow-md hover:shadow-lg">
-                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                        <Link href="/zayavka-nir" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">
                                             Заявка на НИР
                                         </Link>
                                     </div>
@@ -275,7 +274,7 @@ export default function Kontakty() {
                             <div className="space-y-3 sm:space-y-4 text-sm text-gray-300">
                                 <p className="flex items-center gap-3"><svg className="w-4 h-4 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg><a href={`tel:${t.phone}`} className="hover:text-[#F28F20] transition font-medium">{t.phone}</a></p>
                                 <p className="flex items-center gap-3"><svg className="w-4 h-4 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg><a href={`mailto:${t.email}`} className="hover:text-[#F28F20] transition break-all">{t.email}</a></p>
-                                <p className="flex items-start gap-3"><svg className="w-4 h-4 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg><span>{t.footerAddress}</span></p>
+                                <p className="flex items-start gap-3"><svg className="w-4 h-4 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg><span>188663, Россия, Ленинградская область,<br/>Всеволожский район, г.п. Кузьмоловский,<br/>Заводская улица, 3-245</span></p>
                             </div>
                         </div>
                         <div className="sm:col-span-2 md:col-span-1">

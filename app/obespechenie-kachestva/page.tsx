@@ -50,14 +50,14 @@ export default function ObespechenieKachestva() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3">
                     <div className="flex justify-between items-center h-14 sm:h-16">
                         <Link href="/" className="flex items-center gap-2 sm:gap-4 h-full">
-                            <img src="/logo/logo-vector.png" alt="АО НПО ДОМ ФАРМАЦИИ" className="h-10 sm:h-12 w-auto object-contain" />
+                            <img src="/logo/logo-vector.png" alt="АО НПО «ДОМ ФАРМАЦИИ»" className="h-10 sm:h-12 w-auto object-contain" />
                             <div className="hidden md:flex border-l-2 border-[#F28F20]/30 pl-4 h-12 items-center">
-                                <h1 className="text-xl font-bold text-gray-900 leading-tight">НПО Дом фармации</h1>
+                                <h1 className="text-xl font-bold text-gray-900 leading-tight">НПО «ДОМ ФАРМАЦИИ»</h1>
                             </div>
                         </Link>
                         <div className="hidden md:flex items-center gap-4">
                             <div className="hidden lg:flex items-center gap-3">
-                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на доклинику</Link>
+                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на доклинические исследования</Link>
                                 <Link href="/zayavka-nir" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">Заявка на НИР</Link>
                             </div>
                             <LanguageSwitcher currentLang={lang} onLanguageChange={setLang} />
@@ -81,7 +81,7 @@ export default function ObespechenieKachestva() {
                 {mobileMenuOpen && (
                     <div className="md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[70vh] overflow-y-auto">
                         <div className="px-4 py-4 space-y-3">
-                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинику</Link>
+                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинические исследования</Link>
                             <Link href="/zayavka-nir" className="block w-full px-4 py-3 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-center font-medium rounded-lg transition-all">Заявка на НИР</Link>
                             <div className="border-t border-gray-100 my-3"></div>
                             <Link href="/" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">Главная</Link>
@@ -170,31 +170,12 @@ export default function ObespechenieKachestva() {
                                     )}
                                 </div>
 
-                                <div className="text-center py-4 bg-gradient-to-r from-[#F28F20]/10 to-[#14B7E0]/10 rounded-xl border border-[#F28F20]/20">
-                                    <p className="text-lg sm:text-xl font-semibold text-gray-800 italic">«Готовы к изменениям без предубеждений,</p>
-                                    <p className="text-lg sm:text-xl font-semibold text-gray-800 italic">сохраняя фокус и скорость реакций»</p>
-                                </div>
-
-                                <div className="bg-gradient-to-r from-[#14B7E0]/10 to-[#146FA8]/10 border border-[#14B7E0]/20 rounded-xl p-4 sm:p-6">
-                                    <p className="text-center text-gray-800 font-medium">Система менеджмента качества сертифицирована на соответствие <strong className="text-[#F28F20]">Принципам надлежащей лабораторной практики GLP</strong> и стандарту <strong className="text-[#14B7E0]">ISO 9001:2015</strong></p>
-                                </div>
-
-                                <div className="prose prose-lg max-w-none text-gray-700 space-y-4">
-                                    <p className="text-justify leading-relaxed">В соответствии с политикой в области качества <strong className="text-[#F28F20]">главной целью</strong> деятельности АО «НПО «ДОМ ФАРМАЦИИ» является создание высокой степени удовлетворенности потребителей научным уровнем и сроками оказываемых услуг посредством обеспечения правильности, достоверности и объективности результатов, гарантирующих высокое качество проводимых испытаний, а также формирования устойчивого доверия со стороны потребителя.</p>
-                                    <p className="text-justify leading-relaxed">Обеспечение качества – основа осуществления главной цели АО «НПО «ДОМ ФАРМАЦИИ» и гарантия качественного выполнения исследований.</p>
-                                </div>
-
                                 <div className="mt-8">
                                     <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 text-center">Что делает служба качества для Вас?</h2>
                                     <p className="text-center text-gray-700 font-medium mb-6">Строгое соблюдение <span className="text-[#F28F20]">Принципов надлежащей лабораторной практики</span> и <span className="text-[#14B7E0]">ISO 9001</span></p>
                                     <div className="rounded-xl overflow-hidden shadow-lg border-2 border-[#F28F20]/20 hover:border-[#F28F20]/50 transition-colors">
                                         <img src="/images/Snimok.jpg" alt="Схема обеспечения качества" className="w-full h-auto" />
                                     </div>
-                                </div>
-
-                                <div className="mt-8 space-y-4">
-                                    <p className="text-justify leading-relaxed text-gray-700">Коллектив службы качества – высококвалифицированные специалисты, имеющие большой опыт выполнения научно-исследовательских работ, что позволяет обеспечивать высокое качество выполняемых работ.</p>
-                                    <p className="text-justify leading-relaxed text-gray-700">Наши специалисты службы качества регулярно проходят обучение по менеджменту качества, повышая свою квалификацию, внедряя на практике новейшие методические приемы в области надлежащих практик.</p>
                                 </div>
                             </div>
                         </div>
@@ -218,7 +199,7 @@ export default function ObespechenieKachestva() {
                             <div className="space-y-3 sm:space-y-4 text-sm text-gray-300">
                                 <p className="flex items-center gap-3"><span className="text-[#F28F20]">📞</span><a href={`tel:${t.phone}`} className="hover:text-[#F28F20] transition font-medium">{t.phone}</a></p>
                                 <p className="flex items-center gap-3"><span className="text-[#14B7E0]">✉️</span><a href={`mailto:${t.email}`} className="hover:text-[#14B7E0] transition break-all">{t.email}</a></p>
-                                <p className="flex items-start gap-3 leading-relaxed"><span className="text-[#146FA8] mt-0.5">📍</span><span>{t.footerAddress}</span></p>
+                                <p className="flex items-start gap-3 leading-relaxed"><span className="text-[#146FA8] mt-0.5">📍</span><span>188663, Россия, Ленинградская область,<br/>Всеволожский район, г.п. Кузьмоловский,<br/>Заводская улица, 3-245</span></p>
                             </div>
                         </div>
                         <div className="sm:col-span-2 md:col-span-1">

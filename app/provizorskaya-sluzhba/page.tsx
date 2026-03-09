@@ -53,14 +53,14 @@ export default function ProvizorskayaSluzhba() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3">
                     <div className="flex justify-between items-center h-14 sm:h-16">
                         <Link href="/" className="flex items-center gap-2 sm:gap-4 h-full">
-                            <img src="/logo/logo-vector.png" alt="АО НПО ДОМ ФАРМАЦИИ" className="h-10 sm:h-12 w-auto object-contain" />
+                            <img src="/logo/logo-vector.png" alt="АО НПО «ДОМ ФАРМАЦИИ»" className="h-10 sm:h-12 w-auto object-contain" />
                             <div className="hidden md:flex border-l-2 border-gray-300 pl-4 h-12 items-center">
-                                <h1 className="text-xl font-bold text-gray-900 leading-tight">НПО Дом фармации</h1>
+                                <h1 className="text-xl font-bold text-gray-900 leading-tight">НПО «ДОМ ФАРМАЦИИ»</h1>
                             </div>
                         </Link>
                         <div className="hidden md:flex items-center gap-4">
                             <div className="hidden lg:flex items-center gap-3">
-                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap">Заявка на доклинику</Link>
+                                <Link href="/zayavka-doklinicheskie" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap">Заявка на доклинические исследования</Link>
                                 <Link href="/zayavka-nir" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap">Заявка на НИР</Link>
                             </div>
                             <LanguageSwitcher currentLang={lang} onLanguageChange={setLang} />
@@ -84,7 +84,7 @@ export default function ProvizorskayaSluzhba() {
                 {mobileMenuOpen && (
                     <div className="md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[70vh] overflow-y-auto">
                         <div className="px-4 py-4 space-y-3">
-                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинику</Link>
+                            <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинические исследования</Link>
                             <Link href="/zayavka-nir" className="block w-full px-4 py-3 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-center font-medium rounded-lg transition-all">Заявка на НИР</Link>
                             <div className="border-t border-gray-100 my-3"></div>
                             <Link href="/" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 rounded-lg transition">Главная</Link>
@@ -276,7 +276,7 @@ export default function ProvizorskayaSluzhba() {
                                     <div className="bg-gradient-to-r from-[#F28F20]/10 to-[#14B7E0]/10 border border-[#F28F20]/30 rounded-xl p-4 sm:p-6 mt-8">
                                         <h3 className="text-lg font-bold text-gray-900 mb-3">Лицензии и регистрация</h3>
                                         <p className="text-gray-700 text-justify leading-relaxed">
-                                            АО «НПО «ДОМ ФАРМАЦИИ» имеет лицензии на осуществление фармацевтической деятельности (хранение лекарственных средств для ветеринарного применения; хранение лекарственных препаратов и лекарственных средств для медицинского применения). АО «НПО «ДОМ ФАРМАЦИИ» зарегистрирован в системе МДЛП <strong>«Честный знак»</strong>. Приемка зарегистрированных на территории Российской Федерации препаратов может осуществляться по прямому или обратному акцепту, на усмотрение Спонсора. Вывод из оборота маркированных лекарственных средств на исследование осуществляется с применением 552 схемы (вывод из оборота) с кодом 9 (в целях клинических исследований) или с кодом 13 (списание без передачи на уничтожение).
+                                            Информация о лицензиях доступна на странице <Link href="/litsenzii-sertifikaty-udostovereniya" className="text-[#F28F20] hover:underline font-medium">Лицензии, сертификаты, удостоверения</Link>.
                                         </p>
                                     </div>
                                 </div>
@@ -302,7 +302,7 @@ export default function ProvizorskayaSluzhba() {
                             <div className="space-y-3 sm:space-y-4 text-sm text-gray-300">
                                 <p className="flex items-center gap-3"><span className="text-[#F28F20]">📞</span><a href={`tel:${t.phone}`} className="hover:text-[#F28F20] transition font-medium">{t.phone}</a></p>
                                 <p className="flex items-center gap-3"><span className="text-[#F28F20]">✉️</span><a href={`mailto:${t.email}`} className="hover:text-[#F28F20] transition break-all">{t.email}</a></p>
-                                <p className="flex items-start gap-3 leading-relaxed"><span className="text-[#F28F20] mt-0.5">📍</span><span>{t.footerAddress}</span></p>
+                                <p className="flex items-start gap-3 leading-relaxed"><span className="text-[#F28F20] mt-0.5">📍</span><span>188663, Россия, Ленинградская область,<br/>Всеволожский район, г.п. Кузьмоловский,<br/>Заводская улица, 3-245</span></p>
                             </div>
                         </div>
                         <div className="sm:col-span-2 md:col-span-1">

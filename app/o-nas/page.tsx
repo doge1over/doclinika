@@ -7,7 +7,7 @@ import { translations, Language } from '@/translations/translations'
 import Link from 'next/link'
 
 const menuItems = [
-    { href: '/o-nas', title: 'О нас' },
+    { href: '/o-nas', title: 'О нас', active: true },
     { href: '/vakansii', title: 'Вакансии' },
     { href: '/doklinicheskie-issledovaniya', title: 'Доклинические исследования' },
     { href: '/himiko-analiticheskie-issledovaniya', title: 'Химико-аналитическая лаборатория' },
@@ -23,12 +23,113 @@ const menuItems = [
     { href: '/spetsialisty', title: 'Специалисты' },
     { href: '/policy', title: 'Политики' },
     { href: '/litsenzii-sertifikaty-udostovereniya', title: 'Лицензии, сертификаты, удостоверения' },
-    { href: '/glavnaya', title: 'Сведения об образовательной организации', active: true },
+    { href: '/glavnaya', title: 'Сведения об образовательной организации' },
     { href: '/category/news', title: 'Новости' },
     { href: '/kontakty', title: 'Контакты' },
 ]
 
-export default function KontaktyObrazovanie() {
+const events = [
+    { year: '1991', title: 'Межрегиональный центр «Адаптоген»', text: 'На базе кафедры биохимии СПбГМА им. И.И. Мечникова создаётся Межрегиональный центр «Адаптоген», который занимался химико-аналитическими исследованиями, разработкой нормативной документации на лекарственные препараты, технологией лекарственных средств.', color: '#F28F20' },
+    { year: '1997', title: 'Конференция «Фитофарм»', text: 'Межрегиональный центр «Адаптоген» начинает проводить ежегодную конференцию «Фитофарм».', color: '#14B7E0' },
+    { year: '2007', title: 'Санкт-Петербургский институт фармации', text: 'Создание «Санкт-Петербургского института фармации».', color: '#146FA8' },
+    { year: '2010', title: 'НПО «Дом Фармации»', text: 'Создание НПО «Дом Фармации» и начало строительства собственного здания.', color: '#F28F20' },
+    { year: '2011', title: 'Институт экспериментальной фармакологии', text: 'Создание «Института экспериментальной фармакологии».', color: '#14B7E0' },
+    { year: '2013', title: 'Объединение институтов', text: 'Четыре организации объединены в группу научно-исследовательских институтов.', color: '#146FA8' },
+]
+
+function AlternatingTimeline() {
+    return (
+        <div style={{ position: 'relative' }}>
+            {/* Center vertical line */}
+            <div style={{
+                position: 'absolute',
+                left: '50%',
+                top: 0,
+                bottom: 0,
+                width: '2px',
+                background: 'linear-gradient(to bottom, #F28F20, #14B7E0, #146FA8, #F28F20, #14B7E0, #146FA8)',
+                transform: 'translateX(-50%)',
+            }} />
+
+            {events.map((ev, i) => {
+                const isLeft = i % 2 === 0
+                return (
+                    <div key={i} style={{
+                        display: 'grid',
+                        gridTemplateColumns: '1fr 40px 1fr',
+                        alignItems: 'start',
+                        marginBottom: i < events.length - 1 ? '40px' : '0',
+                    }}>
+                        {/* Left column */}
+                        <div style={{ paddingRight: '20px' }}>
+                            {isLeft ? (
+                                <div style={{
+                                    background: '#fff',
+                                    border: '1px solid #e5e7eb',
+                                    borderRadius: '12px',
+                                    padding: '20px',
+                                    boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+                                    borderRight: `3px solid ${ev.color}`,
+                                }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+                                        <span style={{ background: ev.color, color: '#fff', padding: '3px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: 700 }}>{ev.year}</span>
+                                        <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
+                                    </div>
+                                    <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#111827', margin: '0 0 6px', lineHeight: 1.4 }}>{ev.title}</h3>
+                                    <p style={{ fontSize: '13px', color: '#6b7280', lineHeight: 1.6, margin: 0 }}>{ev.text}</p>
+                                </div>
+                            ) : (
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', height: '100%', paddingTop: '8px' }}>
+                                    <span style={{ fontSize: '18px', fontWeight: 800, color: ev.color }}>{ev.year}</span>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Center dot */}
+                        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '8px' }}>
+                            <div style={{
+                                width: '16px',
+                                height: '16px',
+                                borderRadius: '50%',
+                                background: ev.color,
+                                border: '3px solid #fff',
+                                boxShadow: `0 0 0 2px ${ev.color}40`,
+                                zIndex: 1,
+                            }} />
+                        </div>
+
+                        {/* Right column */}
+                        <div style={{ paddingLeft: '20px' }}>
+                            {!isLeft ? (
+                                <div style={{
+                                    background: '#fff',
+                                    border: '1px solid #e5e7eb',
+                                    borderRadius: '12px',
+                                    padding: '20px',
+                                    boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+                                    borderLeft: `3px solid ${ev.color}`,
+                                }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+                                        <span style={{ background: ev.color, color: '#fff', padding: '3px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: 700 }}>{ev.year}</span>
+                                        <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
+                                    </div>
+                                    <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#111827', margin: '0 0 6px', lineHeight: 1.4 }}>{ev.title}</h3>
+                                    <p style={{ fontSize: '13px', color: '#6b7280', lineHeight: 1.6, margin: 0 }}>{ev.text}</p>
+                                </div>
+                            ) : (
+                                <div style={{ display: 'flex', alignItems: 'center', height: '100%', paddingTop: '8px' }}>
+                                    <span style={{ fontSize: '18px', fontWeight: 800, color: ev.color }}>{ev.year}</span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )
+            })}
+        </div>
+    )
+}
+
+export default function ONas() {
     const [lang, setLang] = useState<Language>('ru')
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -40,7 +141,7 @@ export default function KontaktyObrazovanie() {
             <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-[#F28F20]/20 shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3">
                     <div className="flex justify-between items-center h-14 sm:h-16">
-                        <Link href="/public" className="flex items-center gap-2 sm:gap-4 h-full">
+                        <Link href="/" className="flex items-center gap-2 sm:gap-4 h-full">
                             <img src="/logo/logo-vector.png" alt="АО НПО «ДОМ ФАРМАЦИИ»" className="h-10 sm:h-12 w-auto object-contain" />
                             <div className="hidden md:flex border-l-2 border-[#F28F20]/30 pl-4 h-12 items-center">
                                 <h1 className="text-xl font-bold text-gray-900 leading-tight">НПО «ДОМ ФАРМАЦИИ»</h1>
@@ -75,34 +176,32 @@ export default function KontaktyObrazovanie() {
                             <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинические исследования</Link>
                             <Link href="/zayavka-nir" className="block w-full px-4 py-3 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-center font-medium rounded-lg transition-all">Заявка на НИР</Link>
                             <div className="border-t border-gray-100 my-3"></div>
-                            <Link href="/public" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">Главная</Link>
-                            <Link href="/o-nas" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">О нас</Link>
+                            <Link href="/" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">Главная</Link>
+                            <Link href="/o-nas" className="block px-4 py-2 text-[#F28F20] bg-[#F28F20]/10 font-medium rounded-lg">О нас</Link>
                             <Link href="/kontakty" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">Контакты</Link>
+                            <div className="border-t border-gray-100 my-3"></div>
+                            <div className="px-4 py-2 space-y-2">
+                                <a href={`tel:${t.phone}`} className="flex items-center gap-2 text-gray-700"><svg className="w-4 h-4 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg><span className="font-medium">{t.phone}</span></a>
+                                <a href={`mailto:${t.email}`} className="flex items-center gap-2 text-gray-500 text-sm"><svg className="w-4 h-4 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg><span>{t.email}</span></a>
+                            </div>
                         </div>
                     </div>
                 )}
             </header>
 
-            {/* Breadcrumbs */}
             <div className="bg-white border-b border-[#F28F20]/20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
-                    <nav className="flex flex-wrap items-center text-sm text-gray-500 gap-1">
-                        <Link href="/public" className="hover:text-[#F28F20] transition">Главная</Link>
-                        <svg className="w-4 h-4 mx-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                        <Link href="/glavnaya" className="hover:text-[#F28F20] transition">Сведения об образовательной организации</Link>
-                        <svg className="w-4 h-4 mx-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                        <Link href="/glavnaya/svedeniya-ob-obrazovatelnoj-organizacii" className="hover:text-[#F28F20] transition">Сведения об образовательной организации</Link>
-                        <svg className="w-4 h-4 mx-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                        <span className="text-gray-900 font-medium">Контакты</span>
+                    <nav className="flex items-center text-sm text-gray-500">
+                        <Link href="/" className="hover:text-[#F28F20] transition">Главная</Link>
+                        <svg className="w-4 h-4 mx-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                        <span className="text-gray-900 font-medium">О нас</span>
                     </nav>
                 </div>
             </div>
 
-            {/* Main Content */}
             <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
                 <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
 
-                    {/* Mobile Sidebar Toggle */}
                     <div className="lg:hidden">
                         <button onClick={() => setSidebarOpen(!sidebarOpen)} className="w-full flex items-center justify-between px-4 py-3 bg-white rounded-xl shadow-md border border-gray-200">
                             <span className="font-semibold text-gray-900">Меню раздела</span>
@@ -123,7 +222,6 @@ export default function KontaktyObrazovanie() {
                         )}
                     </div>
 
-                    {/* Desktop Sidebar */}
                     <aside className="hidden lg:block w-72 flex-shrink-0">
                         <div className="sticky top-24 bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                             <div className="px-5 py-4" style={{ background: 'linear-gradient(to right, #F28F20, #e07d10)' }}>
@@ -141,82 +239,19 @@ export default function KontaktyObrazovanie() {
                         </div>
                     </aside>
 
-                    {/* Content */}
                     <article className="flex-1 min-w-0">
                         <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-                            {/* Header */}
                             <div className="px-6 sm:px-8 py-6 sm:py-8" style={{ background: 'linear-gradient(to right, #F28F20, #e07d10)' }}>
-                                <h1 className="text-2xl sm:text-3xl font-bold text-white">Контакты</h1>
+                                <h1 className="text-2xl sm:text-3xl font-bold text-white">О нас</h1>
                             </div>
-
-                            {/* Content */}
-                            <div className="px-6 sm:px-8 py-6 sm:py-8">
-                                <div className="space-y-6">
-                                    {/* Телефон */}
-                                    <div className="flex items-start gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-[#F28F20]/10 flex items-center justify-center flex-shrink-0">
-                                            <svg className="w-6 h-6 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p className="text-sm text-gray-500 mb-1">Телефон</p>
-                                            <a href="tel:+78126037428" className="text-lg font-semibold text-gray-900 hover:text-[#F28F20] transition">
-                                                +7(812)603-74-28
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    {/* Email */}
-                                    <div className="flex items-start gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-[#14B7E0]/10 flex items-center justify-center flex-shrink-0">
-                                            <svg className="w-6 h-6 text-[#14B7E0]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p className="text-sm text-gray-500 mb-1">Адрес электронной почты</p>
-                                            <a href="mailto:edu@doclinika.ru" className="text-lg font-semibold text-gray-900 hover:text-[#14B7E0] transition">
-                                                edu@doclinika.ru
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    {/* Адрес */}
-                                    <div className="flex items-start gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-[#F28F20]/10 flex items-center justify-center flex-shrink-0">
-                                            <svg className="w-6 h-6 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p className="text-sm text-gray-500 mb-1">Адрес местонахождения</p>
-                                            <p className="text-lg font-semibold text-gray-900">
-                                                188663, Россия, Ленинградская обл., Всеволожский район, г.п. Кузьмоловский, ул. Заводская, дом 3, корп. 245.
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    {/* Карта */}
-                                    <div className="mt-8 rounded-xl overflow-hidden shadow-lg border border-gray-200">
-                                        <iframe 
-                                            src="https://yandex.ru/map-widget/v1/?lang=ru_RU&scroll=true&source=constructor-api&um=constructor%3Adc7b04b68a41ad1bdf18c8112ff573806757e0f708dfd54378d8ba4859993f58" 
-                                            width="100%" 
-                                            height="350" 
-                                            frameBorder="0" 
-                                            allowFullScreen={true} 
-                                            title="Карта"
-                                        />
-                                    </div>
-                                </div>
+                            <div style={{ padding: '32px 24px' }}>
+                                <AlternatingTimeline />
                             </div>
                         </div>
                     </article>
                 </div>
             </main>
 
-            {/* Footer */}
             <footer className="bg-gradient-to-br from-gray-900 to-gray-800 mt-12">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-12 mb-8 sm:mb-12">
