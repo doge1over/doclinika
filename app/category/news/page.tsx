@@ -1,13 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ScrollToTop from '@/components/ScrollToTop'
 import LanguageSwitcher from '@/translations/LanguageSwitcher'
 import { translations, Language } from '@/translations/translations'
 import Link from 'next/link'
-import newsData from '@/data/news.json'
-
-const ITEMS_PER_PAGE = 10
 
 const menuItems = [
     { href: '/o-nas', title: 'О нас' },
@@ -31,19 +28,77 @@ const menuItems = [
     { href: '/kontakty', title: 'Контакты' },
 ]
 
+function VKWidget() {
+    const [error, setError] = useState(false)
+
+    useEffect(() => {
+        const existing = document.getElementById('vk-openapi-js')
+        if (existing) {
+            initWidget()
+            return
+        }
+
+        const script = document.createElement('script')
+        script.id = 'vk-openapi-js'
+        script.src = 'https://vk.ru/js/api/openapi.js?168'
+        script.type = 'text/javascript'
+        script.onload = () => initWidget()
+        script.onerror = () => setError(true)
+        document.head.appendChild(script)
+
+        function initWidget() {
+            setTimeout(() => {
+                try {
+                    const vk = (window as any).VK
+                    if (vk && vk.Widgets) {
+                        vk.Widgets.Group('vk_groups', {
+                            mode: 4,
+                            no_cover: 1,
+                            wide: 1,
+                            width: 'auto',
+                            height: 2000,
+                            color1: 'FFFFFF',
+                            color2: '000000',
+                            color3: '4c9798',
+                        }, 147926971)
+                    } else {
+                        setError(true)
+                    }
+                } catch {
+                    setError(true)
+                }
+            }, 300)
+        }
+    }, [])
+
+    if (error) {
+        return (
+            <div className="text-center py-12">
+                <p className="text-gray-500 mb-4">Не удалось загрузить виджет ВКонтакте</p>
+                <a href="https://vk.com/club147926971" target="_blank" rel="noopener noreferrer"
+                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0077FF] hover:bg-[#0066DD] text-white text-sm font-medium rounded-lg transition-all shadow-md">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.862-.525-2.049-1.714-1.033-1.01-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.12-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.678.847 2.49 2.27 4.675 2.85 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .372.17.508.271.508.22 0 .407-.136.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.763-.491h1.744c.525 0 .644.27.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.49-.085.744-.576.744z"/></svg>
+                    Открыть новости в ВКонтакте
+                </a>
+            </div>
+        )
+    }
+
+    return (
+        <div style={{ overflow: 'hidden', marginBottom: '-40px', paddingBottom: '0' }}>
+            <div id="vk_groups" />
+        </div>
+    )
+}
+
 export default function NewsPage() {
     const [lang, setLang] = useState<Language>('ru')
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [currentPage, setCurrentPage] = useState(1)
     const t = translations[lang]
-
-    const totalPages = Math.ceil(newsData.length / ITEMS_PER_PAGE)
-    const paginatedNews = newsData.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
 
     return (
         <div className="min-h-screen bg-white">
-            {/* Header */}
             <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-[#F28F20]/20 shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3">
                     <div className="flex justify-between items-center h-14 sm:h-16">
@@ -86,7 +141,6 @@ export default function NewsPage() {
                 )}
             </header>
 
-            {/* Breadcrumbs */}
             <div className="bg-white border-b border-[#F28F20]/20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
                     <nav className="flex items-center text-sm text-gray-500">
@@ -97,11 +151,9 @@ export default function NewsPage() {
                 </div>
             </div>
 
-            {/* Main */}
             <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
                 <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
 
-                    {/* Mobile Sidebar */}
                     <div className="lg:hidden">
                         <button onClick={() => setSidebarOpen(!sidebarOpen)} className="w-full flex items-center justify-between px-4 py-3 bg-white rounded-xl shadow-md border border-gray-200">
                             <span className="font-semibold text-gray-900">Меню раздела</span>
@@ -122,7 +174,6 @@ export default function NewsPage() {
                         )}
                     </div>
 
-                    {/* Desktop Sidebar */}
                     <aside className="hidden lg:block w-72 flex-shrink-0">
                         <div className="sticky top-24 bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                             <div className="px-5 py-4" style={{ background: 'linear-gradient(to right, #F28F20, #e07d10)' }}>
@@ -140,60 +191,19 @@ export default function NewsPage() {
                         </div>
                     </aside>
 
-                    {/* Content */}
                     <article className="flex-1 min-w-0">
                         <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-                            {/* Header */}
                             <div className="px-6 sm:px-8 py-6 sm:py-8" style={{ background: 'linear-gradient(to right, #F28F20, #e07d10)' }}>
                                 <h1 className="text-2xl sm:text-3xl font-bold text-white">Новости</h1>
                             </div>
-
-                            {/* News list */}
-                            <div className="px-6 sm:px-8 py-6 sm:py-8 space-y-6">
-                                {paginatedNews.map((item) => (
-                                    <div key={item.id} className="border border-gray-200 rounded-xl p-4 sm:p-6 hover:border-[#F28F20] hover:shadow-md transition-all">
-                                        <Link href={`/category/news/${item.id}`}>
-                                            <h2 className="text-base sm:text-lg font-bold text-gray-900 hover:text-[#F28F20] transition mb-2 leading-snug">
-                                                {item.title}
-                                            </h2>
-                                        </Link>
-                                        <p className="text-sm text-gray-600 leading-relaxed mb-3">
-                                            {item.excerpt}
-                                        </p>
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-xs text-gray-400 font-medium">{item.date}</span>
-                                            <Link href={`/category/news/${item.id}`} className="text-sm text-[#F28F20] hover:text-[#e07d10] font-medium transition">
-                                                Читать далее →
-                                            </Link>
-                                        </div>
-                                    </div>
-                                ))}
-
-                                {/* Pagination */}
-                                {totalPages > 1 && (
-                                    <div className="flex items-center justify-center gap-2 pt-4">
-                                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                                            <button
-                                                key={page}
-                                                onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-                                                className={`w-10 h-10 rounded-lg text-sm font-medium transition-all ${
-                                                    currentPage === page
-                                                        ? 'bg-[#F28F20] text-white shadow-md'
-                                                        : 'bg-white text-gray-700 border border-gray-200 hover:border-[#F28F20] hover:text-[#F28F20]'
-                                                }`}
-                                            >
-                                                {page}
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
+                            <div className="px-6 sm:px-8 py-6 sm:py-8">
+                                <VKWidget />
                             </div>
                         </div>
                     </article>
                 </div>
             </main>
 
-            {/* Footer */}
             <footer className="bg-gradient-to-br from-gray-900 to-gray-800 mt-12">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-12 mb-8 sm:mb-12">

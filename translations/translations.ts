@@ -75,7 +75,7 @@ export const translations = {
         footerOurContacts: 'Наши контакты',
         footerHowToGet: 'Как добраться',
         footerAddress: '188663, Россия, Ленинградская область, Всеволожский район, г.п. Кузьмоловский, Заводская улица, 3-245',
-        footerCopyright: 'ДОМ ФАРМАЦИИ © 2022'
+        footerCopyright: 'ДОМ ФАРМАЦИИ © 2026'
     },
     en: {
         // Header

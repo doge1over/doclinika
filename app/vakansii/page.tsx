@@ -175,6 +175,57 @@ export default function Vakansii() {
                                     />
                                 </div>
 
+                                {/* Наши гарантии */}
+                                <div className="bg-[#146FA8]/5 border border-[#146FA8]/20 rounded-xl p-4 sm:p-6">
+                                    <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                        <svg className="w-5 h-5 text-[#146FA8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                                        Наши гарантии
+                                    </h3>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        {[
+                                            'Оформление по ТК РФ',
+                                            'Бесплатные обеды',
+                                            'Выплаты 2 раза в месяц',
+                                            'ДМС со стоматологией от Ингосстрах',
+                                            'Работа в комфортных условиях',
+                                            'Охраняемая территория с бесплатной парковкой',
+                                            'Оплачиваемый испытательный срок 3 месяца',
+                                            'Частичная компенсация проезда',
+                                            'Велопарковка',
+                                        ].map((item, i) => (
+                                            <div key={i} className="flex items-start gap-2">
+                                                <svg className="w-4 h-4 text-[#146FA8] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                                <span className="text-sm text-gray-700">{item}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Присоединяйтесь */}
+                                <div className="bg-[#F28F20]/10 border border-[#F28F20]/30 rounded-xl p-4 sm:p-6">
+                                    <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                        <svg className="w-5 h-5 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                                        Присоединяйтесь к АО «НПО «ДОМ ФАРМАЦИИ»»!
+                                    </h3>
+                                    <p className="text-gray-600 text-sm mb-4">Мы — современный научно‑исследовательский центр, где ценят профессионализм и создают все условия для успеха</p>
+                                    <p className="text-gray-900 font-semibold text-sm mb-3">Вас ждут:</p>
+                                    <div className="space-y-3 mb-4">
+                                        <div className="flex items-start gap-2">
+                                            <svg className="w-4 h-4 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                            <span className="text-sm text-gray-700"><strong>Увлекательные задачи.</strong> Вы будете работать над передовыми научными проектами в команде единомышленников.</span>
+                                        </div>
+                                        <div className="flex items-start gap-2">
+                                            <svg className="w-4 h-4 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                            <span className="text-sm text-gray-700"><strong>Комфортная среда.</strong> Мы позаботились о том, чтобы ваше рабочее место способствовало продуктивности и вдохновению.</span>
+                                        </div>
+                                        <div className="flex items-start gap-2">
+                                            <svg className="w-4 h-4 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                            <span className="text-sm text-gray-700"><strong>Перспективы развития.</strong> Ваш профессиональный рост — наша общая цель. Мы предоставляем доступ к обучению и помогаем строить карьеру.</span>
+                                        </div>
+                                    </div>
+                                    <p className="text-sm text-gray-700 font-medium">Выбирайте место, где ваш талант будет по‑настоящему оценён!</p>
+                                </div>
+
                                 {/* Contact Info */}
                                 <div className="bg-[#14B7E0]/10 border border-[#14B7E0]/30 rounded-xl p-4 sm:p-6">
                                     <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
@@ -185,8 +236,8 @@ export default function Vakansii() {
                                         Если у вас есть вопросы или вы хотите отправить резюме напрямую, свяжитесь с нами:
                                     </p>
                                     <div className="flex flex-wrap gap-3">
-                                        <a href="mailto:info@doclinika.ru" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">
-                                            info@doclinika.ru
+                                        <a href="mailto:career@doclinika.ru" className="px-4 py-2 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">
+                                            career@doclinika.ru
                                         </a>
                                         <a href="tel:+78126037428" className="px-4 py-2 bg-[#F28F20] hover:bg-[#e07d10] text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap shadow-md hover:shadow-lg">
                                             +7 (812) 603-74-28
