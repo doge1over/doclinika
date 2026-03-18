@@ -134,9 +134,9 @@ function AnimalModal({ animal, onClose }: { animal: typeof animals[0]; onClose: 
             {/* Backdrop */}
             <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)' }} />
 
-            {/* Modal */}
+            {/* Modal — horizontal */}
             <div
-                style={{ position: 'relative', background: 'white', borderRadius: '16px', maxWidth: '600px', width: '100%', maxHeight: '90vh', overflow: 'auto', boxShadow: '0 25px 50px rgba(0,0,0,0.25)' }}
+                style={{ position: 'relative', background: 'white', borderRadius: '16px', maxWidth: '750px', width: '100%', maxHeight: '90vh', overflow: 'auto', boxShadow: '0 25px 50px rgba(0,0,0,0.25)', display: 'flex', flexDirection: 'row' }}
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Close button */}
@@ -147,13 +147,13 @@ function AnimalModal({ animal, onClose }: { animal: typeof animals[0]; onClose: 
                     <svg width="16" height="16" fill="none" stroke="white" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
 
-                {/* Image */}
-                <div style={{ width: '100%', height: '350px', overflow: 'hidden', borderRadius: '16px 16px 0 0' }}>
-                    <img src={animal.img} alt={animal.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%' }} />
+                {/* Photo left */}
+                <div style={{ width: '260px', aspectRatio: '4/5', flexShrink: 0, overflow: 'hidden', borderRadius: '16px 0 0 16px', background: '#f9fafb' }}>
+                    <img src={animal.img} alt={animal.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%' }} />
                 </div>
 
-                {/* Content */}
-                <div style={{ padding: '24px' }}>
+                {/* Info right */}
+                <div style={{ flex: 1, padding: '24px', overflowY: 'auto', maxHeight: '90vh' }}>
                     <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#111827', margin: '0 0 4px' }}>{animal.name}</h2>
                     <p style={{ fontSize: '14px', color: '#9ca3af', fontStyle: 'italic', margin: '0 0 16px' }}>{animal.latin}</p>
 
