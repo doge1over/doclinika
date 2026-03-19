@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
-import { validateSession, getTokenFromHeaders } from '@/lib/auth'
+import { validateToken, getTokenFromHeaders } from '@/lib/auth'
 
 const NEWS_FILE = path.join(process.cwd(), 'data', 'news.json')
 
@@ -30,18 +30,16 @@ function saveNews(news: NewsItem[]) {
 
 function requireAuth(req: NextRequest): NextResponse | null {
     const token = getTokenFromHeaders(req.headers)
-    if (!validateSession(token)) {
+    if (!validateToken(token)) {
         return NextResponse.json({ error: 'Не авторизован' }, { status: 401 })
     }
     return null
 }
 
-// GET — публичный, без авторизации
 export async function GET() {
     return NextResponse.json(getNews())
 }
 
-// POST — создание новости (требует авторизации)
 export async function POST(req: NextRequest) {
     const authError = requireAuth(req)
     if (authError) return authError
@@ -49,7 +47,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const news = getNews()
     const dateStr = body.date || new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })
-    const newItem = {
+    const newItem: NewsItem = {
         id: Date.now().toString(),
         date: dateStr,
         title: body.title,
@@ -61,7 +59,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true, item: newItem })
 }
 
-// PUT — редактирование новости (требует авторизации)
 export async function PUT(req: NextRequest) {
     const authError = requireAuth(req)
     if (authError) return authError
@@ -85,7 +82,6 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ success: true, item: news[index] })
 }
 
-// DELETE — удаление новости (требует авторизации)
 export async function DELETE(req: NextRequest) {
     const authError = requireAuth(req)
     if (authError) return authError

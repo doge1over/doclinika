@@ -213,10 +213,7 @@ export default function NewsAdmin() {
         setLoginLoading(false)
     }
 
-    const handleLogout = async () => {
-        if (token) {
-            await fetch('/api/auth', { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } }).catch(() => {})
-        }
+    const handleLogout = () => {
         setAuth(false); setToken(null); setPassword(''); resetForm()
     }
 

@@ -1,43 +1,83 @@
 import crypto from 'crypto'
 
+// ─── JWT (без внешних зависимостей) ───
+
+function base64UrlEncode(data: string): string {
+    return Buffer.from(data).toString('base64url')
+}
+
+function base64UrlDecode(str: string): string {
+    return Buffer.from(str, 'base64url').toString('utf-8')
+}
+
+function getSecret(): string {
+    const secret = process.env.SESSION_SECRET
+    if (!secret || secret.length < 16) {
+        throw new Error('SESSION_SECRET не задан или слишком короткий (мин. 16 символов)')
+    }
+    return secret
+}
+
+function sign(payload: Record<string, unknown>): string {
+    const secret = getSecret()
+    const header = base64UrlEncode(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
+    const body = base64UrlEncode(JSON.stringify(payload))
+    const signature = crypto
+        .createHmac('sha256', secret)
+        .update(`${header}.${body}`)
+        .digest('base64url')
+    return `${header}.${body}.${signature}`
+}
+
+function verify(token: string): Record<string, unknown> | null {
+    try {
+        const parts = token.split('.')
+        if (parts.length !== 3) return null
+
+        const [header, body, signature] = parts
+        const secret = getSecret()
+
+        // Проверяем подпись
+        const expectedSig = crypto
+            .createHmac('sha256', secret)
+            .update(`${header}.${body}`)
+            .digest('base64url')
+
+        // Timing-safe сравнение
+        if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSig))) {
+            return null
+        }
+
+        const payload = JSON.parse(base64UrlDecode(body))
+
+        // Проверяем срок действия
+        if (payload.exp && Date.now() > payload.exp) {
+            return null
+        }
+
+        return payload
+    } catch {
+        return null
+    }
+}
+
 // ─── Конфигурация ───
-const SESSION_TTL = (Number(process.env.SESSION_TTL_HOURS) || 8) * 60 * 60 * 1000 // мс
-const MAX_LOGIN_ATTEMPTS = 5       // макс. попыток
-const RATE_LIMIT_WINDOW = 15 * 60 * 1000  // 15 мин окно
-const LOCKOUT_DURATION = 30 * 60 * 1000   // 30 мин блокировка после превышения
+const SESSION_TTL = (Number(process.env.SESSION_TTL_HOURS) || 8) * 60 * 60 * 1000
 
-// ─── Хранилища (in-memory, сбрасываются при перезапуске сервера) ───
-interface Session {
-    token: string
-    createdAt: number
-    ip: string
-}
-
-interface LoginAttempt {
-    count: number
-    firstAttempt: number
-    lockedUntil: number | null
-}
-
-const sessions = new Map<string, Session>()
-const loginAttempts = new Map<string, LoginAttempt>()
-
-// ─── Хэширование пароля ───
+// ─── Проверка пароля ───
 function hashPassword(password: string): string {
     return crypto.createHash('sha256').update(password).digest('hex')
 }
 
-// ─── Проверка пароля ───
 export function verifyPassword(inputPassword: string): boolean {
     const storedPassword = process.env.ADMIN_PASSWORD
     if (!storedPassword) {
-        console.error('ADMIN_PASSWORD не задан в .env')
+        console.error('ADMIN_PASSWORD не задан в переменных окружения')
         return false
     }
-    // Сравнение через timing-safe для защиты от timing attacks
-    const inputHash = hashPassword(inputPassword)
-    const storedHash = hashPassword(storedPassword)
     try {
+        const inputHash = hashPassword(inputPassword)
+        const storedHash = hashPassword(storedPassword)
         return crypto.timingSafeEqual(
             Buffer.from(inputHash, 'hex'),
             Buffer.from(storedHash, 'hex')
@@ -47,29 +87,47 @@ export function verifyPassword(inputPassword: string): boolean {
     }
 }
 
-// ─── Rate Limiting ───
+// ─── Создание токена ───
+export function createToken(): string {
+    return sign({
+        role: 'admin',
+        iat: Date.now(),
+        exp: Date.now() + SESSION_TTL,
+        jti: crypto.randomBytes(16).toString('hex'),
+    })
+}
+
+// ─── Проверка токена ───
+export function validateToken(token: string | null): boolean {
+    if (!token) return false
+    const payload = verify(token)
+    return payload !== null && payload.role === 'admin'
+}
+
+// ─── Rate Limiting (per-instance, частичная защита на serverless) ───
+const MAX_LOGIN_ATTEMPTS = 5
+const RATE_LIMIT_WINDOW = 15 * 60 * 1000
+const LOCKOUT_DURATION = 30 * 60 * 1000
+
+interface LoginAttempt {
+    count: number
+    firstAttempt: number
+    lockedUntil: number | null
+}
+
+const loginAttempts = new Map<string, LoginAttempt>()
+
 export function checkRateLimit(ip: string): { allowed: boolean; retryAfterSeconds?: number; attemptsLeft?: number } {
     const now = Date.now()
     const attempt = loginAttempts.get(ip)
 
-    if (!attempt) {
-        return { allowed: true, attemptsLeft: MAX_LOGIN_ATTEMPTS }
-    }
+    if (!attempt) return { allowed: true, attemptsLeft: MAX_LOGIN_ATTEMPTS }
 
-    // Проверяем блокировку
     if (attempt.lockedUntil && now < attempt.lockedUntil) {
-        const retryAfter = Math.ceil((attempt.lockedUntil - now) / 1000)
-        return { allowed: false, retryAfterSeconds: retryAfter }
+        return { allowed: false, retryAfterSeconds: Math.ceil((attempt.lockedUntil - now) / 1000) }
     }
 
-    // Сброс если окно истекло
-    if (now - attempt.firstAttempt > RATE_LIMIT_WINDOW) {
-        loginAttempts.delete(ip)
-        return { allowed: true, attemptsLeft: MAX_LOGIN_ATTEMPTS }
-    }
-
-    // Сброс блокировки если время вышло
-    if (attempt.lockedUntil && now >= attempt.lockedUntil) {
+    if (now - attempt.firstAttempt > RATE_LIMIT_WINDOW || (attempt.lockedUntil && now >= attempt.lockedUntil)) {
         loginAttempts.delete(ip)
         return { allowed: true, attemptsLeft: MAX_LOGIN_ATTEMPTS }
     }
@@ -86,7 +144,6 @@ export function recordFailedAttempt(ip: string): void {
         loginAttempts.set(ip, { count: 1, firstAttempt: now, lockedUntil: null })
         return
     }
-
     attempt.count++
     if (attempt.count >= MAX_LOGIN_ATTEMPTS) {
         attempt.lockedUntil = now + LOCKOUT_DURATION
@@ -97,67 +154,13 @@ export function clearAttempts(ip: string): void {
     loginAttempts.delete(ip)
 }
 
-// ─── Управление сессиями ───
-export function createSession(ip: string): string {
-    // Удаляем старые сессии этого IP
-    for (const [token, session] of sessions) {
-        if (session.ip === ip) sessions.delete(token)
-    }
-
-    const secret = process.env.SESSION_SECRET || 'fallback-change-me'
-    const raw = `${ip}-${Date.now()}-${crypto.randomBytes(32).toString('hex')}`
-    const token = crypto.createHmac('sha256', secret).update(raw).digest('hex')
-
-    sessions.set(token, {
-        token,
-        createdAt: Date.now(),
-        ip,
-    })
-
-    // Чистим просроченные сессии
-    cleanExpiredSessions()
-
-    return token
-}
-
-export function validateSession(token: string | null): boolean {
-    if (!token) return false
-
-    const session = sessions.get(token)
-    if (!session) return false
-
-    // Проверяем TTL
-    if (Date.now() - session.createdAt > SESSION_TTL) {
-        sessions.delete(token)
-        return false
-    }
-
-    return true
-}
-
-export function destroySession(token: string): void {
-    sessions.delete(token)
-}
-
-function cleanExpiredSessions(): void {
-    const now = Date.now()
-    for (const [token, session] of sessions) {
-        if (now - session.createdAt > SESSION_TTL) {
-            sessions.delete(token)
-        }
-    }
-}
-
-// ─── Хелпер для извлечения токена из заголовков ───
+// ─── Хелперы ───
 export function getTokenFromHeaders(headers: Headers): string | null {
     const auth = headers.get('authorization')
-    if (auth && auth.startsWith('Bearer ')) {
-        return auth.slice(7)
-    }
+    if (auth && auth.startsWith('Bearer ')) return auth.slice(7)
     return null
 }
 
-// ─── Хелпер для получения IP ───
 export function getClientIP(headers: Headers): string {
     return headers.get('x-forwarded-for')?.split(',')[0]?.trim()
         || headers.get('x-real-ip')
