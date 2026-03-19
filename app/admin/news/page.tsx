@@ -267,20 +267,32 @@ export default function NewsAdmin() {
         formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
 
+    // Конвертация переносов строк в HTML если текст не содержит HTML-тегов
+    const formatContent = (text: string): string => {
+        const hasHtmlBlocks = /<(p|div|br|ul|ol|li|h[1-6]|table|blockquote)\b/i.test(text)
+        if (hasHtmlBlocks) return text
+        // Простой текст — оборачиваем абзацы
+        return text
+            .split(/\n\s*\n/) // двойной перенос = новый абзац
+            .map(para => `<p>${para.replace(/\n/g, '<br>')}</p>`)
+            .join('\n')
+    }
+
     const handleSubmit = async () => {
         if (!title.trim()) { showToast('Введите заголовок новости', 'error'); return }
         if (!content.trim()) { showToast('Введите содержание новости', 'error'); return }
         setLoading(true); const dateValue = date ? isoToRuDate(date) : undefined
+        const formattedContent = formatContent(content)
         try {
             if (editingId) {
-                const body: { id: string; title: string; content: string; date?: string } = { id: editingId, title, content }
+                const body: { id: string; title: string; content: string; date?: string } = { id: editingId, title, content: formattedContent }
                 if (dateValue) body.date = dateValue
                 const res = await authFetch('/api/news', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
                 const data = await res.json()
                 if (data.success) { resetForm(); showToast('Новость успешно обновлена', 'success'); loadNews() }
                 else showToast(data.error || 'Ошибка сохранения', 'error')
             } else {
-                const body: { title: string; content: string; date?: string } = { title, content }
+                const body: { title: string; content: string; date?: string } = { title, content: formattedContent }
                 if (dateValue) body.date = dateValue
                 const res = await authFetch('/api/news', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
                 const data = await res.json()
