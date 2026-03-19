@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
+import { kv } from '@vercel/kv'
 import { validateToken, getTokenFromHeaders } from '@/lib/auth'
 
-const NEWS_FILE = path.join(process.cwd(), 'data', 'news.json')
+const NEWS_KEY = 'news'
 
 interface NewsItem {
     id: string
@@ -13,19 +12,17 @@ interface NewsItem {
     content: string
 }
 
-function getNews(): NewsItem[] {
+async function getNews(): Promise<NewsItem[]> {
     try {
-        const data = fs.readFileSync(NEWS_FILE, 'utf-8')
-        return JSON.parse(data)
+        const data = await kv.get<NewsItem[]>(NEWS_KEY)
+        return data || []
     } catch {
         return []
     }
 }
 
-function saveNews(news: NewsItem[]) {
-    const dir = path.dirname(NEWS_FILE)
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
-    fs.writeFileSync(NEWS_FILE, JSON.stringify(news, null, 2), 'utf-8')
+async function saveNews(news: NewsItem[]): Promise<void> {
+    await kv.set(NEWS_KEY, news)
 }
 
 function requireAuth(req: NextRequest): NextResponse | null {
@@ -37,7 +34,8 @@ function requireAuth(req: NextRequest): NextResponse | null {
 }
 
 export async function GET() {
-    return NextResponse.json(getNews())
+    const news = await getNews()
+    return NextResponse.json(news)
 }
 
 export async function POST(req: NextRequest) {
@@ -45,7 +43,7 @@ export async function POST(req: NextRequest) {
     if (authError) return authError
 
     const body = await req.json()
-    const news = getNews()
+    const news = await getNews()
     const dateStr = body.date || new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })
     const newItem: NewsItem = {
         id: Date.now().toString(),
@@ -55,7 +53,7 @@ export async function POST(req: NextRequest) {
         content: body.content,
     }
     news.unshift(newItem)
-    saveNews(news)
+    await saveNews(news)
     return NextResponse.json({ success: true, item: newItem })
 }
 
@@ -67,7 +65,7 @@ export async function PUT(req: NextRequest) {
     if (!body.id) {
         return NextResponse.json({ error: 'ID не указан' }, { status: 400 })
     }
-    const news = getNews()
+    const news = await getNews()
     const index = news.findIndex(n => n.id === body.id)
     if (index === -1) {
         return NextResponse.json({ error: 'Новость не найдена' }, { status: 404 })
@@ -78,7 +76,7 @@ export async function PUT(req: NextRequest) {
         news[index].excerpt = body.excerpt || body.content.replace(/<[^>]*>/g, '').slice(0, 200) + '...'
     }
     if (body.date !== undefined) news[index].date = body.date
-    saveNews(news)
+    await saveNews(news)
     return NextResponse.json({ success: true, item: news[index] })
 }
 
@@ -87,8 +85,8 @@ export async function DELETE(req: NextRequest) {
     if (authError) return authError
 
     const body = await req.json()
-    const news = getNews()
+    const news = await getNews()
     const filtered = news.filter(n => n.id !== body.id)
-    saveNews(filtered)
+    await saveNews(filtered)
     return NextResponse.json({ success: true })
 }

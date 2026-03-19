@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
+import { put } from '@vercel/blob'
 import { validateToken, getTokenFromHeaders } from '@/lib/auth'
 
-const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads')
 const MAX_FILE_SIZE = 10 * 1024 * 1024
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml']
+const ALLOWED_EXTS = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg']
 
 export async function POST(req: NextRequest) {
     const token = getTokenFromHeaders(req.headers)
@@ -34,21 +33,25 @@ export async function POST(req: NextRequest) {
         )
     }
 
-    const ext = path.extname(file.name).toLowerCase()
-    const allowedExts = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg']
-    if (!allowedExts.includes(ext)) {
-        return NextResponse.json({ error: `Недопустимое расширение файла: ${ext}` }, { status: 400 })
+    // Проверка расширения
+    const nameParts = file.name.split('.')
+    const ext = nameParts.length > 1 ? `.${nameParts.pop()?.toLowerCase()}` : ''
+    if (!ALLOWED_EXTS.includes(ext)) {
+        return NextResponse.json({ error: `Недопустимое расширение: ${ext}` }, { status: 400 })
     }
 
-    if (!fs.existsSync(UPLOAD_DIR)) {
-        fs.mkdirSync(UPLOAD_DIR, { recursive: true })
+    // Безопасное имя файла
+    const filename = `uploads/${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`
+
+    try {
+        const blob = await put(filename, file, {
+            access: 'public',
+            addRandomSuffix: false,
+        })
+
+        return NextResponse.json({ success: true, url: blob.url })
+    } catch (error) {
+        console.error('Blob upload error:', error)
+        return NextResponse.json({ error: 'Ошибка загрузки файла' }, { status: 500 })
     }
-
-    const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`
-    const filepath = path.join(UPLOAD_DIR, filename)
-
-    const bytes = await file.arrayBuffer()
-    fs.writeFileSync(filepath, Buffer.from(bytes))
-
-    return NextResponse.json({ success: true, url: `/uploads/${filename}` })
 }
