@@ -147,7 +147,8 @@ const NEWS_CSS = `
     margin: 0 !important;
     flex-shrink: 0;
 }
-.news-content ul, .news-content ol { padding-left: 24px; margin: 16px 0; }
+.news-content ul { padding-left: 24px; margin: 16px 0; list-style-type: disc; }
+.news-content ol { padding-left: 24px; margin: 16px 0; list-style-type: decimal; }
 .news-content li { margin-bottom: 8px; line-height: 1.6; color: #374151; font-size: 15px; }
 .news-content strong, .news-content b { color: #111827; font-weight: 600; }
 .news-content em, .news-content i { font-style: italic; }

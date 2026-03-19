@@ -548,7 +548,8 @@ const CSS = `
 .adm-preview-content img:hover{opacity:.85}
 .adm-preview-content .news-img-row{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;margin:10px 0}
 .adm-preview-content .news-img-row img{margin:0!important;flex-shrink:0}
-.adm-preview-content ul,.adm-preview-content ol{padding-left:24px;margin:12px 0}
+.adm-preview-content ul{padding-left:24px;margin:12px 0;list-style-type:disc}
+.adm-preview-content ol{padding-left:24px;margin:12px 0;list-style-type:decimal}
 .adm-preview-content li{margin-bottom:6px;line-height:1.6}
 .adm-preview-content strong,.adm-preview-content b{color:#111827;font-weight:600}
 .adm-preview-content a{color:#F28F20;text-decoration:underline}
