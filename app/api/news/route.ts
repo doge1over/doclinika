@@ -12,6 +12,32 @@ interface NewsItem {
     content: string
 }
 
+// Парсит дату dd.mm.yyyy в timestamp для сортировки
+function parseDate(dateStr: string): number {
+    const parts = dateStr.split('.')
+    if (parts.length !== 3) return 0
+    const [day, month, year] = parts.map(Number)
+    return new Date(year, month - 1, day).getTime()
+}
+
+// Сортирует новости по дате (новые первые)
+function sortByDate(news: NewsItem[]): NewsItem[] {
+    return [...news].sort((a, b) => parseDate(b.date) - parseDate(a.date))
+}
+
+// Убирает <!--more--> и генерирует excerpt если нужно
+function cleanContent(content: string): string {
+    return content.replace(/<!--more-->/gi, '')
+}
+
+function makeExcerpt(content: string): string {
+    // Берём текст до <!--more--> если есть
+    const moreSplit = content.split(/<!--more-->/i)
+    const textBefore = moreSplit[0] || content
+    const plain = textBefore.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()
+    return plain.slice(0, 200) + (plain.length > 200 ? '...' : '')
+}
+
 async function getNews(): Promise<NewsItem[]> {
     try {
         const data = await kv.get<NewsItem[]>(NEWS_KEY)
@@ -35,7 +61,7 @@ function requireAuth(req: NextRequest): NextResponse | null {
 
 export async function GET() {
     const news = await getNews()
-    return NextResponse.json(news)
+    return NextResponse.json(sortByDate(news))
 }
 
 export async function POST(req: NextRequest) {
@@ -45,15 +71,16 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const news = await getNews()
     const dateStr = body.date || new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })
+    const cleaned = cleanContent(body.content)
     const newItem: NewsItem = {
         id: Date.now().toString(),
         date: dateStr,
         title: body.title,
-        excerpt: body.excerpt || body.content.replace(/<[^>]*>/g, '').slice(0, 200) + '...',
-        content: body.content,
+        excerpt: body.excerpt || makeExcerpt(body.content),
+        content: cleaned,
     }
     news.unshift(newItem)
-    await saveNews(news)
+    await saveNews(sortByDate(news))
     return NextResponse.json({ success: true, item: newItem })
 }
 
@@ -72,11 +99,11 @@ export async function PUT(req: NextRequest) {
     }
     if (body.title !== undefined) news[index].title = body.title
     if (body.content !== undefined) {
-        news[index].content = body.content
-        news[index].excerpt = body.excerpt || body.content.replace(/<[^>]*>/g, '').slice(0, 200) + '...'
+        news[index].content = cleanContent(body.content)
+        news[index].excerpt = body.excerpt || makeExcerpt(body.content)
     }
     if (body.date !== undefined) news[index].date = body.date
-    await saveNews(news)
+    await saveNews(sortByDate(news))
     return NextResponse.json({ success: true, item: news[index] })
 }
 

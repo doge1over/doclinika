@@ -410,7 +410,7 @@ export default function NewsAdmin() {
                                     </label>
                                 </div>
                             </div>
-                            <textarea ref={contentRef} placeholder="Текст новости (поддерживается HTML)..." value={content} onChange={e => setContent(e.target.value)} rows={12} className="adm-textarea" />
+                            <textarea ref={contentRef} placeholder="Текст новости. Двойной перенос строки = новый абзац. Поддерживается HTML." value={content} onChange={e => setContent(e.target.value)} rows={12} className="adm-textarea" />
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '4px' }}>
                                 <span style={{ fontSize: '12px', color: '#9ca3af' }}>{content.length} символов</span>
                                 {content && <button onClick={() => setShowPreview(!showPreview)} className="adm-preview-btn">{showPreview ? 'Скрыть предпросмотр' : 'Предпросмотр'}</button>}
@@ -422,7 +422,7 @@ export default function NewsAdmin() {
                                 <div className="adm-preview-tag">Предпросмотр</div>
                                 <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#111827', margin: '0 0 6px' }}>{title || 'Без заголовка'}</h3>
                                 <p style={{ fontSize: '12px', color: '#9ca3af', margin: '0 0 12px' }}>{date ? isoToRuDate(date) : new Date().toLocaleDateString('ru-RU')}</p>
-                                <div className="adm-preview-content" dangerouslySetInnerHTML={{ __html: groupConsecutiveImages(content) }} />
+                                <div className="adm-preview-content" dangerouslySetInnerHTML={{ __html: groupConsecutiveImages(formatContent(content)) }} />
                             </div>
                         )}
 
@@ -539,11 +539,19 @@ const CSS = `
 .adm-preview{background:#fafafa;border-radius:12px;padding:20px;border:1px solid #f3f4f6;position:relative}
 .adm-preview-tag{position:absolute;top:-10px;left:16px;background:#fafafa;padding:0 8px;font-size:11px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 .adm-preview-content{font-size:14px;color:#374151;line-height:1.65}
+.adm-preview-content p{margin-bottom:12px;line-height:1.7}
+.adm-preview-content div{margin-bottom:10px;line-height:1.7}
+.adm-preview-content h2{font-size:18px;font-weight:700;color:#111827;margin:20px 0 10px}
+.adm-preview-content h3{font-size:16px;font-weight:700;color:#111827;margin:16px 0 8px}
+.adm-preview-content blockquote{border-left:4px solid #F28F20;padding:10px 16px;margin:12px 0;background:#FFF7ED;border-radius:0 8px 8px 0;font-style:italic}
 .adm-preview-content img{display:block;height:auto;border-radius:8px;margin:10px 0;box-shadow:0 2px 8px rgba(0,0,0,.08);cursor:pointer;transition:opacity .2s}
 .adm-preview-content img:hover{opacity:.85}
 .adm-preview-content .news-img-row{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;margin:10px 0}
 .adm-preview-content .news-img-row img{margin:0!important;flex-shrink:0}
-.adm-preview-content p{margin-bottom:12px;line-height:1.7}
+.adm-preview-content ul,.adm-preview-content ol{padding-left:24px;margin:12px 0}
+.adm-preview-content li{margin-bottom:6px;line-height:1.6}
+.adm-preview-content strong,.adm-preview-content b{color:#111827;font-weight:600}
+.adm-preview-content a{color:#F28F20;text-decoration:underline}
 .adm-spin{width:24px;height:24px;border:2.5px solid #e5e7eb;border-top-color:#F28F20;border-radius:50%;animation:spin .7s linear infinite}
 .adm-spin-sm{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
 .adm-search-wrap{position:relative;padding:0 24px;margin:16px 0 0}
