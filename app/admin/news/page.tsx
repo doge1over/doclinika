@@ -223,6 +223,7 @@ export default function NewsAdmin() {
             const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg'
             const filename = `uploads/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
             const blob = await upload(filename, file, {
+                access: 'public',
                 handleUploadUrl: '/api/upload',
                 clientPayload: token || '',
             })
