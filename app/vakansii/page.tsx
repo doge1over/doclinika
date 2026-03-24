@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import ScrollToTop from '@/components/ScrollToTop'
 import LanguageSwitcher from '@/translations/LanguageSwitcher'
 import { translations, Language } from '@/translations/translations'
@@ -27,6 +27,71 @@ const menuItems = [
     { href: '/category/news', title: 'Новости' },
     { href: '/kontakty', title: 'Контакты' },
 ]
+
+// HH виджет — пересоздаётся при изменении ширины экрана
+function getHHSize(containerWidth: number) {
+    const w = containerWidth - 4 // border
+    if (w < 350) return { width: w, height: 560, perPage: 6, logo: false, region: false }
+    if (w < 500) return { width: w, height: 560, perPage: 6, logo: false, region: false }
+    if (w < 650) return { width: w, height: 560, perPage: 6, logo: false, region: true }
+    return { width: w, height: 560, perPage: 6, logo: true, region: true }
+}
+
+function buildSrcDoc(config: { width: number; height: number; perPage: number; logo: boolean; region: boolean }) {
+    return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;padding:0;overflow:hidden;background:#fff;}</style></head><body><script type="module" class="widgetHhScript">import initVacanciesWidget from 'https://widgets.hh.ru/vacanciesWidget/vacanciesWidget.js';initVacanciesWidget({"country":"RU","searchParams":{"employerId":["2543983"],"host":"hh.ru","locale":"RU","perPage":${config.perPage}},"settings":{"locale":"RU","theme":"LIGHT","size":{"width":${config.width},"height":${config.height}},"elementsOrder":"NAME_SALARY_AREA_EMPLOYER","isLogoVisible":${config.logo},"isRegionVisible":${config.region},"isRegionSearchEnabled":false,"isProfRolesSearchEnabled":false,"isSalaryVisible":true},"version":"1"});<\/script></body></html>`
+}
+
+function HHWidget() {
+    const [srcDoc, setSrcDoc] = useState('')
+    const [height, setHeight] = useState(400)
+    const containerRef = useRef<HTMLDivElement>(null)
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+    const prevKeyRef = useRef('')
+
+    useEffect(() => {
+        function apply() {
+            const el = containerRef.current
+            if (!el) return
+            const w = el.offsetWidth
+            if (w < 10) return
+            const config = getHHSize(w)
+            const newKey = `${config.width}-${config.perPage}`
+            if (newKey === prevKeyRef.current) return
+            prevKeyRef.current = newKey
+            setSrcDoc(buildSrcDoc(config))
+            setHeight(config.height)
+        }
+
+        requestAnimationFrame(apply)
+
+        const handleResize = () => {
+            if (timerRef.current) clearTimeout(timerRef.current)
+            timerRef.current = setTimeout(apply, 300)
+        }
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize)
+            if (timerRef.current) clearTimeout(timerRef.current)
+        }
+    }, [])
+
+    return (
+        <div ref={containerRef} className="rounded-xl sm:rounded-2xl shadow-md overflow-hidden border border-gray-200">
+            {!srcDoc ? (
+                <div className="flex items-center justify-center bg-gray-50" style={{ height: '400px' }}>
+                    <div className="text-center text-gray-400 text-sm">Загрузка вакансий...</div>
+                </div>
+            ) : (
+                <iframe
+                    srcDoc={srcDoc}
+                    className="border-0 w-full"
+                    style={{ height: `${height}px`, display: 'block' }}
+                    title="Вакансии hh.ru"
+                />
+            )}
+        </div>
+    )
+}
 
 export default function Vakansii() {
     const [lang, setLang] = useState<Language>('ru')
@@ -74,16 +139,6 @@ export default function Vakansii() {
                         <div className="px-4 py-4 space-y-3">
                             <Link href="/zayavka-doklinicheskie" className="block w-full px-4 py-3 bg-[#F28F20] hover:bg-[#e07d10] text-white text-center font-medium rounded-lg transition-all">Заявка на доклинические исследования</Link>
                             <Link href="/zayavka-nir" className="block w-full px-4 py-3 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white text-center font-medium rounded-lg transition-all">Заявка на НИР</Link>
-                            <div className="border-t border-gray-100 my-3"></div>
-                            <Link href="/" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">Главная</Link>
-                            <Link href="/o-nas" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">О нас</Link>
-                            <Link href="/vakansii" className="block px-4 py-2 text-[#F28F20] bg-[#F28F20]/10 font-medium rounded-lg">Вакансии</Link>
-                            <Link href="/kontakty" className="block px-4 py-2 text-gray-700 hover:bg-[#F28F20]/10 hover:text-[#F28F20] rounded-lg transition">Контакты</Link>
-                            <div className="border-t border-gray-100 my-3"></div>
-                            <div className="px-4 py-2 space-y-2">
-                                <a href={`tel:${t.phone}`} className="flex items-center gap-2 text-gray-700"><svg className="w-4 h-4 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg><span className="font-medium">{t.phone}</span></a>
-                                <a href={`mailto:${t.email}`} className="flex items-center gap-2 text-gray-500 text-sm"><svg className="w-4 h-4 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg><span>{t.email}</span></a>
-                            </div>
                         </div>
                     </div>
                 )}
@@ -149,31 +204,14 @@ export default function Vakansii() {
                             {/* Header */}
                             <div className="px-6 sm:px-8 py-6 sm:py-8" style={{ background: 'linear-gradient(to right, #F28F20, #e07d10)' }}>
                                 <h1 className="text-2xl sm:text-3xl font-bold text-white">Вакансии</h1>
+                                <p className="text-white/80 mt-2 text-sm sm:text-base">Присоединяйтесь к команде АО «НПО «ДОМ ФАРМАЦИИ»</p>
                             </div>
 
                             {/* Content */}
-                            <div className="px-6 sm:px-8 py-6 sm:py-8 space-y-6">
+                            <div className="px-4 sm:px-6 md:px-8 py-6 sm:py-8 space-y-6">
 
-                                {/* Intro */}
-                                <div className="bg-[#F28F20]/10 border border-[#F28F20]/30 rounded-xl p-4 sm:p-6">
-                                    <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-                                        <svg className="w-5 h-5 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                                        Присоединяйтесь к нашей команде!
-                                    </h3>
-                                    <p className="text-gray-700 leading-relaxed">
-                                        АО «НПО «ДОМ ФАРМАЦИИ» — это современный научно-исследовательский центр, где работают профессионалы в области доклинических исследований. Мы ценим каждого сотрудника и предлагаем интересные задачи, комфортные условия труда и возможности для профессионального роста.
-                                    </p>
-                                </div>
-
-                                {/* HH Widget Container */}
-                                <div className="rounded-3xl shadow-lg overflow-hidden w-full">
-                                    <iframe
-                                        srcDoc={`<!DOCTYPE html><html><head><meta charset="utf-8"><style>body{margin:0;padding:0;overflow:hidden;background:#fff;}</style></head><body><script type="module" class="widgetHhScript">import initVacanciesWidget from 'https://widgets.hh.ru/vacanciesWidget/vacanciesWidget.js';initVacanciesWidget({"country":"RU","searchParams":{"employerId":["2543983"],"host":"hh.ru","locale":"RU","perPage":6},"settings":{"locale":"RU","theme":"LIGHT","size":{"width":840,"height":724},"elementsOrder":"NAME_SALARY_AREA_EMPLOYER","isLogoVisible":true,"isRegionVisible":true,"isRegionSearchEnabled":false,"isProfRolesSearchEnabled":false,"isSalaryVisible":true},"version":"1"});</script></body></html>`}
-                                        className="border-0 w-full"
-                                        style={{ height: '724px' }}
-                                        title="Вакансии hh.ru"
-                                    />
-                                </div>
+                                {/* HH Widget */}
+                                <HHWidget />
 
                                 {/* Наши гарантии */}
                                 <div className="bg-[#146FA8]/5 border border-[#146FA8]/20 rounded-xl p-4 sm:p-6">
@@ -226,7 +264,7 @@ export default function Vakansii() {
                                     <p className="text-sm text-gray-700 font-medium">Выбирайте место, где ваш талант будет по‑настоящему оценён!</p>
                                 </div>
 
-                                {/* Contact Info */}
+                                {/* Контакты */}
                                 <div className="bg-[#14B7E0]/10 border border-[#14B7E0]/30 rounded-xl p-4 sm:p-6">
                                     <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
                                         <svg className="w-5 h-5 text-[#14B7E0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
