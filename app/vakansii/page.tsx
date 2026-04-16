@@ -210,6 +210,31 @@ export default function Vakansii() {
                             {/* Content */}
                             <div className="px-4 sm:px-6 md:px-8 py-6 sm:py-8 space-y-6">
 
+                                {/* Присоединяйтесь */}
+                                <div className="bg-[#F28F20]/10 border border-[#F28F20]/30 rounded-xl p-4 sm:p-6">
+                                    <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                        <svg className="w-5 h-5 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                                        Присоединяйтесь к АО «НПО «ДОМ ФАРМАЦИИ»»!
+                                    </h3>
+                                    <p className="text-gray-600 text-sm mb-4">Мы — современный научно‑исследовательский центр, где ценят профессионализм и создают все условия для успеха</p>
+                                    <p className="text-gray-900 font-semibold text-sm mb-3">Вас ждут:</p>
+                                    <div className="space-y-3 mb-4">
+                                        <div className="flex items-start gap-2">
+                                            <svg className="w-4 h-4 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                            <span className="text-sm text-gray-700"><strong>Увлекательные задачи.</strong> Вы будете работать над передовыми научными проектами в команде единомышленников.</span>
+                                        </div>
+                                        <div className="flex items-start gap-2">
+                                            <svg className="w-4 h-4 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                            <span className="text-sm text-gray-700"><strong>Комфортная среда.</strong> Мы позаботились о том, чтобы ваше рабочее место способствовало продуктивности и вдохновению.</span>
+                                        </div>
+                                        <div className="flex items-start gap-2">
+                                            <svg className="w-4 h-4 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                            <span className="text-sm text-gray-700"><strong>Перспективы развития.</strong> Ваш профессиональный рост — наша общая цель. Мы предоставляем доступ к обучению и помогаем строить карьеру.</span>
+                                        </div>
+                                    </div>
+                                    <p className="text-sm text-gray-700 font-medium">Выбирайте место, где ваш талант будет по‑настоящему оценён!</p>
+                                </div>
+
                                 {/* HH Widget */}
                                 <HHWidget />
 
@@ -237,31 +262,6 @@ export default function Vakansii() {
                                             </div>
                                         ))}
                                     </div>
-                                </div>
-
-                                {/* Присоединяйтесь */}
-                                <div className="bg-[#F28F20]/10 border border-[#F28F20]/30 rounded-xl p-4 sm:p-6">
-                                    <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
-                                        <svg className="w-5 h-5 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                                        Присоединяйтесь к АО «НПО «ДОМ ФАРМАЦИИ»»!
-                                    </h3>
-                                    <p className="text-gray-600 text-sm mb-4">Мы — современный научно‑исследовательский центр, где ценят профессионализм и создают все условия для успеха</p>
-                                    <p className="text-gray-900 font-semibold text-sm mb-3">Вас ждут:</p>
-                                    <div className="space-y-3 mb-4">
-                                        <div className="flex items-start gap-2">
-                                            <svg className="w-4 h-4 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                                            <span className="text-sm text-gray-700"><strong>Увлекательные задачи.</strong> Вы будете работать над передовыми научными проектами в команде единомышленников.</span>
-                                        </div>
-                                        <div className="flex items-start gap-2">
-                                            <svg className="w-4 h-4 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                                            <span className="text-sm text-gray-700"><strong>Комфортная среда.</strong> Мы позаботились о том, чтобы ваше рабочее место способствовало продуктивности и вдохновению.</span>
-                                        </div>
-                                        <div className="flex items-start gap-2">
-                                            <svg className="w-4 h-4 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                                            <span className="text-sm text-gray-700"><strong>Перспективы развития.</strong> Ваш профессиональный рост — наша общая цель. Мы предоставляем доступ к обучению и помогаем строить карьеру.</span>
-                                        </div>
-                                    </div>
-                                    <p className="text-sm text-gray-700 font-medium">Выбирайте место, где ваш талант будет по‑настоящему оценён!</p>
                                 </div>
 
                                 {/* Контакты */}
