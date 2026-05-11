@@ -38,7 +38,7 @@ function getHHSize(containerWidth: number) {
 }
 
 function buildSrcDoc(config: { width: number; height: number; perPage: number; logo: boolean; region: boolean }) {
-    return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;padding:0;overflow:hidden;background:#fff;}</style></head><body><script type="module" class="widgetHhScript">import initVacanciesWidget from 'https://widgets.hh.ru/vacanciesWidget/vacanciesWidget.js';initVacanciesWidget({"country":"RU","searchParams":{"employerId":["2543983"],"host":"hh.ru","locale":"RU","perPage":${config.perPage}},"settings":{"locale":"RU","theme":"LIGHT","size":{"width":${config.width},"height":${config.height}},"elementsOrder":"NAME_SALARY_AREA_EMPLOYER","isLogoVisible":${config.logo},"isRegionVisible":${config.region},"isRegionSearchEnabled":false,"isProfRolesSearchEnabled":false,"isSalaryVisible":true},"version":"1"});<\/script></body></html>`
+    return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;padding:0;overflow:hidden;background:#f1f4f9;}</style></head><body><script type="module" class="widgetHhScript">import initVacanciesWidget from 'https://widgets.hh.ru/vacanciesWidget/vacanciesWidget.js';initVacanciesWidget({"country":"RU","searchParams":{"employerId":["2543983"],"host":"hh.ru","locale":"RU","perPage":${config.perPage}},"settings":{"locale":"RU","theme":"LIGHT","size":{"width":${config.width},"height":${config.height}},"elementsOrder":"NAME_SALARY_AREA_EMPLOYER","isLogoVisible":${config.logo},"isRegionVisible":${config.region},"isRegionSearchEnabled":false,"isProfRolesSearchEnabled":false,"isSalaryVisible":true},"version":"1"});<\/script></body></html>`
 }
 
 function HHWidget() {
@@ -76,9 +76,9 @@ function HHWidget() {
     }, [])
 
     return (
-        <div ref={containerRef} className="rounded-xl sm:rounded-2xl shadow-md overflow-hidden border border-gray-200">
+        <div ref={containerRef} className="rounded-xl sm:rounded-2xl shadow-md overflow-hidden border border-gray-200" style={{ background: '#f1f4f9' }}>
             {!srcDoc ? (
-                <div className="flex items-center justify-center bg-gray-50" style={{ height: '400px' }}>
+                <div className="flex items-center justify-center" style={{ height: '400px', background: '#f1f4f9' }}>
                     <div className="text-center text-gray-400 text-sm">Загрузка вакансий...</div>
                 </div>
             ) : (
