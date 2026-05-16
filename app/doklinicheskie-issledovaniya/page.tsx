@@ -6,10 +6,87 @@ import LanguageSwitcher from '@/translations/LanguageSwitcher'
 import { translations, Language } from '@/translations/translations'
 import Link from 'next/link'
 
+const BRANCHES = [
+    { id: 'tox', title: 'Токсикология', color: '#F28F20', items: ['Острая токсичность', 'Субхроническая токсичность', 'Хроническая токсичность', 'Генотоксичность'] },
+    { id: 'safety', title: 'Фармакобезопасность', color: '#E91E63', items: ['Сердечно-сосудистая система', 'Дыхательная система', 'Центральная нервная система'] },
+    { id: 'immuno', title: 'Иммунология', color: '#00BCD4', items: ['Иммуногенность', 'Иммунотоксикология', 'Аллергенность'] },
+    { id: 'bio', title: 'Биоанализ', color: '#03A9F4', items: ['Разработка методик', 'Валидация методик', 'Биоматрицы'] },
+    { id: 'pharm', title: 'Фармакология', color: '#146FA8', items: ['Специфическая активность', 'Дозозависимые эффекты', 'Безопасность', 'Фармакодинамика'] },
+    { id: 'pk', title: 'Фармакокинетика', color: '#14B7E0', items: ['ADME-исследования', 'Биодоступность', 'Распределение и метаболизм'] },
+    { id: 'repro', title: 'Репродуктивная токсичность', color: '#9C27B0', items: ['Фертильность', 'Эмбриофетальное развитие', 'Постнатальное развитие'] },
+    { id: 'onco', title: 'Канцерогенность', color: '#FF9800', items: ['Исследования in vivo', 'Исследования in vitro', 'Долгосрочные исследования'] },
+]
+
+function MindMapMobile() {
+    return (
+        <div className="md:hidden space-y-8 py-2">
+            {BRANCHES.map(branch => (
+                <div key={branch.id}>
+                    <div
+                        className="inline-block px-5 py-2.5 rounded-full border-2 bg-white font-semibold text-base"
+                        style={{ borderColor: branch.color, color: branch.color }}
+                    >
+                        {branch.title}
+                    </div>
+                    <div className="ml-5 mt-2">
+                        {branch.items.map((item, i) => {
+                            const isLast = i === branch.items.length - 1
+                            return (
+                                <div key={i} className="flex items-stretch">
+                                    <div className="relative w-6 shrink-0">
+                                        {/* Вертикальный ствол: до низа или до начала дуги (для последнего) */}
+                                        <div
+                                            className="absolute left-0 top-0 w-0.5"
+                                            style={{
+                                                backgroundColor: branch.color,
+                                                bottom: isLast ? 'calc(50% + 10px)' : 0,
+                                            }}
+                                        />
+                                        {/* Дуга — четверть круга, точно соединяющая ствол с горизонталью */}
+                                        <svg
+                                            className="absolute"
+                                            style={{
+                                                left: 0,
+                                                top: 'calc(50% - 10px)',
+                                                width: '12px',
+                                                height: '11px',
+                                                overflow: 'visible',
+                                            }}
+                                            viewBox="0 0 12 11"
+                                        >
+                                            <path
+                                                d="M 1 0 A 10 10 0 0 0 11 10"
+                                                fill="none"
+                                                stroke={branch.color}
+                                                strokeWidth="2"
+                                            />
+                                        </svg>
+                                        {/* Горизонтальное продолжение */}
+                                        <div
+                                            className="absolute h-0.5"
+                                            style={{
+                                                left: '11px',
+                                                right: 0,
+                                                top: 'calc(50% - 1px)',
+                                                backgroundColor: branch.color,
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="py-2 text-[15px] text-gray-700 leading-snug">{item}</div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
+            ))}
+        </div>
+    )
+}
+
 function MindMapSVG({ active, setActive }: { active: string | null; setActive: (id: string | null) => void }) {
     const dim = (id: string) => active !== null && active !== id ? 'mm-dim' : ''
     return (
-        <svg viewBox="-160 0 1760 880" preserveAspectRatio="xMidYMid meet" className="mm-svg" onMouseLeave={() => setActive(null)}>
+        <svg viewBox="-220 0 1940 880" preserveAspectRatio="xMidYMid meet" className="mm-svg" onMouseLeave={() => setActive(null)}>
             <defs>
                 <linearGradient id="g-tox" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#F28F20"/><stop offset="1" stopColor="#FFB877"/></linearGradient>
                 <linearGradient id="g-safety" x1="1" y1="0" x2="0" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#E91E63"/><stop offset="1" stopColor="#F779A8"/></linearGradient>
@@ -76,40 +153,40 @@ function MindMapSVG({ active, setActive }: { active: string | null; setActive: (
                 <text className="mm-sub" x="60" y="795" textAnchor="end" dominantBaseline="central">Биоматрицы</text>
             </g>
 
-            {/* RIGHT */}
+            {/* RIGHT — у всех групп текст начинается с x=1410, кривые заканчиваются в x=1400 */}
             <g className={`mm-branch ${dim('pharm')}`} onMouseEnter={() => setActive('pharm')}>
                 <path d="M 820 420 C 920 380 960 230 1020 200" stroke="url(#g-pharm)" strokeWidth="2.5"/>
                 <rect x="1020" y="175" width="170" height="50" rx="25" fill="#fff" stroke="#146FA8" strokeWidth="2"/>
                 <text className="mm-pill" x="1105" y="202" textAnchor="middle" dominantBaseline="central" fill="#146FA8">Фармакология</text>
-                <path d="M 1190 200 L 1250 200" stroke="#146FA8" strokeWidth="2"/>
-                <path d="M 1250 200 C 1280 193 1310 100 1340 90" stroke="#146FA8" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="1350" y="90" textAnchor="start" dominantBaseline="central">Специфическая активность</text>
-                <path d="M 1250 200 C 1280 196 1320 150 1340 145" stroke="#146FA8" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="1350" y="145" textAnchor="start" dominantBaseline="central">Дозозависимые эффекты</text>
-                <path d="M 1250 200 C 1280 207 1320 252 1340 258" stroke="#146FA8" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="1350" y="258" textAnchor="start" dominantBaseline="central">Безопасность</text>
-                <path d="M 1250 200 C 1280 215 1320 310 1340 318" stroke="#146FA8" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="1350" y="318" textAnchor="start" dominantBaseline="central">Фармакодинамика</text>
+                <path d="M 1190 200 L 1310 200" stroke="#146FA8" strokeWidth="2"/>
+                <path d="M 1310 200 C 1340 193 1370 100 1400 90" stroke="#146FA8" strokeWidth="1.5" opacity="0.85"/>
+                <text className="mm-sub" x="1410" y="90" textAnchor="start" dominantBaseline="central">Специфическая активность</text>
+                <path d="M 1310 200 C 1340 196 1380 150 1400 145" stroke="#146FA8" strokeWidth="1.5" opacity="0.85"/>
+                <text className="mm-sub" x="1410" y="145" textAnchor="start" dominantBaseline="central">Дозозависимые эффекты</text>
+                <path d="M 1310 200 C 1340 207 1380 252 1400 258" stroke="#146FA8" strokeWidth="1.5" opacity="0.85"/>
+                <text className="mm-sub" x="1410" y="258" textAnchor="start" dominantBaseline="central">Безопасность</text>
+                <path d="M 1310 200 C 1340 215 1380 310 1400 318" stroke="#146FA8" strokeWidth="1.5" opacity="0.85"/>
+                <text className="mm-sub" x="1410" y="318" textAnchor="start" dominantBaseline="central">Фармакодинамика</text>
             </g>
 
             <g className={`mm-branch ${dim('pk')}`} onMouseEnter={() => setActive('pk')}>
                 <path d="M 820 425 C 900 405 940 360 1020 350" stroke="url(#g-pk)" strokeWidth="2.5"/>
                 <rect x="1020" y="325" width="195" height="50" rx="25" fill="#fff" stroke="#14B7E0" strokeWidth="2"/>
                 <text className="mm-pill" x="1117" y="352" textAnchor="middle" dominantBaseline="central" fill="#14B7E0">Фармакокинетика</text>
-                <path d="M 1215 350 L 1260 350" stroke="#14B7E0" strokeWidth="2"/>
-                <path d="M 1260 350 C 1290 343 1320 383 1340 380" stroke="#14B7E0" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="1350" y="380" textAnchor="start" dominantBaseline="central">ADME-исследования</text>
-                <path d="M 1260 350 C 1290 357 1320 422 1340 425" stroke="#14B7E0" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="1350" y="425" textAnchor="start" dominantBaseline="central">Биодоступность</text>
-                <path d="M 1260 350 C 1290 362 1320 470 1340 475" stroke="#14B7E0" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="1350" y="475" textAnchor="start" dominantBaseline="central">Распределение и метаболизм</text>
+                <path d="M 1215 350 L 1320 350" stroke="#14B7E0" strokeWidth="2"/>
+                <path d="M 1320 350 C 1350 343 1380 383 1400 380" stroke="#14B7E0" strokeWidth="1.5" opacity="0.85"/>
+                <text className="mm-sub" x="1410" y="380" textAnchor="start" dominantBaseline="central">ADME-исследования</text>
+                <path d="M 1320 350 C 1350 357 1380 422 1400 425" stroke="#14B7E0" strokeWidth="1.5" opacity="0.85"/>
+                <text className="mm-sub" x="1410" y="425" textAnchor="start" dominantBaseline="central">Биодоступность</text>
+                <path d="M 1320 350 C 1350 362 1380 470 1400 475" stroke="#14B7E0" strokeWidth="1.5" opacity="0.85"/>
+                <text className="mm-sub" x="1410" y="475" textAnchor="start" dominantBaseline="central">Распределение и метаболизм</text>
             </g>
 
             <g className={`mm-branch ${dim('repro')}`} onMouseEnter={() => setActive('repro')}>
                 <path d="M 820 440 C 900 460 940 500 1020 510" stroke="url(#g-repro)" strokeWidth="2.5"/>
-                <rect x="1020" y="485" width="290" height="50" rx="25" fill="#fff" stroke="#9C27B0" strokeWidth="2"/>
-                <text className="mm-pill" x="1165" y="512" textAnchor="middle" dominantBaseline="central" fill="#9C27B0">Репродуктивная токсичность</text>
-                <path d="M 1310 510 L 1350 510" stroke="#9C27B0" strokeWidth="2"/>
+                <rect x="1020" y="485" width="320" height="50" rx="25" fill="#fff" stroke="#9C27B0" strokeWidth="2"/>
+                <text className="mm-pill" x="1180" y="512" textAnchor="middle" dominantBaseline="central" fill="#9C27B0">Репродуктивная токсичность</text>
+                <path d="M 1340 510 L 1350 510" stroke="#9C27B0" strokeWidth="2"/>
                 <path d="M 1350 510 C 1370 503 1390 538 1400 535" stroke="#9C27B0" strokeWidth="1.5" opacity="0.85"/>
                 <text className="mm-sub" x="1410" y="535" textAnchor="start" dominantBaseline="central">Фертильность</text>
                 <path d="M 1350 510 C 1370 518 1390 575 1400 578" stroke="#9C27B0" strokeWidth="1.5" opacity="0.85"/>
@@ -122,17 +199,17 @@ function MindMapSVG({ active, setActive }: { active: string | null; setActive: (
                 <path d="M 820 445 C 900 530 940 660 1020 680" stroke="url(#g-onco)" strokeWidth="2.5"/>
                 <rect x="1020" y="655" width="195" height="50" rx="25" fill="#fff" stroke="#FF9800" strokeWidth="2"/>
                 <text className="mm-pill" x="1117" y="682" textAnchor="middle" dominantBaseline="central" fill="#FF9800">Канцерогенность</text>
-                <path d="M 1215 680 L 1260 680" stroke="#FF9800" strokeWidth="2"/>
-                <path d="M 1260 680 C 1290 677 1320 700 1340 698" stroke="#FF9800" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="1350" y="698" textAnchor="start" dominantBaseline="central">Исследования in vivo</text>
-                <path d="M 1260 680 C 1290 687 1320 738 1340 740" stroke="#FF9800" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="1350" y="740" textAnchor="start" dominantBaseline="central">Исследования in vitro</text>
-                <path d="M 1260 680 C 1290 693 1320 778 1340 783" stroke="#FF9800" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="1350" y="783" textAnchor="start" dominantBaseline="central">Долгосрочные исследования</text>
+                <path d="M 1215 680 L 1320 680" stroke="#FF9800" strokeWidth="2"/>
+                <path d="M 1320 680 C 1350 677 1380 700 1400 698" stroke="#FF9800" strokeWidth="1.5" opacity="0.85"/>
+                <text className="mm-sub" x="1410" y="698" textAnchor="start" dominantBaseline="central">Исследования in vivo</text>
+                <path d="M 1320 680 C 1350 687 1380 738 1400 740" stroke="#FF9800" strokeWidth="1.5" opacity="0.85"/>
+                <text className="mm-sub" x="1410" y="740" textAnchor="start" dominantBaseline="central">Исследования in vitro</text>
+                <path d="M 1320 680 C 1350 693 1380 778 1400 783" stroke="#FF9800" strokeWidth="1.5" opacity="0.85"/>
+                <text className="mm-sub" x="1410" y="783" textAnchor="start" dominantBaseline="central">Долгосрочные исследования</text>
             </g>
 
             {/* Центр */}
-            <g>
+            <g onMouseEnter={() => setActive(null)}>
                 <rect x="680" y="395" width="160" height="70" rx="35" fill="#fff" stroke="#F28F20" strokeWidth="2.5"/>
                 <text x="760" y="423" textAnchor="middle" dominantBaseline="central" fill="#F28F20" fontSize="20" fontWeight="700" fontFamily="system-ui">ДОМ</text>
                 <text x="760" y="447" textAnchor="middle" dominantBaseline="central" fill="#F28F20" fontSize="13" fontWeight="600" fontFamily="system-ui" letterSpacing="0.05em">ФАРМАЦИИ</text>
@@ -215,7 +292,10 @@ export default function DoklinicheskieIssledovaniya() {
 
             {/* Mind Map */}
             <section className="max-w-[1500px] mx-auto px-4 py-8">
-                <MindMapSVG active={active} setActive={setActive} />
+                <div className="hidden md:block">
+                    <MindMapSVG active={active} setActive={setActive} />
+                </div>
+                <MindMapMobile />
             </section>
 
             {/* CTA */}
@@ -269,8 +349,8 @@ export default function DoklinicheskieIssledovaniya() {
 const CSS = `
 .mm-svg{width:100%;height:auto;display:block}
 .mm-svg path{fill:none;stroke-linecap:round}
-.mm-branch{transition:opacity 0.3s;cursor:default}
+.mm-branch{transition:opacity 0.15s;cursor:default}
 .mm-dim{opacity:0.18}
-.mm-pill{font-size:17px;font-weight:600;font-family:system-ui,sans-serif}
-.mm-sub{font-size:15px;font-weight:400;fill:#4a4a4a;font-family:system-ui,sans-serif}
+.mm-pill{font-size:18px;font-weight:600;font-family:system-ui,sans-serif}
+.mm-sub{font-size:19px;font-weight:400;fill:#4a4a4a;font-family:system-ui,sans-serif}
 `
