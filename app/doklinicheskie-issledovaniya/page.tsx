@@ -125,10 +125,10 @@ function MindMapSVG({ active, setActive }: { active: string | null; setActive: (
             </g>
 
             <g className={`mm-branch ${dim('safety')}`} onMouseEnter={() => setActive('safety')}>
-                <path d="M 700 425 C 620 405 580 360 500 350" stroke="url(#g-safety)" strokeWidth="2.5"/>
-                <rect x="270" y="325" width="230" height="50" rx="25" fill="#fff" stroke="#E91E63" strokeWidth="2"/>
-                <text className="mm-pill" x="385" y="352" textAnchor="middle" dominantBaseline="central" fill="#E91E63">Фармакобезопасность</text>
-                <path d="M 270 350 L 260 350" stroke="#E91E63" strokeWidth="2"/>
+                <path d="M 700 425 C 620 405 580 360 520 350" stroke="url(#g-safety)" strokeWidth="2.5"/>
+                <rect x="280" y="325" width="240" height="50" rx="25" fill="#fff" stroke="#E91E63" strokeWidth="2"/>
+                <text className="mm-pill" x="400" y="352" textAnchor="middle" dominantBaseline="central" fill="#E91E63">Фармакобезопасность</text>
+                <path d="M 280 350 L 260 350" stroke="#E91E63" strokeWidth="2"/>
                 <path d="M 260 350 C 210 343 150 385 70 380" stroke="#E91E63" strokeWidth="1.5" opacity="0.85"/>
                 <text className="mm-sub" x="60" y="380" textAnchor="end" dominantBaseline="central">Сердечно-сосудистая система</text>
                 <path d="M 260 350 C 210 357 150 425 70 430" stroke="#E91E63" strokeWidth="1.5" opacity="0.85"/>
@@ -140,9 +140,9 @@ function MindMapSVG({ active, setActive }: { active: string | null; setActive: (
             <a href="/immunogennost-aktivnost" aria-label="Иммуногенность и активность">
             <g className={`mm-branch mm-link ${dim('immuno')}`} onMouseEnter={() => setActive('immuno')}>
                 <path d="M 700 440 C 620 460 580 500 500 510" stroke="url(#g-immuno)" strokeWidth="2.5"/>
-                <rect x="340" y="485" width="160" height="50" rx="25" fill="#fff" stroke="#00BCD4" strokeWidth="2"/>
-                <text className="mm-pill" x="420" y="512" textAnchor="middle" dominantBaseline="central" fill="#00BCD4">Иммуногенность</text>
-                <path d="M 340 510 L 260 510" stroke="#00BCD4" strokeWidth="2"/>
+                <rect x="310" y="485" width="190" height="50" rx="25" fill="#fff" stroke="#00BCD4" strokeWidth="2"/>
+                <text className="mm-pill" x="405" y="512" textAnchor="middle" dominantBaseline="central" fill="#00BCD4">Иммуногенность</text>
+                <path d="M 310 510 L 260 510" stroke="#00BCD4" strokeWidth="2"/>
                 <path d="M 260 510 C 210 503 150 545 70 540" stroke="#00BCD4" strokeWidth="1.5" opacity="0.85"/>
                 <text className="mm-sub" x="60" y="540" textAnchor="end" dominantBaseline="central">Оценка иммуногенности</text>
                 <path d="M 260 510 C 210 518 150 580 70 585" stroke="#00BCD4" strokeWidth="1.5" opacity="0.85"/>
@@ -155,9 +155,9 @@ function MindMapSVG({ active, setActive }: { active: string | null; setActive: (
             <a href="/farmacevticheskaya-razrabotka" aria-label="Фармацевтическая разработка">
             <g className={`mm-branch mm-link ${dim('development')}`} onMouseEnter={() => setActive('development')}>
                 <path d="M 700 445 C 620 530 580 660 500 680" stroke="url(#g-bio)" strokeWidth="2.5"/>
-                <rect x="360" y="655" width="140" height="50" rx="25" fill="#fff" stroke="#03A9F4" strokeWidth="2"/>
-                <text className="mm-pill mm-pill-small" x="430" y="682" textAnchor="middle" dominantBaseline="central" fill="#03A9F4">Фармразработка</text>
-                <path d="M 360 680 L 260 680" stroke="#03A9F4" strokeWidth="2"/>
+                <rect x="305" y="655" width="195" height="50" rx="25" fill="#fff" stroke="#03A9F4" strokeWidth="2"/>
+                <text className="mm-pill" x="402.5" y="682" textAnchor="middle" dominantBaseline="central" fill="#03A9F4">Фармразработка</text>
+                <path d="M 305 680 L 260 680" stroke="#03A9F4" strokeWidth="2"/>
                 <path d="M 260 680 C 210 677 150 705 70 705" stroke="#03A9F4" strokeWidth="1.5" opacity="0.85"/>
                 <text className="mm-sub" x="60" y="705" textAnchor="end" dominantBaseline="central">Преформуляция</text>
                 <path d="M 260 680 C 210 687 150 745 70 750" stroke="#03A9F4" strokeWidth="1.5" opacity="0.85"/>
@@ -368,7 +368,6 @@ const CSS = `
 .mm-branch{transition:opacity 0.15s;cursor:default}
 .mm-link{cursor:pointer}
 .mm-dim{opacity:0.18}
-.mm-pill{font-size:18px;font-weight:600;font-family:system-ui,sans-serif}
-.mm-pill-small{font-size:15px}
+.mm-pill{font-size:20px;font-weight:600;font-family:system-ui,sans-serif}
 .mm-sub{font-size:19px;font-weight:400;fill:#4a4a4a;font-family:system-ui,sans-serif}
 `
