@@ -70,10 +70,78 @@ export default function ZayavkaNIR() {
         setFormData(prev => ({ ...prev, [name]: value }))
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const [submitting, setSubmitting] = useState(false)
+    const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        console.log('Form submitted:', formData)
-        alert('Заявка отправлена! Мы свяжемся с вами в ближайшее время.')
+        setSubmitting(true)
+        setSubmitStatus('idle')
+        try {
+            const labelMap: Record<string, string> = {
+                organizationName: 'Название организации',
+                organizationAddress: 'Адрес организации',
+                contactPerson: 'ФИО контактного лица',
+                contactEmail: 'Электронная почта',
+                contactPhone: 'Телефон',
+                applicationDate: 'Дата заявки',
+                drugType: 'Тип препарата',
+                dosageForm: 'Лекарственная форма',
+                dosage: 'Дозировка',
+                primaryPackaging: 'Первичная упаковка',
+                activeSubstance: 'Действующее вещество',
+                chemicalStructure: 'Химическая структура',
+                quantitativeAnalysisMethods: 'Методы количественного анализа',
+                physicochemicalProperties: 'Физико-химические свойства',
+                pharmacologicalGroup: 'Фармакологическая группа',
+                storageConditions: 'Условия хранения',
+                stabilityInfo: 'Информация о стабильности',
+                technologyStage: 'Стадия технологии',
+                productionSite: 'Производственная площадка',
+                productionEquipment: 'Оборудование производства',
+                pilotBatchEquipment: 'Оборудование опытных партий',
+                literatureAnalysis: 'Анализ литературных данных',
+                patentSearch: 'Патентный поиск',
+                stressTestStability: 'Стабильность в стресс-тестах',
+                biopharmaceuticalSolubility: 'Биофарм. растворимость',
+                compatibilityStudy: 'Совместимость АФС',
+                methodValidation: 'Разработка и валидация методик',
+                formulationDevelopment: 'Разработка состава',
+                documentationPreparation: 'Подготовка НД',
+                labSamplesProduction: 'Наработка лаб. образцов',
+                stabilitySamples: 'Изучение стабильности образцов',
+                technologyTransfer: 'Трансфер технологии',
+                apiProvided: 'АФС предоставляется',
+                apiCertificate: 'Аналитический паспорт АФС',
+                apiDocumentation: 'Нормативная документация АФС',
+                apiStandardGSO: 'Стандарт АФС: ГСО',
+                apiStandardForeign: 'Стандарт АФС: зарубежные ФП',
+                apiStandardOther: 'Стандарт АФС: иная квалификация',
+                impurityStandardGSO: 'Стандарт примесей: ГСО',
+                impurityStandardForeign: 'Стандарт примесей: зарубежные ФП',
+                impurityStandardOther: 'Стандарт примесей: иная квалификация',
+                excipients: 'Вспомогательные вещества',
+                primaryPackagingProvided: 'Первичная упаковка предоставляется',
+                referenceProduct: 'Образцы референтного объекта',
+            }
+            const labeledData = Object.fromEntries(
+                Object.entries(formData).map(([k, v]) => [labelMap[k] || k, v])
+            )
+            const res = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ formType: 'nir', data: labeledData }),
+            })
+            if (res.ok) {
+                setSubmitStatus('success')
+            } else {
+                setSubmitStatus('error')
+            }
+        } catch {
+            setSubmitStatus('error')
+        } finally {
+            setSubmitting(false)
+        }
     }
 
     const YesNoRadio = ({ name, label }: { name: string; label: string }) => (
@@ -361,9 +429,15 @@ export default function ZayavkaNIR() {
                         </section>
 
                         <div className="pt-6 border-t border-gray-100">
-                            <button type="submit" className="w-full sm:w-auto px-8 py-4 bg-[#14B7E0] hover:bg-[#0ea5cc] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-                                Отправить заявку
+                            <button type="submit" disabled={submitting} className="w-full sm:w-auto px-8 py-4 bg-[#14B7E0] hover:bg-[#0ea5cc] disabled:opacity-60 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                                {submitting ? 'Отправка...' : 'Отправить заявку'}
                             </button>
+                            {submitStatus === 'success' && (
+                                <p className="mt-4 text-sm text-green-600 font-medium">Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.</p>
+                            )}
+                            {submitStatus === 'error' && (
+                                <p className="mt-4 text-sm text-red-600 font-medium">Ошибка при отправке. Пожалуйста, попробуйте ещё раз или свяжитесь с нами по телефону.</p>
+                            )}
                             <p className="mt-4 text-sm text-gray-500">* — обязательные поля</p>
                         </div>
                     </form>

@@ -71,10 +71,76 @@ export default function ZayavkaDKI() {
         }
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const [submitting, setSubmitting] = useState(false)
+    const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        console.log('Form submitted:', formData)
-        alert('Заявка отправлена! Мы свяжемся с вами в ближайшее время.')
+        setSubmitting(true)
+        setSubmitStatus('idle')
+        try {
+            const labelMap: Record<string, string> = {
+                organizationName: 'Название организации',
+                organizationAddress: 'Адрес организации',
+                contactPerson: 'ФИО контактного лица',
+                contactEmail: 'Электронная почта',
+                contactPhone: 'Телефон',
+                applicationDate: 'Дата заявки',
+                researchGoal: 'Цель исследования',
+                researchType: 'Тип исследования',
+                developProgram: 'Разработка программы ДКИ',
+                prepareLiteratureReview: 'Подготовка литературного обзора',
+                singleDoseToxicity: 'Токсичность при однократном введении',
+                doseRangingStudy: 'Поиск токсических доз',
+                repeatDoseToxicity: 'Токсичность при многократном введении',
+                chronicToxicity: 'Хроническая токсичность',
+                reproductiveToxicity: 'Репродуктивная токсичность',
+                immunotoxicity: 'Иммунотоксичность',
+                allergenicProperties: 'Аллергизующие свойства',
+                mutagenicity: 'Мутагенность',
+                carcinogenicity: 'Канцерогенность',
+                localTolerance: 'Местная переносимость',
+                phototoxicity: 'Фототоксичность',
+                addictivePotential: 'Аддиктивный потенциал',
+                additionalToxStudies: 'Доп. токсикологические исследования',
+                pharmacokinetics: 'Фармакокинетика',
+                pharmacodynamics: 'Фармакодинамика',
+                toxicokinetics: 'Токсикокинетика',
+                bioequivalence: 'Биоэквивалентность',
+                biopharmaceuticalStudies: 'Биофармацевтические исследования',
+                pharmacodynamicsStudy: 'Изучение фармакодинамики',
+                experimentalModelWishes: 'Пожелания по модели/дизайну',
+                individualWishes: 'Индивидуальные пожелания',
+                previousStudiesExist: 'Аналогичные исследования проводились',
+                drugInnovativeness: 'Степень инновативности',
+                innName: 'МНН',
+                tradeName: 'Торговое наименование',
+                activeSubstance: 'Действующее вещество',
+                chemicalStructure: 'Химическая структура',
+                dosageForm: 'Лекарственная форма',
+                composition: 'Состав лекарственной формы',
+                pharmacologicalGroup: 'Фармакологическая группа',
+                indications: 'Показания к применению',
+                storageConditions: 'Условия хранения',
+            }
+            const labeledData = Object.fromEntries(
+                Object.entries(formData).map(([k, v]) => [labelMap[k] || k, v])
+            )
+            const res = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ formType: 'doklinicheskie', data: labeledData }),
+            })
+            if (res.ok) {
+                setSubmitStatus('success')
+            } else {
+                setSubmitStatus('error')
+            }
+        } catch {
+            setSubmitStatus('error')
+        } finally {
+            setSubmitting(false)
+        }
     }
 
     return (
@@ -405,9 +471,15 @@ export default function ZayavkaDKI() {
                         </section>
 
                         <div className="pt-6 border-t border-gray-100">
-                            <button type="submit" className="w-full sm:w-auto px-8 py-4 bg-[#F28F20] hover:bg-[#e07d10] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-                                Отправить заявку
+                            <button type="submit" disabled={submitting} className="w-full sm:w-auto px-8 py-4 bg-[#F28F20] hover:bg-[#e07d10] disabled:opacity-60 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                                {submitting ? 'Отправка...' : 'Отправить заявку'}
                             </button>
+                            {submitStatus === 'success' && (
+                                <p className="mt-4 text-sm text-green-600 font-medium">Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.</p>
+                            )}
+                            {submitStatus === 'error' && (
+                                <p className="mt-4 text-sm text-red-600 font-medium">Ошибка при отправке. Пожалуйста, попробуйте ещё раз или свяжитесь с нами по телефону.</p>
+                            )}
                             <p className="mt-4 text-sm text-gray-500">* — обязательные поля</p>
                         </div>
                     </form>

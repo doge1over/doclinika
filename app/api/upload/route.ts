@@ -1,36 +1,46 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { handleUpload, type HandleUploadBody } from '@vercel/blob/client'
-import { validateToken } from '@/lib/auth'
+import fs from 'fs'
+import path from 'path'
+import { validateToken, getTokenFromHeaders } from '@/lib/auth'
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024
-const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml']
+const UPLOADS_DIR = path.join(process.cwd(), 'public', 'uploads')
 
 export async function POST(req: NextRequest) {
-    const body = (await req.json()) as HandleUploadBody
+    const token = getTokenFromHeaders(req.headers)
+    if (!validateToken(token)) {
+        return NextResponse.json({ error: 'Не авторизован' }, { status: 401 })
+    }
 
     try {
-        const jsonResponse = await handleUpload({
-            body,
-            request: req,
-            onBeforeGenerateToken: async (_pathname, clientPayload) => {
-                // JWT токен приходит через clientPayload от клиента
-                if (!clientPayload || !validateToken(clientPayload)) {
-                    throw new Error('Не авторизован')
-                }
+        const formData = await req.formData()
+        const file = formData.get('file') as File | null
 
-                return {
-                    allowedContentTypes: ALLOWED_TYPES,
-                    maximumSizeInBytes: MAX_FILE_SIZE,
-                }
-            },
-            onUploadCompleted: async () => {
-                // Загрузка завершена
-            },
-        })
+        if (!file) {
+            return NextResponse.json({ error: 'Файл не найден' }, { status: 400 })
+        }
 
-        return NextResponse.json(jsonResponse)
+        // Создаём папку если нет
+        if (!fs.existsSync(UPLOADS_DIR)) {
+            fs.mkdirSync(UPLOADS_DIR, { recursive: true })
+        }
+
+        // Генерируем уникальное имя
+        const ext = path.extname(file.name) || '.jpg'
+        const safeName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`
+        const filePath = path.join(UPLOADS_DIR, safeName)
+
+        // Сохраняем на диск
+        const buffer = Buffer.from(await file.arrayBuffer())
+        fs.writeFileSync(filePath, buffer)
+
+        // Возвращаем URL
+        const url = `/uploads/${safeName}`
+
+        return NextResponse.json({ success: true, url })
     } catch (error) {
-        const message = error instanceof Error ? error.message : 'Ошибка загрузки'
-        return NextResponse.json({ error: message }, { status: 400 })
+        return NextResponse.json(
+            { error: error instanceof Error ? error.message : 'Ошибка загрузки' },
+            { status: 500 }
+        )
     }
 }

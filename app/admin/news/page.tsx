@@ -219,15 +219,16 @@ export default function NewsAdmin() {
 
     const uploadFile = async (file: File): Promise<string | null> => {
         try {
-            const { upload } = await import('@vercel/blob/client')
-            const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg'
-            const filename = `uploads/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
-            const blob = await upload(filename, file, {
-                access: 'public',
-                handleUploadUrl: '/api/upload',
-                clientPayload: token || '',
+            const formData = new FormData()
+            formData.append('file', file)
+            const res = await fetch('/api/upload', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token || ''}` },
+                body: formData,
             })
-            return blob.url
+            if (!res.ok) return null
+            const data = await res.json()
+            return data.url || null
         } catch {
             return null
         }
