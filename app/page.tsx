@@ -205,7 +205,7 @@ export default function Home() {
                                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed flex-1">{t.card2Desc}</p>
                             </div>
                         </Link>
-                        <Link href="/himiko-analiticheskie-issledovaniya" className="group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col h-full border border-gray-100 hover:border-[#146FA8]">
+                        <Link href="/immunogennost-aktivnost" className="group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col h-full border border-gray-100 hover:border-[#146FA8]">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#146FA8] to-[#0d5a8a] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
                             <div className="relative z-10 flex-1 flex flex-col">
                                 <svg className="w-10 h-10 sm:w-12 sm:h-12 text-[#146FA8] mb-3 sm:mb-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>
@@ -213,7 +213,7 @@ export default function Home() {
                                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed flex-1">{t.card5Desc}</p>
                             </div>
                         </Link>
-                        <Link href="/tehnologiya-i-farmakokinetika" className="group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col h-full border border-gray-100 hover:border-[#F28F20]">
+                        <Link href="/farmacevticheskaya-razrabotka" className="group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col h-full border border-gray-100 hover:border-[#F28F20]">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F28F20] to-[#e07d10] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
                             <div className="relative z-10 flex-1 flex flex-col">
                                 <svg className="w-10 h-10 sm:w-12 sm:h-12 text-[#F28F20] mb-3 sm:mb-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
@@ -253,7 +253,7 @@ export default function Home() {
                                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed flex-1">{t.card11Desc}</p>
                             </div>
                         </Link>
-                        <Link href="/innovatsionnaya-deyatelnost" className="group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col h-full border border-gray-100 hover:border-[#146FA8]">
+                        <Link href="/farmakokinetika" className="group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col h-full border border-gray-100 hover:border-[#146FA8]">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#146FA8] to-[#0d5a8a] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
                             <div className="relative z-10 flex-1 flex flex-col">
                                 <svg className="w-10 h-10 sm:w-12 sm:h-12 text-[#146FA8] mb-3 sm:mb-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>

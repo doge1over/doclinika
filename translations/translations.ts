@@ -22,11 +22,11 @@ export const translations = {
         card4Title: 'Специалисты',
         card4Desc: 'Наша команда профессионалов',
 
-        card5Title: 'Химико-аналитическая лаборатория',
-        card5Desc: 'Методы исследования на всех этапах',
+        card5Title: 'Иммуногенность и активность',
+        card5Desc: 'Оценка иммуногенности и механизмов действия',
 
-        card6Title: 'Разработка лекарственных форм',
-        card6Desc: 'Целевая доставка субстанции',
+        card6Title: 'Фармацевтическая разработка',
+        card6Desc: 'Состав, технология и документация',
 
         card7Title: 'Отдел микробиологии',
         card7Desc: 'Оценка эффективности препаратов',
@@ -50,7 +50,7 @@ export const translations = {
         card13Desc: 'Документы и удостоверения',
 
         card14Title: 'Фармакокинетика',
-        card14Desc: 'Поиск активных ингредиентов',
+        card14Desc: 'Фармакокинетика, токсикокинетика и ADME',
 
         card15Title: 'Животные для исследований',
         card15Desc: 'Научный журнал',
@@ -100,11 +100,11 @@ export const translations = {
         card4Title: 'Specialists',
         card4Desc: 'Our team of professionals',
 
-        card5Title: 'Chemical-Analytical Laboratory',
-        card5Desc: 'Research methods at all stages',
+        card5Title: 'Immunogenicity and Activity',
+        card5Desc: 'Immunogenicity and mechanism-of-action assessment',
 
-        card6Title: 'Drug Formulation Development',
-        card6Desc: 'Targeted substance delivery',
+        card6Title: 'Pharmaceutical Development',
+        card6Desc: 'Formulation, process and documentation',
 
         card7Title: 'Microbiology Laboratory',
         card7Desc: 'Drug efficacy assessment',
@@ -128,7 +128,7 @@ export const translations = {
         card13Desc: 'Documents and credentials',
 
         card14Title: 'Pharmacokinetics',
-        card14Desc: 'Active ingredient research',
+        card14Desc: 'Pharmacokinetics, toxicokinetics and ADME',
 
         card15Title: 'Animals for Research',
         card15Desc: 'Scientific journal',

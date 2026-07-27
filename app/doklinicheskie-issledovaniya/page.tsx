@@ -9,10 +9,10 @@ import Link from 'next/link'
 const BRANCHES = [
     { id: 'tox', title: 'Токсикология', color: '#F28F20', items: ['Острая токсичность', 'Субхроническая токсичность', 'Хроническая токсичность', 'Генотоксичность'] },
     { id: 'safety', title: 'Фармакобезопасность', color: '#E91E63', items: ['Сердечно-сосудистая система', 'Дыхательная система', 'Центральная нервная система'] },
-    { id: 'immuno', title: 'Иммунология', color: '#00BCD4', items: ['Иммуногенность', 'Иммунотоксикология', 'Аллергенность'] },
-    { id: 'bio', title: 'Биоанализ', color: '#03A9F4', items: ['Разработка методик', 'Валидация методик', 'Биоматрицы'] },
+    { id: 'immuno', title: 'Иммуногенность и активность', color: '#00BCD4', href: '/immunogennost-aktivnost', items: ['Оценка иммуногенности', 'Биологическая активность', 'Механизмы действия'] },
+    { id: 'development', title: 'Фармацевтическая разработка', color: '#03A9F4', href: '/farmacevticheskaya-razrabotka', items: ['Преформуляция', 'Разработка технологии', 'Стабильность'] },
     { id: 'pharm', title: 'Фармакология', color: '#146FA8', items: ['Специфическая активность', 'Дозозависимые эффекты', 'Безопасность', 'Фармакодинамика'] },
-    { id: 'pk', title: 'Фармакокинетика', color: '#14B7E0', items: ['ADME-исследования', 'Биодоступность', 'Распределение и метаболизм'] },
+    { id: 'pk', title: 'Фармакокинетика', color: '#14B7E0', href: '/farmakokinetika', items: ['ADME-исследования', 'Биодоступность', 'Распределение и метаболизм'] },
     { id: 'repro', title: 'Репродуктивная токсичность', color: '#9C27B0', items: ['Фертильность', 'Эмбриофетальное развитие', 'Постнатальное развитие'] },
     { id: 'onco', title: 'Канцерогенность', color: '#FF9800', items: ['Исследования in vivo', 'Исследования in vitro', 'Долгосрочные исследования'] },
 ]
@@ -22,12 +22,22 @@ function MindMapMobile() {
         <div className="md:hidden space-y-8 py-2">
             {BRANCHES.map(branch => (
                 <div key={branch.id}>
-                    <div
-                        className="inline-block px-5 py-2.5 rounded-full border-2 bg-white font-semibold text-base"
-                        style={{ borderColor: branch.color, color: branch.color }}
-                    >
-                        {branch.title}
-                    </div>
+                    {branch.href ? (
+                        <Link
+                            href={branch.href}
+                            className="inline-block px-5 py-2.5 rounded-full border-2 bg-white font-semibold text-base"
+                            style={{ borderColor: branch.color, color: branch.color }}
+                        >
+                            {branch.title}
+                        </Link>
+                    ) : (
+                        <div
+                            className="inline-block px-5 py-2.5 rounded-full border-2 bg-white font-semibold text-base"
+                            style={{ borderColor: branch.color, color: branch.color }}
+                        >
+                            {branch.title}
+                        </div>
+                    )}
                     <div className="ml-5 mt-2">
                         {branch.items.map((item, i) => {
                             const isLast = i === branch.items.length - 1
@@ -127,31 +137,35 @@ function MindMapSVG({ active, setActive }: { active: string | null; setActive: (
                 <text className="mm-sub" x="60" y="480" textAnchor="end" dominantBaseline="central">Центральная нервная система</text>
             </g>
 
-            <g className={`mm-branch ${dim('immuno')}`} onMouseEnter={() => setActive('immuno')}>
+            <a href="/immunogennost-aktivnost" aria-label="Иммуногенность и активность">
+            <g className={`mm-branch mm-link ${dim('immuno')}`} onMouseEnter={() => setActive('immuno')}>
                 <path d="M 700 440 C 620 460 580 500 500 510" stroke="url(#g-immuno)" strokeWidth="2.5"/>
                 <rect x="340" y="485" width="160" height="50" rx="25" fill="#fff" stroke="#00BCD4" strokeWidth="2"/>
-                <text className="mm-pill" x="420" y="512" textAnchor="middle" dominantBaseline="central" fill="#00BCD4">Иммунология</text>
+                <text className="mm-pill" x="420" y="512" textAnchor="middle" dominantBaseline="central" fill="#00BCD4">Иммуногенность</text>
                 <path d="M 340 510 L 260 510" stroke="#00BCD4" strokeWidth="2"/>
                 <path d="M 260 510 C 210 503 150 545 70 540" stroke="#00BCD4" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="60" y="540" textAnchor="end" dominantBaseline="central">Иммуногенность</text>
+                <text className="mm-sub" x="60" y="540" textAnchor="end" dominantBaseline="central">Оценка иммуногенности</text>
                 <path d="M 260 510 C 210 518 150 580 70 585" stroke="#00BCD4" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="60" y="585" textAnchor="end" dominantBaseline="central">Иммунотоксикология</text>
+                <text className="mm-sub" x="60" y="585" textAnchor="end" dominantBaseline="central">Биологическая активность</text>
                 <path d="M 260 510 C 210 523 150 622 70 630" stroke="#00BCD4" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="60" y="630" textAnchor="end" dominantBaseline="central">Аллергенность</text>
+                <text className="mm-sub" x="60" y="630" textAnchor="end" dominantBaseline="central">Механизмы действия</text>
             </g>
+            </a>
 
-            <g className={`mm-branch ${dim('bio')}`} onMouseEnter={() => setActive('bio')}>
+            <a href="/farmacevticheskaya-razrabotka" aria-label="Фармацевтическая разработка">
+            <g className={`mm-branch mm-link ${dim('development')}`} onMouseEnter={() => setActive('development')}>
                 <path d="M 700 445 C 620 530 580 660 500 680" stroke="url(#g-bio)" strokeWidth="2.5"/>
                 <rect x="360" y="655" width="140" height="50" rx="25" fill="#fff" stroke="#03A9F4" strokeWidth="2"/>
-                <text className="mm-pill" x="430" y="682" textAnchor="middle" dominantBaseline="central" fill="#03A9F4">Биоанализ</text>
+                <text className="mm-pill mm-pill-small" x="430" y="682" textAnchor="middle" dominantBaseline="central" fill="#03A9F4">Фармразработка</text>
                 <path d="M 360 680 L 260 680" stroke="#03A9F4" strokeWidth="2"/>
                 <path d="M 260 680 C 210 677 150 705 70 705" stroke="#03A9F4" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="60" y="705" textAnchor="end" dominantBaseline="central">Разработка методик</text>
+                <text className="mm-sub" x="60" y="705" textAnchor="end" dominantBaseline="central">Преформуляция</text>
                 <path d="M 260 680 C 210 687 150 745 70 750" stroke="#03A9F4" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="60" y="750" textAnchor="end" dominantBaseline="central">Валидация методик</text>
+                <text className="mm-sub" x="60" y="750" textAnchor="end" dominantBaseline="central">Разработка технологии</text>
                 <path d="M 260 680 C 210 693 150 788 70 795" stroke="#03A9F4" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="60" y="795" textAnchor="end" dominantBaseline="central">Биоматрицы</text>
+                <text className="mm-sub" x="60" y="795" textAnchor="end" dominantBaseline="central">Стабильность</text>
             </g>
+            </a>
 
             {/* RIGHT — у всех групп текст начинается с x=1410, кривые заканчиваются в x=1400 */}
             <g className={`mm-branch ${dim('pharm')}`} onMouseEnter={() => setActive('pharm')}>
@@ -169,7 +183,8 @@ function MindMapSVG({ active, setActive }: { active: string | null; setActive: (
                 <text className="mm-sub" x="1410" y="318" textAnchor="start" dominantBaseline="central">Фармакодинамика</text>
             </g>
 
-            <g className={`mm-branch ${dim('pk')}`} onMouseEnter={() => setActive('pk')}>
+            <a href="/farmakokinetika" aria-label="Фармакокинетика">
+            <g className={`mm-branch mm-link ${dim('pk')}`} onMouseEnter={() => setActive('pk')}>
                 <path d="M 820 425 C 900 405 940 360 1020 350" stroke="url(#g-pk)" strokeWidth="2.5"/>
                 <rect x="1020" y="325" width="195" height="50" rx="25" fill="#fff" stroke="#14B7E0" strokeWidth="2"/>
                 <text className="mm-pill" x="1117" y="352" textAnchor="middle" dominantBaseline="central" fill="#14B7E0">Фармакокинетика</text>
@@ -181,6 +196,7 @@ function MindMapSVG({ active, setActive }: { active: string | null; setActive: (
                 <path d="M 1320 350 C 1350 362 1380 470 1400 475" stroke="#14B7E0" strokeWidth="1.5" opacity="0.85"/>
                 <text className="mm-sub" x="1410" y="475" textAnchor="start" dominantBaseline="central">Распределение и метаболизм</text>
             </g>
+            </a>
 
             <g className={`mm-branch ${dim('repro')}`} onMouseEnter={() => setActive('repro')}>
                 <path d="M 820 440 C 900 460 940 500 1020 510" stroke="url(#g-repro)" strokeWidth="2.5"/>
@@ -286,7 +302,7 @@ export default function DoklinicheskieIssledovaniya() {
                         На главную
                     </Link>
                     <h1 className="text-3xl sm:text-5xl font-black text-gray-900 tracking-tight leading-tight">Доклинические исследования</h1>
-                    <p className="mt-4 text-gray-500 text-base sm:text-lg max-w-xl mx-auto">Полный цикл исследований лекарственных средств — от токсикологии до биоанализа</p>
+                    <p className="mt-4 text-gray-500 text-base sm:text-lg max-w-xl mx-auto">Полный цикл исследований лекарственных средств — от токсикологии до фармакокинетики</p>
                 </div>
             </section>
 
@@ -350,7 +366,9 @@ const CSS = `
 .mm-svg{width:100%;height:auto;display:block}
 .mm-svg path{fill:none;stroke-linecap:round}
 .mm-branch{transition:opacity 0.15s;cursor:default}
+.mm-link{cursor:pointer}
 .mm-dim{opacity:0.18}
 .mm-pill{font-size:18px;font-weight:600;font-family:system-ui,sans-serif}
+.mm-pill-small{font-size:15px}
 .mm-sub{font-size:19px;font-weight:400;fill:#4a4a4a;font-family:system-ui,sans-serif}
 `
