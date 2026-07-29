@@ -22,8 +22,8 @@ export const translations = {
         card4Title: 'Специалисты',
         card4Desc: 'Наша команда профессионалов',
 
-        card5Title: 'Иммуногенность и активность',
-        card5Desc: 'Оценка иммуногенности и механизмов действия',
+        card5Title: 'Иммуноактивность',
+        card5Desc: 'Оценка иммуноактивности и механизмов действия',
 
         card6Title: 'Фармацевтическая разработка',
         card6Desc: 'Состав, технология и документация',
@@ -40,8 +40,8 @@ export const translations = {
         card10Title: 'Политики',
         card10Desc: 'Нормативная документация',
 
-        card11Title: 'Биохимия и гематология',
-        card11Desc: 'Выявление патологий органов',
+        card11Title: 'Отдел лабораторной диагностики',
+        card11Desc: 'Комплексная лабораторная диагностика',
 
         card12Title: 'Сведения об организации',
         card12Desc: 'Образовательная деятельность',
@@ -118,8 +118,8 @@ export const translations = {
         card10Title: 'Policies',
         card10Desc: 'Regulatory documentation',
 
-        card11Title: 'Biochemistry and Hematology',
-        card11Desc: 'Organ pathology detection',
+        card11Title: 'Laboratory Diagnostics',
+        card11Desc: 'Comprehensive laboratory diagnostics',
 
         card12Title: 'Organization Information',
         card12Desc: 'Educational activities',

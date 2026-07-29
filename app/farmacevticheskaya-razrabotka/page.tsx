@@ -8,11 +8,17 @@ export const metadata: Metadata = {
 }
 
 export default function PharmaceuticalDevelopmentPage() {
+    const blocks = content as ResearchBlock[]
+    const orderedBlocks = [
+        ...blocks.filter((block) => block.kind === 'publications'),
+        ...blocks.filter((block) => block.kind !== 'publications'),
+    ]
+
     return (
         <ResearchDepartmentPage
             active="development"
             title="Разработка лекарственных форм"
-            blocks={content as ResearchBlock[]}
+            blocks={orderedBlocks}
         />
     )
 }

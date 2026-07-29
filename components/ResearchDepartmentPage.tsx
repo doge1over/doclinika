@@ -11,11 +11,12 @@ export type ResearchBlock =
     | { kind: 'paragraph'; text: string }
     | { kind: 'list'; items: string[] }
     | { kind: 'publications'; title: string; items: string[] }
+    | { kind: 'diagnostics-services'; title: string; items: string[] }
     | { kind: 'equipment-link' }
     | { kind: 'image'; src: string; alt: string; caption: string }
 
 type Props = {
-    active: 'development' | 'pharmacokinetics' | 'immunogenicity' | 'equipment'
+    active: 'development' | 'pharmacokinetics' | 'immunogenicity' | 'diagnostics' | 'equipment'
     title: string
     blocks: ResearchBlock[]
     note?: string
@@ -25,11 +26,11 @@ const menuItems = [
     { href: '/o-nas', title: 'О нас' },
     { href: '/vakansii', title: 'Вакансии' },
     { href: '/doklinicheskie-issledovaniya', title: 'Доклинические исследования' },
-    { href: '/immunogennost-aktivnost', title: 'Иммуногенность и активность', id: 'immunogenicity' },
+    { href: '/immunogennost-aktivnost', title: 'Иммуноактивность', id: 'immunogenicity' },
     { href: '/gruppa-gistologii-i-patomorfologii', title: 'Лаборатория гистологии и патоморфологии' },
     { href: '/mikrobiologicheskaya-laboratoriya', title: 'Отдел микробиологии' },
     { href: '/farmacevticheskaya-razrabotka', title: 'Фармацевтическая разработка', id: 'development' },
-    { href: '/gruppa-biohimii-i-gematologii', title: 'Лаборатория биохимии и гематологии' },
+    { href: '/gruppa-biohimii-i-gematologii', title: 'Отдел лабораторной диагностики', id: 'diagnostics' },
     { href: '/laboratornye-zhivotnye', title: 'Лабораторные животные' },
     { href: 'http://labanimalsjournal.ru/ru/contents/2018/2', title: 'Журнал «Лабораторные животные»', external: true },
     { href: '/farmakokinetika', title: 'Фармакокинетика', id: 'pharmacokinetics' },
@@ -183,6 +184,30 @@ export default function ResearchDepartmentPage({ active, title, blocks, note }: 
                                                 </details>
                                             )
                                         }
+                                        if (block.kind === 'diagnostics-services') {
+                                            return (
+                                                <div key={index} className="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+                                                    <table className="w-full border-collapse">
+                                                        <thead>
+                                                            <tr>
+                                                                <th className="bg-gradient-to-r from-[#146FA8] to-[#14B7E0] px-5 py-4 text-left text-lg font-bold text-white sm:text-xl">
+                                                                    {block.title}
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {block.items.map((item, itemIndex) => (
+                                                                <tr key={itemIndex} className={itemIndex % 2 === 0 ? 'bg-white' : 'bg-[#14B7E0]/5'}>
+                                                                    <td className="border-t border-gray-200 px-5 py-3.5 leading-relaxed text-gray-800">
+                                                                        {item}
+                                                                    </td>
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            )
+                                        }
                                         if (block.kind === 'equipment-link') {
                                             return (
                                                 <div key={index} className="border border-gray-200 rounded-xl overflow-hidden">
@@ -210,7 +235,7 @@ export default function ResearchDepartmentPage({ active, title, blocks, note }: 
                                     </div>
                                 )}
 
-                                {active !== 'equipment' && !blocks.some((block) => block.kind === 'equipment-link') && (
+                                {active !== 'equipment' && active !== 'diagnostics' && !blocks.some((block) => block.kind === 'equipment-link') && (
                                     <div className="mt-8 text-right">
                                         <Link href="/oborudovanie-otdela" className="text-[#F28F20] font-medium hover:underline">Оборудование отдела →</Link>
                                     </div>

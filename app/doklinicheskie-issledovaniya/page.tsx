@@ -6,15 +6,57 @@ import LanguageSwitcher from '@/translations/LanguageSwitcher'
 import { translations, Language } from '@/translations/translations'
 import Link from 'next/link'
 
-const BRANCHES = [
-    { id: 'tox', title: 'Токсикология', color: '#F28F20', items: ['Острая токсичность', 'Субхроническая токсичность', 'Хроническая токсичность', 'Генотоксичность'] },
-    { id: 'safety', title: 'Фармакобезопасность', color: '#E91E63', items: ['Сердечно-сосудистая система', 'Дыхательная система', 'Центральная нервная система'] },
-    { id: 'immuno', title: 'Иммуногенность и активность', color: '#00BCD4', href: '/immunogennost-aktivnost', items: ['Оценка иммуногенности', 'Биологическая активность', 'Механизмы действия'] },
-    { id: 'development', title: 'Фармацевтическая разработка', color: '#03A9F4', href: '/farmacevticheskaya-razrabotka', items: ['Преформуляция', 'Разработка технологии', 'Стабильность'] },
-    { id: 'pharm', title: 'Фармакология', color: '#146FA8', items: ['Специфическая активность', 'Дозозависимые эффекты', 'Безопасность', 'Фармакодинамика'] },
-    { id: 'pk', title: 'Фармакокинетика', color: '#14B7E0', href: '/farmakokinetika', items: ['ADME-исследования', 'Биодоступность', 'Распределение и метаболизм'] },
-    { id: 'repro', title: 'Репродуктивная токсичность', color: '#9C27B0', items: ['Фертильность', 'Эмбриофетальное развитие', 'Постнатальное развитие'] },
-    { id: 'onco', title: 'Канцерогенность', color: '#FF9800', items: ['Исследования in vivo', 'Исследования in vitro', 'Долгосрочные исследования'] },
+type BranchItem = {
+    title: string
+    href?: string
+}
+
+type Branch = {
+    id: string
+    title: string
+    color: string
+    href?: string
+    items: BranchItem[]
+}
+
+const BRANCHES: Branch[] = [
+    { id: 'tox', title: 'Токсикология', color: '#F28F20', items: [{ title: 'Острая токсичность' }, { title: 'Субхроническая токсичность' }, { title: 'Хроническая токсичность' }, { title: 'Генотоксичность' }] },
+    { id: 'safety', title: 'Фармакобезопасность', color: '#E91E63', items: [{ title: 'Сердечно-сосудистая система' }, { title: 'Дыхательная система' }, { title: 'Центральная нервная система' }] },
+    {
+        id: 'immuno',
+        title: 'Иммуноактивность',
+        color: '#00BCD4',
+        href: '/immunogennost-aktivnost',
+        items: [
+            { title: 'Оценка иммуноактивности' },
+            { title: 'Биологическая активность' },
+            { title: 'Механизмы действия' },
+        ],
+    },
+    {
+        id: 'development',
+        title: 'Фармразработка',
+        color: '#03A9F4',
+        href: '/farmacevticheskaya-razrabotka',
+        items: [
+            { title: 'Технологии кинетики анализа лекарственных средств' },
+            { title: 'Фармакокинетика, иммуногенность / иммуноактивность' },
+        ],
+    },
+    { id: 'pharm', title: 'Фармакология', color: '#146FA8', items: [{ title: 'Специфическая активность' }, { title: 'Дозозависимые эффекты' }, { title: 'Безопасность' }, { title: 'Фармакодинамика' }] },
+    {
+        id: 'pk',
+        title: 'Фармакокинетика',
+        color: '#14B7E0',
+        href: '/farmakokinetika',
+        items: [
+            { title: 'ADME-исследования' },
+            { title: 'Биодоступность' },
+            { title: 'Распределение и метаболизм' },
+        ],
+    },
+    { id: 'repro', title: 'Репродуктивная токсичность', color: '#9C27B0', items: [{ title: 'Фертильность' }, { title: 'Эмбриофетальное развитие' }, { title: 'Постнатальное развитие' }] },
+    { id: 'onco', title: 'Канцерогенность', color: '#FF9800', items: [{ title: 'Исследования in vivo' }, { title: 'Исследования in vitro' }, { title: 'Долгосрочные исследования' }] },
 ]
 
 function MindMapMobile() {
@@ -82,7 +124,13 @@ function MindMapMobile() {
                                             }}
                                         />
                                     </div>
-                                    <div className="py-2 text-[15px] text-gray-700 leading-snug">{item}</div>
+                                    {item.href ? (
+                                        <Link href={item.href} className="py-2 text-[15px] text-gray-700 hover:text-[#03A9F4] leading-snug transition-colors">
+                                            {item.title}
+                                        </Link>
+                                    ) : (
+                                        <div className="py-2 text-[15px] text-gray-700 leading-snug">{item.title}</div>
+                                    )}
                                 </div>
                             )
                         })}
@@ -137,14 +185,14 @@ function MindMapSVG({ active, setActive }: { active: string | null; setActive: (
                 <text className="mm-sub" x="60" y="480" textAnchor="end" dominantBaseline="central">Центральная нервная система</text>
             </g>
 
-            <a href="/immunogennost-aktivnost" aria-label="Иммуногенность и активность">
+            <a href="/immunogennost-aktivnost" aria-label="Иммуноактивность">
             <g className={`mm-branch mm-link ${dim('immuno')}`} onMouseEnter={() => setActive('immuno')}>
                 <path d="M 700 440 C 620 460 580 500 500 510" stroke="url(#g-immuno)" strokeWidth="2.5"/>
-                <rect x="310" y="485" width="190" height="50" rx="25" fill="#fff" stroke="#00BCD4" strokeWidth="2"/>
-                <text className="mm-pill" x="405" y="512" textAnchor="middle" dominantBaseline="central" fill="#00BCD4">Иммуногенность</text>
-                <path d="M 310 510 L 260 510" stroke="#00BCD4" strokeWidth="2"/>
+                <rect x="280" y="485" width="220" height="50" rx="25" fill="#fff" stroke="#00BCD4" strokeWidth="2"/>
+                <text className="mm-pill" x="390" y="512" textAnchor="middle" dominantBaseline="central" fill="#00BCD4">Иммуноактивность</text>
+                <path d="M 280 510 L 260 510" stroke="#00BCD4" strokeWidth="2"/>
                 <path d="M 260 510 C 210 503 150 545 70 540" stroke="#00BCD4" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="60" y="540" textAnchor="end" dominantBaseline="central">Оценка иммуногенности</text>
+                <text className="mm-sub" x="60" y="540" textAnchor="end" dominantBaseline="central">Оценка иммуноактивности</text>
                 <path d="M 260 510 C 210 518 150 580 70 585" stroke="#00BCD4" strokeWidth="1.5" opacity="0.85"/>
                 <text className="mm-sub" x="60" y="585" textAnchor="end" dominantBaseline="central">Биологическая активность</text>
                 <path d="M 260 510 C 210 523 150 622 70 630" stroke="#00BCD4" strokeWidth="1.5" opacity="0.85"/>
@@ -152,20 +200,24 @@ function MindMapSVG({ active, setActive }: { active: string | null; setActive: (
             </g>
             </a>
 
-            <a href="/farmacevticheskaya-razrabotka" aria-label="Фармацевтическая разработка">
-            <g className={`mm-branch mm-link ${dim('development')}`} onMouseEnter={() => setActive('development')}>
-                <path d="M 700 445 C 620 530 580 660 500 680" stroke="url(#g-bio)" strokeWidth="2.5"/>
-                <rect x="305" y="655" width="195" height="50" rx="25" fill="#fff" stroke="#03A9F4" strokeWidth="2"/>
-                <text className="mm-pill" x="402.5" y="682" textAnchor="middle" dominantBaseline="central" fill="#03A9F4">Фармразработка</text>
-                <path d="M 305 680 L 260 680" stroke="#03A9F4" strokeWidth="2"/>
-                <path d="M 260 680 C 210 677 150 705 70 705" stroke="#03A9F4" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="60" y="705" textAnchor="end" dominantBaseline="central">Преформуляция</text>
-                <path d="M 260 680 C 210 687 150 745 70 750" stroke="#03A9F4" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="60" y="750" textAnchor="end" dominantBaseline="central">Разработка технологии</text>
-                <path d="M 260 680 C 210 693 150 788 70 795" stroke="#03A9F4" strokeWidth="1.5" opacity="0.85"/>
-                <text className="mm-sub" x="60" y="795" textAnchor="end" dominantBaseline="central">Стабильность</text>
+            <g className={`mm-branch ${dim('development')}`} onMouseEnter={() => setActive('development')}>
+                <path d="M 700 445 C 620 530 580 660 520 680" stroke="url(#g-bio)" strokeWidth="2.5"/>
+                <a href="/farmacevticheskaya-razrabotka" aria-label="Фармразработка">
+                    <rect x="315" y="655" width="205" height="50" rx="25" fill="#fff" stroke="#03A9F4" strokeWidth="2"/>
+                    <text className="mm-pill mm-link" x="417.5" y="682" textAnchor="middle" dominantBaseline="central" fill="#03A9F4">Фармразработка</text>
+                </a>
+                <path d="M 315 680 L 260 680" stroke="#03A9F4" strokeWidth="2"/>
+                <path d="M 260 680 C 220 677 180 730 140 735" stroke="#03A9F4" strokeWidth="1.5" opacity="0.85"/>
+                <text className="mm-sub" x="130" y="728" textAnchor="end">
+                    <tspan x="130" dy="0">Технологии кинетики анализа</tspan>
+                    <tspan x="130" dy="17">лекарственных средств</tspan>
+                </text>
+                <path d="M 260 680 C 220 687 180 790 140 795" stroke="#03A9F4" strokeWidth="1.5" opacity="0.85"/>
+                <text className="mm-sub" x="130" y="788" textAnchor="end">
+                    <tspan x="130" dy="0">Фармакокинетика, иммуногенность</tspan>
+                    <tspan x="130" dy="17">/ иммуноактивность</tspan>
+                </text>
             </g>
-            </a>
 
             {/* RIGHT — у всех групп текст начинается с x=1410, кривые заканчиваются в x=1400 */}
             <g className={`mm-branch ${dim('pharm')}`} onMouseEnter={() => setActive('pharm')}>
