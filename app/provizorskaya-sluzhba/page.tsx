@@ -41,6 +41,7 @@ const publications = [
     { authors: 'Кириченко Д.В.', title: 'Влияние физико-химических свойств компонентов препарата на выбор носителя для введения лабораторным животным', journal: 'Лабораторные животные для научных исследований. – 2020, №2.', link: 'https://labanimalsjournal.ru/ru/2618723x-2020-02-09' },
 ]
 
+
 export default function ProvizorskayaSluzhba() {
     const [lang, setLang] = useState<Language>('ru')
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -175,7 +176,7 @@ export default function ProvizorskayaSluzhba() {
 
                                 <div className="prose prose-lg max-w-none text-gray-700 space-y-4">
                                     <p className="text-justify leading-relaxed">
-                                        В соответствии с Национальным стандартом РФ <strong className="text-[#F28F20]">ГОСТ 33044-2014 «Принципы надлежащей лабораторной практики»</strong> организация располагает отдельными помещениями для обработки испытуемых и стандартных объектов, соответствующими требованиям безопасности при хранении веществ. Утилизация неизрасходованных тестируемых и стандартных объектов, поступивших в провизорскую службу, по согласованию со Спонсором, проводится на соответствующих полигонах в сопровождении природоохранных государственных унитарных предприятий.
+                                        Провизорская служба — это отдельное структурное подразделение АО «НПО «ДОМ ФАРМАЦИИ», обеспечивающее обращение исследуемых и стандартных объектов в рамках доклинических исследований в соответствии с требованиями GLP.
                                     </p>
 
                                     <div className="bg-[#F28F20]/10 border border-[#F28F20]/30 rounded-xl p-4 sm:p-6">
@@ -191,7 +192,7 @@ export default function ProvizorskayaSluzhba() {
                                             </li>
                                             <li className="flex items-start gap-2">
                                                 <svg className="w-5 h-5 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                                <span>Учет и проверка доброкачественности объектов на этапе получения и в ходе хранения</span>
+                                                <span>Оценка доброкачественности объектов на этапе получения и в ходе хранения</span>
                                             </li>
                                             <li className="flex items-start gap-2">
                                                 <svg className="w-5 h-5 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -205,74 +206,34 @@ export default function ProvizorskayaSluzhba() {
                                     </div>
 
                                     <div className="bg-[#14B7E0]/10 border border-[#14B7E0]/30 rounded-xl p-4 sm:p-6">
-                                        <h3 className="text-lg font-bold text-gray-800 mb-3">До начала исследования Спонсор предоставляет:</h3>
+                                        <h3 className="text-lg font-bold text-gray-800 mb-3">Процессы провизорской службы:</h3>
                                         <ul className="space-y-2 text-[#14B7E0]">
                                             <li className="flex items-start gap-2">
                                                 <svg className="w-5 h-5 text-[#14B7E0] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                                                <span>Исследуемые объекты и объекты сравнения (включая арбитражные образцы для каждой серии объекта и образцы для тестовой пробоподготовки)</span>
+                                                <span>Приемка исследуемых объектов</span>
                                             </li>
                                             <li className="flex items-start gap-2">
                                                 <svg className="w-5 h-5 text-[#14B7E0] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                                                <span>Аналитический паспорт/сертификат анализа/протокол анализа на каждую серию переданных объектов</span>
+                                                <span>Хранение</span>
                                             </li>
                                             <li className="flex items-start gap-2">
                                                 <svg className="w-5 h-5 text-[#14B7E0] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                                                <span>Акт приемки-передачи</span>
+                                                <span>Ведение документации</span>
                                             </li>
                                             <li className="flex items-start gap-2">
                                                 <svg className="w-5 h-5 text-[#14B7E0] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                                                <span>Правила безопасности при работе с объектами/MSDS (при наличии)</span>
+                                                <span>Тестовая пробоподготовка</span>
+                                            </li>
+                                            <li className="flex items-start gap-2">
+                                                <svg className="w-5 h-5 text-[#14B7E0] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                                                <span>Приготовление объектов для введения в тест-систему</span>
+                                            </li>
+                                            <li className="flex items-start gap-2">
+                                                <svg className="w-5 h-5 text-[#14B7E0] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                                                <span>Возврат исследуемых объектов</span>
                                             </li>
                                         </ul>
                                     </div>
-
-                                    <div className="flex flex-wrap justify-center gap-4 my-8">
-                                        <img src="/images/1-524x1024.png" alt="Провизорская служба" className="h-64 object-contain rounded-lg shadow-md" />
-                                        <img src="/images/2-977x1024.jpg" alt="Провизорская служба" className="h-64 object-contain rounded-lg shadow-md" />
-                                    </div>
-
-                                    <p className="text-justify leading-relaxed">
-                                        Квалифицированные и опытные специалисты провизорской службы, руководствуясь требованиями основных нормативных документов, обеспечивают учет и сохранность препаратов, преобразуют лекарственные формы для удобного дозирования лабораторным животным, а также контролируют доброкачественность исследуемых объектов на всех этапах работы.
-                                    </p>
-
-                                    <h2 className="text-xl font-bold text-gray-900 mt-8 mb-4">Приемка объектов</h2>
-                                    <p className="text-justify leading-relaxed">
-                                        Работа с объектами начинается с приемки. В ходе приемки сотрудники проверяют состояние поступивших объектов: осуществляется проверка состояния упаковки, внешний вид и маркировка самого объекта и наличие всей сопроводительной документации. В полученной от Спонсора сопроводительной документации должны быть указаны все основные сведения об объекте, а также сведения о режиме хранения, сведения о стабильности объекта в процессе хранения. Сотрудники провизорской службы знакомятся с паспортами безопасности для исследуемых и стандартных объектов и извещают сотрудников о мерах безопасности при работе с ними.
-                                    </p>
-
-                                    <h2 className="text-xl font-bold text-gray-900 mt-8 mb-4">Хранение объектов</h2>
-                                    <p className="text-justify leading-relaxed">
-                                        Сотрудники провизорской службы обеспечивают правильное хранение объектов на протяжении всего времени нахождения их в организации. При хранении объектов должно обеспечиваться соблюдение идентичности, сохранение концентрации, чистоты и стабильности. Для обеспечения хранения подразделение имеет выделенные складские помещения с ограниченным в них доступом. Складское помещение оснащено сейфом, стеллажами и фармацевтическими холодильниками с разными температурами хранения, имеется стеллаж для хранения арбитражных образцов. В помещениях и холодильниках ведется постоянный контроль показателей температуры и влажности, данные фиксируются дважды в сутки. На контейнеры, в которых осуществляется хранение объектов, наносится маркировка, с указанием кода объекта в исследовании, условий хранения и срока годности объекта.
-                                    </p>
-
-                                    <div className="flex flex-wrap justify-center gap-4 my-8">
-                                        <img src="/images/4-768x1024.jpg" alt="Хранение объектов" className="h-64 object-contain rounded-lg shadow-md" />
-                                        <img src="/images/3-1024x1024.jpg" alt="Хранение объектов" className="h-64 object-contain rounded-lg shadow-md" />
-                                    </div>
-
-                                    <h2 className="text-xl font-bold text-gray-900 mt-8 mb-4">Проверка стабильности</h2>
-                                    <p className="text-justify leading-relaxed">
-                                        Согласно OECD и ГОСТ 33044-2014 «Принципы надлежащей лабораторной практики», в случаях, когда тестируемый продукт предоставляется Спонсором, должен быть представлен механизм, разработанный в сотрудничестве между Спонсором и организацией, проводящей доклинические испытания, для установления подлинности объектов исследования. Так же должна быть определена стабильность тестируемых и контрольных объектов, как в условиях хранения, так и в условиях эксперимента. Провизорская служба по разработанным методикам проводит проверку полученных объектов на стабильность в ходе растворения и разведения носителем. Например, все суспензии, предназначенные для введения животным, проходят оценку стабильности суспензии по показателю «pH» и «содержание сухого остатка».
-                                    </p>
-
-                                    <h2 className="text-xl font-bold text-gray-900 mt-8 mb-4">Кодирование и «слепой» метод</h2>
-                                    <p className="text-justify leading-relaxed">
-                                        Перед началом работы с исследуемыми объектами, им присваивается индивидуальный код. Кодирование препаратов позволяет обеспечить применение <strong className="text-[#F28F20]">«слепого» метода исследования</strong> – метода, при котором сотрудникам, выполняющим введение объектов и получение данных с лабораторных животных, не известно, какой из объектов получает животное. «Слепой» метод позволяет уменьшить количество ошибок, вызванных сознательной и несознательной заинтересованностью исследователей в получении определенных результатов исследования при анализе данных. Также этот метод позволяет обеспечить четкую и понятную маркировку исследуемых объектов.
-                                    </p>
-
-                                    <h2 className="text-xl font-bold text-gray-900 mt-8 mb-4">Приготовление доз</h2>
-                                    <p className="text-justify leading-relaxed">
-                                        Для обеспечения введения лабораторным животным исследуемых объектов в удобной форме, сотрудники провизорской службы осуществляют приготовление доз для введения. Дозы готовятся <strong className="text-[#14B7E0]">экстемпорально</strong> (время хранения приготовленных растворов и суспензий не превышает 4 часов, а в особых случаях – не больше 10 минут до введения животному). Подготовка объектов к исследованию проводится в оборудованном помещении, отделённым от склада и от помещений содержания животных. Подготовка объектов исследования проводится при помощи точного и поверенного весового и мерного оборудования.
-                                    </p>
-
-                                    <div className="flex justify-center my-8">
-                                        <img src="/images/5-1024x1024.jpg" alt="Приготовление доз" className="h-72 object-contain rounded-lg shadow-md" />
-                                    </div>
-
-                                    <h2 className="text-xl font-bold text-gray-900 mt-8 mb-4">Работа с неизрасходованными объектами</h2>
-                                    <p className="text-justify leading-relaxed">
-                                        В АО «НПО «ДОМ ФАРМАЦИИ» разработаны процедуры по работе с неизрасходованными объектами. После завершения исследования, Спонсор оповещается о неизрасходованных объектах. Неизрасходованные объекты могут быть возвращены Спонсору, либо могут быть переданы на утилизацию в специализированную компанию.
-                                    </p>
 
                                     <div className="bg-gradient-to-r from-[#F28F20]/10 to-[#14B7E0]/10 border border-[#F28F20]/30 rounded-xl p-4 sm:p-6 mt-8">
                                         <h3 className="text-lg font-bold text-gray-900 mb-3">Лицензии и регистрация</h3>
