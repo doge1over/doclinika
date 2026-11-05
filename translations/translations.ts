@@ -52,8 +52,8 @@ export const translations = {
         card14Title: 'Фармакокинетика',
         card14Desc: 'Фармакокинетика, токсикокинетика и ADME',
 
-        card15Title: 'Животные для исследований',
-        card15Desc: 'Научный журнал',
+        card15Title: 'Научный журнал',
+        card15Desc: 'Лабораторные животные для научных исследований',
 
         card16Title: 'Контакты',
         card16Desc: 'Свяжитесь с нами',
@@ -130,8 +130,8 @@ export const translations = {
         card14Title: 'Pharmacokinetics',
         card14Desc: 'Pharmacokinetics, toxicokinetics and ADME',
 
-        card15Title: 'Animals for Research',
-        card15Desc: 'Scientific journal',
+        card15Title: 'Scientific Journal',
+        card15Desc: 'Laboratory Animals for Science',
 
         card16Title: 'Contacts',
         card16Desc: 'Get in touch with us',

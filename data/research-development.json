@@ -19,9 +19,6 @@
     ]
   },
   {
-    "kind": "equipment-link"
-  },
-  {
     "kind": "publications",
     "title": "Публикации по теме",
     "items": [

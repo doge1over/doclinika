@@ -5,9 +5,10 @@ import ScrollToTop from '@/components/ScrollToTop'
 import LanguageSwitcher from '@/translations/LanguageSwitcher'
 import { translations, Language } from '@/translations/translations'
 import Link from 'next/link'
+import SiteFooter from '@/components/SiteFooter'
 const menuItems = [
-    { href: '/o-nas', title: 'О нас' },{ href: '/vakansii', title: 'Вакансии' },{ href: '/doklinicheskie-issledovaniya', title: 'Доклинические исследования' },{ href: '/immunogennost-aktivnost', title: 'Иммуноактивность' },{ href: '/gruppa-gistologii-i-patomorfologii', title: 'Лаборатория гистологии и патоморфологии' },{ href: '/mikrobiologicheskaya-laboratoriya', title: 'Отдел микробиологии' },{ href: '/farmacevticheskaya-razrabotka', title: 'Фармацевтическая разработка' },{ href: '/gruppa-biohimii-i-gematologii', title: 'Отдел лабораторной диагностики' },{ href: '/laboratornye-zhivotnye', title: 'Лабораторные животные' },{ href: 'http://labanimalsjournal.ru/ru/contents/2018/2', title: 'Журнал «Лабораторные животные»', external: true },{ href: '/farmakokinetika', title: 'Фармакокинетика' },
-    { href: '/oborudovanie-otdela', title: 'Оборудование отдела' },{ href: '/obespechenie-kachestva', title: 'Обеспечение качества' },{ href: '/provizorskaya-sluzhba', title: 'Провизорская служба' },{ href: '/spetsialisty', title: 'Специалисты' },{ href: '/policy', title: 'Политики' },{ href: '/litsenzii-sertifikaty-udostovereniya', title: 'Лицензии, сертификаты, удостоверения' },{ href: '/glavnaya', title: 'Сведения об образовательной организации' },{ href: '/category/news', title: 'Новости', active: true },{ href: '/kontakty', title: 'Контакты' },
+    { href: '/o-nas', title: 'О нас' },{ href: '/vakansii', title: 'Вакансии' },{ href: '/doklinicheskie-issledovaniya', title: 'Доклинические исследования' },{ href: '/immunogennost-aktivnost', title: 'Иммуноактивность' },{ href: '/gruppa-gistologii-i-patomorfologii', title: 'Отдел гистологии и патоморфологии' },{ href: '/mikrobiologicheskaya-laboratoriya', title: 'Отдел микробиологии' },{ href: '/farmacevticheskaya-razrabotka', title: 'Фармацевтическая разработка' },{ href: '/gruppa-biohimii-i-gematologii', title: 'Отдел лабораторной диагностики' },{ href: '/laboratornye-zhivotnye', title: 'Лабораторные животные' },{ href: 'http://labanimalsjournal.ru/ru/contents/2018/2', title: 'Журнал «Лабораторные животные»', external: true },{ href: '/farmakokinetika', title: 'Фармакокинетика' },
+    { href: '/obespechenie-kachestva', title: 'Обеспечение качества' },{ href: '/provizorskaya-sluzhba', title: 'Провизорская служба' },{ href: '/spetsialisty', title: 'Специалисты' },{ href: '/policy', title: 'Политики' },{ href: '/litsenzii-sertifikaty-udostovereniya', title: 'Лицензии, сертификаты, удостоверения' },{ href: '/glavnaya', title: 'Сведения об образовательной организации' },{ href: '/category/news', title: 'Новости', active: true },{ href: '/kontakty', title: 'Контакты' },
 ]
 
 function groupConsecutiveImages(html: string): string {
@@ -113,7 +114,7 @@ export default function NewsArticle() {
                 </>}
             </div></article>
         </div></main>
-        <footer className="bg-gradient-to-br from-gray-900 to-gray-800 mt-12"><div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16"><div className="pt-6 border-t border-gray-700 text-center text-xs sm:text-sm text-gray-400"><p className="font-medium">{t.footerCopyright}</p></div></div></footer>
+        <SiteFooter lang={lang} />
         <ScrollToTop />
     </div>)
 }

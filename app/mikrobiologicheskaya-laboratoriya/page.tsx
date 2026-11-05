@@ -5,20 +5,20 @@ import ScrollToTop from '@/components/ScrollToTop'
 import LanguageSwitcher from '@/translations/LanguageSwitcher'
 import { translations, Language } from '@/translations/translations'
 import Link from 'next/link'
+import SiteFooter from '@/components/SiteFooter'
 
 const menuItems = [
     { href: '/o-nas', title: 'О нас' },
     { href: '/vakansii', title: 'Вакансии' },
     { href: '/doklinicheskie-issledovaniya', title: 'Доклинические исследования' },
     { href: '/immunogennost-aktivnost', title: 'Иммуноактивность' },
-    { href: '/gruppa-gistologii-i-patomorfologii', title: 'Лаборатория гистологии и патоморфологии' },
+    { href: '/gruppa-gistologii-i-patomorfologii', title: 'Отдел гистологии и патоморфологии' },
     { href: '/mikrobiologicheskaya-laboratoriya', title: 'Отдел микробиологии', active: true },
     { href: '/farmacevticheskaya-razrabotka', title: 'Фармацевтическая разработка' },
     { href: '/gruppa-biohimii-i-gematologii', title: 'Отдел лабораторной диагностики' },
     { href: '/laboratornye-zhivotnye', title: 'Лабораторные животные' },
     { href: 'http://labanimalsjournal.ru/ru/contents/2018/2', title: 'Журнал «Лабораторные животные»', external: true },
     { href: '/farmakokinetika', title: 'Фармакокинетика' },
-    { href: '/oborudovanie-otdela', title: 'Оборудование отдела' },
     { href: '/obespechenie-kachestva', title: 'Обеспечение качества' },
     { href: '/provizorskaya-sluzhba', title: 'Провизорская служба' },
     { href: '/spetsialisty', title: 'Специалисты' },
@@ -174,8 +174,66 @@ export default function MikrobiologicheskayaLaboratoriya() {
                                     )}
                                 </div>
 
+                                <section className="space-y-5" aria-label="Направления работы отдела микробиологии">
+                                    <article className="overflow-hidden rounded-2xl border border-[#F28F20]/40 bg-white shadow-md">
+                                        <div className="bg-gradient-to-r from-[#F28F20] to-[#e07d10] px-5 py-4 text-white">
+                                            <h2 className="text-lg font-bold leading-snug">Антимикробная активность in vivo с экспериментальным заражением</h2>
+                                        </div>
+                                        <div className="bg-white">
+                                            <div>
+                                                <ul className="list-disc space-y-3 p-5 pl-10 text-sm leading-relaxed text-gray-700 marker:text-[#F28F20] sm:p-6 sm:pl-11">
+                                                    {['Мыши', 'Крысы', 'Морские свинки', 'Кролики', 'Хорьки'].map((item) => <li key={item} className="pl-1">{item}</li>)}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </article>
+
+                                    <div>
+                                    <article className="overflow-hidden rounded-2xl border border-[#14B7E0]/40 bg-white shadow-md">
+                                        <div className="bg-gradient-to-r from-[#146FA8] to-[#14B7E0] px-5 py-4 text-white">
+                                            <h2 className="text-lg font-bold leading-snug">Антимикробная активность in vitro на тест-штаммах микроорганизмов</h2>
+                                        </div>
+                                        <div className="bg-white">
+                                            <div>
+                                                <ul className="list-disc space-y-3 p-5 pb-4 pl-10 text-sm leading-relaxed text-gray-700 marker:text-[#F28F20] sm:px-6 sm:pt-6 sm:pl-11">
+                                                    {[
+                                                        'Оценка мультирезистентности',
+                                                        'Формирование устойчивости',
+                                                        'Изучение мишеней и механизмов антибактериального действия',
+                                                        'Оценка активности воспроизводимых препаратов',
+                                                    ].map((item) => <li key={item} className="pl-1">{item}</li>)}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </article>
+
+                                    <div className="px-2 sm:px-6">
+                                        <div className="grid grid-cols-2 gap-5" aria-hidden="true">
+                                            {[0, 1].map((item) => <svg key={item} className="mx-auto h-12 w-8 text-[#14B7E0]" viewBox="0 0 32 48" fill="none"><path d="M16 2v37m0 0L7 30m9 9 9-9" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>)}
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-4 sm:gap-6">
+                                            <div className="rounded-2xl border border-[#14B7E0]/40 bg-white px-4 py-5 text-center text-sm font-bold text-[#153b55] shadow-md">Эталонные штаммы</div>
+                                            <div className="rounded-2xl border border-[#14B7E0]/40 bg-white px-4 py-5 text-center text-sm font-bold text-[#153b55] shadow-md">Клинические изоляты</div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <article className="overflow-hidden rounded-2xl border border-[#F28F20]/40 bg-white shadow-md">
+                                        <div className="bg-gradient-to-r from-[#F28F20] to-[#e07d10] px-5 py-4 text-white">
+                                            <h2 className="text-lg font-bold leading-snug">Бактериологический мониторинг</h2>
+                                        </div>
+                                        <div className="bg-white">
+                                            <div>
+                                                <ul className="list-disc space-y-3 p-5 pl-10 text-sm leading-relaxed text-gray-700 marker:text-[#F28F20] sm:p-6 sm:pl-11">
+                                                    {['Здоровье животных', 'Окружающая среда'].map((item) => <li key={item} className="pl-1">{item}</li>)}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </section>
+
                                 {/* Основной текст */}
-                                <div className="prose prose-lg max-w-none text-gray-700 space-y-4">
+                                <div className="hidden" aria-hidden="true">
                                     <p className="text-justify">
                                         Микробиологическая лаборатория на базе АО «НПО «ДОМ ФАРМАЦИИ» спроектирована и оснащена в соответствии с Санитарными правилами и нормами СанПиН 3.3686-21 «Санитарно-эпидемиологические требования по профилактике инфекционных болезней».
                                     </p>
@@ -270,35 +328,7 @@ export default function MikrobiologicheskayaLaboratoriya() {
             </main>
 
             {/* Footer */}
-            <footer className="bg-gradient-to-br from-gray-900 to-gray-800 mt-12">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-12 mb-8 sm:mb-12">
-                        <div>
-                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerInfo}</h3>
-                            <ul className="space-y-3 sm:space-y-4 text-sm text-gray-300">
-                                <li><Link href="/o-nas" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerAbout}</Link></li>
-                                <li><Link href="/category/news" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerNews}</Link></li>
-                                <li><Link href="/kontakty" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerContacts}</Link></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerOurContacts}</h3>
-                            <div className="space-y-3 sm:space-y-4 text-sm text-gray-300">
-                                <p className="flex items-center gap-3"><svg className="w-4 h-4 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg><a href={`tel:${t.phone}`} className="hover:text-[#F28F20] transition font-medium">{t.phone}</a></p>
-                                <p className="flex items-center gap-3"><svg className="w-4 h-4 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg><a href={`mailto:${t.email}`} className="hover:text-[#F28F20] transition break-all">{t.email}</a></p>
-                                <p className="flex items-start gap-3"><svg className="w-4 h-4 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg><span>188663, Россия, Ленинградская область,<br/>Всеволожский район, г.п. Кузьмоловский,<br/>Заводская улица, 3-245</span></p>
-                            </div>
-                        </div>
-                        <div className="sm:col-span-2 md:col-span-1">
-                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerHowToGet}</h3>
-                            <iframe src="https://yandex.ru/map-widget/v1/?lang=ru_RU&scroll=true&source=constructor-api&um=constructor%3Adc7b04b68a41ad1bdf18c8112ff573806757e0f708dfd54378d8ba4859993f58" width="100%" height="180" frameBorder="0" allowFullScreen={true} className="rounded-xl sm:rounded-2xl shadow-lg" title="Карта" />
-                        </div>
-                    </div>
-                    <div className="pt-6 sm:pt-8 border-t border-gray-700 text-center text-xs sm:text-sm text-gray-400">
-                        <p className="font-medium">{t.footerCopyright}</p>
-                    </div>
-                </div>
-            </footer>
+            <SiteFooter lang={lang} />
 
             <ScrollToTop />
         </div>

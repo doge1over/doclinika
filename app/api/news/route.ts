@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
-import { validateToken, getTokenFromHeaders } from '@/lib/auth'
+import { getSession, getTokenFromHeaders, hasPermission } from '@/lib/auth'
+import { writeAudit } from '@/lib/audit'
+import { createBackup, ensureDailyBackup } from '@/lib/backups'
 
 const NEWS_FILE = path.join(process.cwd(), 'data', 'news.json')
 
@@ -56,7 +58,7 @@ function saveNews(news: NewsItem[]) {
 
 function requireAuth(req: NextRequest): NextResponse | null {
     const token = getTokenFromHeaders(req.headers)
-    if (!validateToken(token)) {
+    if (!hasPermission(getSession(token), 'news')) {
         return NextResponse.json({ error: 'Не авторизован' }, { status: 401 })
     }
     return null
@@ -81,8 +83,11 @@ export async function POST(req: NextRequest) {
         excerpt: body.excerpt || formattedContent.replace(/<[^>]*>/g, '').slice(0, 200) + '...',
         content: formattedContent,
     }
+    ensureDailyBackup()
+    createBackup('change', getSession(getTokenFromHeaders(req.headers))?.username || 'editor')
     news.unshift(newItem)
     saveNews(news)
+    writeAudit(getSession(getTokenFromHeaders(req.headers)),'news_created','news',req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()||'127.0.0.1',newItem.id,newItem.title)
     return NextResponse.json({ success: true, item: newItem })
 }
 
@@ -97,6 +102,8 @@ export async function PUT(req: NextRequest) {
     const index = news.findIndex(n => n.id === body.id)
     if (index === -1) return NextResponse.json({ error: 'Новость не найдена' }, { status: 404 })
 
+    ensureDailyBackup()
+    createBackup('change', getSession(getTokenFromHeaders(req.headers))?.username || 'editor')
     if (body.title !== undefined) news[index].title = body.title
     if (body.content !== undefined) {
         news[index].content = formatContent(body.content)
@@ -104,6 +111,7 @@ export async function PUT(req: NextRequest) {
     }
     if (body.date !== undefined) news[index].date = body.date
     saveNews(news)
+    writeAudit(getSession(getTokenFromHeaders(req.headers)),'news_updated','news',req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()||'127.0.0.1',String(body.id),news[index].title)
     return NextResponse.json({ success: true, item: news[index] })
 }
 
@@ -113,7 +121,10 @@ export async function DELETE(req: NextRequest) {
 
     const body = await req.json()
     const news = getNews()
+    ensureDailyBackup()
+    createBackup('change', getSession(getTokenFromHeaders(req.headers))?.username || 'editor')
     const filtered = news.filter(n => n.id !== body.id)
     saveNews(filtered)
+    writeAudit(getSession(getTokenFromHeaders(req.headers)),'news_deleted','news',req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()||'127.0.0.1',String(body.id))
     return NextResponse.json({ success: true })
 }

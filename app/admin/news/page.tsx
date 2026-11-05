@@ -128,7 +128,6 @@ function ImageSizeDialog({ imageUrl, onInsert, onClose }: { imageUrl: string; on
 
 export default function NewsAdmin() {
     const [password, setPassword] = useState('')
-    const [token, setToken] = useState<string | null>(null)
     const [auth, setAuth] = useState(false)
     const [news, setNews] = useState<N[]>([])
     const [title, setTitle] = useState('')
@@ -153,6 +152,19 @@ export default function NewsAdmin() {
     const cursorPosRef = useRef<number>(0)
 
     const showToast = useCallback((message: string, type: 'success' | 'error') => { setToast({ message, type }) }, [])
+    useEffect(() => {
+        fetch('/api/auth')
+            .then(async response => response.ok ? response.json() : Promise.reject())
+            .then(data => {
+                const user = data.user
+                if (user?.role === 'admin' || user?.permissions?.includes('news')) {
+                    setAuth(true)
+                } else {
+                    setLoginError('У этой учётной записи нет доступа к новостям')
+                }
+            })
+            .catch(() => setAuth(false))
+    }, [])
     const loadNews = useCallback(() => {
         setNewsLoading(true)
         fetch('/api/news').then(r => r.json()).then(d => { setNews(d); setNewsLoading(false) }).catch(() => setNewsLoading(false))
@@ -180,14 +192,13 @@ export default function NewsAdmin() {
     // Авторизованный fetch с автоматической обработкой 401
     const authFetch = useCallback(async (url: string, opts: RequestInit = {}): Promise<Response> => {
         const headers = new Headers(opts.headers)
-        if (token) headers.set('Authorization', `Bearer ${token}`)
         const res = await fetch(url, { ...opts, headers })
         if (res.status === 401) {
-            setAuth(false); setToken(null)
+            setAuth(false)
             showToast('Сессия истекла, войдите заново', 'error')
         }
         return res
-    }, [token, showToast])
+    }, [showToast])
 
     const handleLogin = async () => {
         if (!password.trim() || loginLoading || lockoutSeconds > 0) return
@@ -199,8 +210,8 @@ export default function NewsAdmin() {
                 body: JSON.stringify({ password })
             })
             const data = await res.json()
-            if (res.ok && data.token) {
-                setToken(data.token); setAuth(true); setLoginError(null)
+            if (res.ok && data.user) {
+                setAuth(true); setLoginError(null)
             } else if (res.status === 429) {
                 startLockout(data.retryAfterSeconds || 60)
                 setLoginError('Слишком много попыток')
@@ -214,7 +225,8 @@ export default function NewsAdmin() {
     }
 
     const handleLogout = () => {
-        setAuth(false); setToken(null); setPassword(''); resetForm()
+        fetch('/api/auth', { method: 'DELETE' })
+        setAuth(false); setPassword(''); resetForm()
     }
 
     const uploadFile = async (file: File): Promise<string | null> => {
@@ -223,7 +235,6 @@ export default function NewsAdmin() {
             formData.append('file', file)
             const res = await fetch('/api/upload', {
                 method: 'POST',
-                headers: { 'Authorization': `Bearer ${token || ''}` },
                 body: formData,
             })
             if (!res.ok) return null
@@ -374,6 +385,10 @@ export default function NewsAdmin() {
                     </div>
                     <div className="adm-header-right">
                         <span className="adm-count">{news.length} {news.length === 1 ? 'новость' : news.length < 5 ? 'новости' : 'новостей'}</span>
+                        <Link href="/admin" className="adm-panel-link">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                            В админ-панель
+                        </Link>
                         <button onClick={handleLogout} className="adm-logout">Выйти</button>
                     </div>
                 </div>
@@ -501,6 +516,8 @@ const CSS = `
 .adm-header-inner{max-width:960px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
 .adm-header-left{display:flex;align-items:center;gap:16px}
 .adm-header-right{display:flex;align-items:center;gap:16px}
+.adm-panel-link{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid #fed7aa;border-radius:8px;background:#fff7ed;color:#c86408;text-decoration:none;font-size:13px;font-weight:700;transition:.18s}
+.adm-panel-link:hover{background:#F28F20;border-color:#F28F20;color:#fff;transform:translateY(-1px)}
 .adm-back{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#F28F20;text-decoration:none;transition:opacity .2s}
 .adm-back:hover{opacity:.8}
 .adm-divider{width:1px;height:24px;background:#e5e7eb}

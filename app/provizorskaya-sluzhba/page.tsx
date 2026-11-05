@@ -5,20 +5,20 @@ import ScrollToTop from '@/components/ScrollToTop'
 import LanguageSwitcher from '@/translations/LanguageSwitcher'
 import { translations, Language } from '@/translations/translations'
 import Link from 'next/link'
+import SiteFooter from '@/components/SiteFooter'
 
 const menuItems = [
     { href: '/o-nas', title: 'О нас' },
     { href: '/vakansii', title: 'Вакансии' },
     { href: '/doklinicheskie-issledovaniya', title: 'Доклинические исследования' },
     { href: '/immunogennost-aktivnost', title: 'Иммуноактивность' },
-    { href: '/gruppa-gistologii-i-patomorfologii', title: 'Лаборатория гистологии и патоморфологии' },
+    { href: '/gruppa-gistologii-i-patomorfologii', title: 'Отдел гистологии и патоморфологии' },
     { href: '/mikrobiologicheskaya-laboratoriya', title: 'Лаборатория микробиологии' },
     { href: '/farmacevticheskaya-razrabotka', title: 'Фармацевтическая разработка' },
     { href: '/gruppa-biohimii-i-gematologii', title: 'Отдел лабораторной диагностики' },
     { href: '/laboratornye-zhivotnye', title: 'Лабораторные животные' },
     { href: 'http://labanimalsjournal.ru/ru/contents/2018/2', title: 'Журнал «Лабораторные животные»', external: true },
     { href: '/farmakokinetika', title: 'Фармакокинетика' },
-    { href: '/oborudovanie-otdela', title: 'Оборудование отдела' },
     { href: '/obespechenie-kachestva', title: 'Обеспечение качества' },
     { href: '/provizorskaya-sluzhba', title: 'Провизорская служба', active: true },
     { href: '/spetsialisty', title: 'Специалисты' },
@@ -248,35 +248,7 @@ export default function ProvizorskayaSluzhba() {
                 </div>
             </main>
 
-            <footer className="bg-gradient-to-br from-gray-900 to-gray-800 mt-12">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-12 mb-8 sm:mb-12">
-                        <div>
-                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerInfo}</h3>
-                            <ul className="space-y-3 sm:space-y-4 text-sm text-gray-300">
-                                <li><Link href="/o-nas" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerAbout}</Link></li>
-                                <li><Link href="/category/news" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerNews}</Link></li>
-                                <li><Link href="/kontakty" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerContacts}</Link></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerOurContacts}</h3>
-                            <div className="space-y-3 sm:space-y-4 text-sm text-gray-300">
-                                <p className="flex items-center gap-3"><span className="text-[#F28F20]">📞</span><a href={`tel:${t.phone}`} className="hover:text-[#F28F20] transition font-medium">{t.phone}</a></p>
-                                <p className="flex items-center gap-3"><span className="text-[#F28F20]">✉️</span><a href={`mailto:${t.email}`} className="hover:text-[#F28F20] transition break-all">{t.email}</a></p>
-                                <p className="flex items-start gap-3 leading-relaxed"><span className="text-[#F28F20] mt-0.5">📍</span><span>188663, Россия, Ленинградская область,<br/>Всеволожский район, г.п. Кузьмоловский,<br/>Заводская улица, 3-245</span></p>
-                            </div>
-                        </div>
-                        <div className="sm:col-span-2 md:col-span-1">
-                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerHowToGet}</h3>
-                            <iframe src="https://yandex.ru/map-widget/v1/?lang=ru_RU&scroll=true&source=constructor-api&um=constructor%3Adc7b04b68a41ad1bdf18c8112ff573806757e0f708dfd54378d8ba4859993f58" width="100%" height="180" frameBorder="0" allowFullScreen={true} className="rounded-xl sm:rounded-2xl shadow-lg" title="Карта" />
-                        </div>
-                    </div>
-                    <div className="pt-6 sm:pt-8 border-t border-gray-700 text-center text-xs sm:text-sm text-gray-400">
-                        <p className="font-medium">{t.footerCopyright}</p>
-                    </div>
-                </div>
-            </footer>
+            <SiteFooter lang={lang} />
 
             <ScrollToTop />
         </div>

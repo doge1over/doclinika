@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# personal-data consent audit logs
+consent-audit.log
+data/consent-audit.log
+data/audit.log
+data/backups/

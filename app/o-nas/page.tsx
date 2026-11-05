@@ -5,20 +5,21 @@ import ScrollToTop from '@/components/ScrollToTop'
 import LanguageSwitcher from '@/translations/LanguageSwitcher'
 import { translations, Language } from '@/translations/translations'
 import Link from 'next/link'
+import SiteFooter from '@/components/SiteFooter'
+import { useManagedSection } from '@/lib/useManagedSection'
 
 const menuItems = [
     { href: '/o-nas', title: 'О нас', active: true },
     { href: '/vakansii', title: 'Вакансии' },
     { href: '/doklinicheskie-issledovaniya', title: 'Доклинические исследования' },
     { href: '/immunogennost-aktivnost', title: 'Иммуноактивность' },
-    { href: '/gruppa-gistologii-i-patomorfologii', title: 'Лаборатория гистологии и патоморфологии' },
+    { href: '/gruppa-gistologii-i-patomorfologii', title: 'Отдел гистологии и патоморфологии' },
     { href: '/mikrobiologicheskaya-laboratoriya', title: 'Отдел микробиологии' },
     { href: '/farmacevticheskaya-razrabotka', title: 'Фармацевтическая разработка' },
     { href: '/gruppa-biohimii-i-gematologii', title: 'Отдел лабораторной диагностики' },
     { href: '/laboratornye-zhivotnye', title: 'Лабораторные животные' },
     { href: 'http://labanimalsjournal.ru/ru/contents/2018/2', title: 'Журнал «Лабораторные животные»', external: true },
     { href: '/farmakokinetika', title: 'Фармакокинетика' },
-    { href: '/oborudovanie-otdela', title: 'Оборудование отдела' },
     { href: '/obespechenie-kachestva', title: 'Обеспечение качества' },
     { href: '/provizorskaya-sluzhba', title: 'Провизорская служба' },
     { href: '/spetsialisty', title: 'Специалисты' },
@@ -34,103 +35,106 @@ const events = [
     { year: '1997', title: 'Конференция «Фитофарм»', text: 'Межрегиональный центр «Адаптоген» начинает проводить ежегодную конференцию «Фитофарм».', color: '#14B7E0' },
     { year: '2007', title: 'Санкт-Петербургский институт фармации', text: 'Создание «Санкт-Петербургского института фармации».', color: '#146FA8' },
     { year: '2010', title: 'НПО «Дом Фармации»', text: 'Создание НПО «Дом Фармации» и начало строительства собственного здания.', color: '#F28F20' },
+    { year: '2010', title: 'Это Миса пробник', text: 'Она забавная', color: '#F28F20', image: '/images/timeline/5221983279462949067.jpg', caption: 'Миса' },
     { year: '2011', title: 'Институт экспериментальной фармакологии', text: 'Создание «Института экспериментальной фармакологии».', color: '#14B7E0' },
     { year: '2013', title: 'Объединение институтов', text: 'Четыре организации объединены в группу научно-исследовательских институтов.', color: '#146FA8' },
+    { year: '2013', title: 'Это Тиша', text: 'Она больше Мисы, но это не вся информация', color: '#14B7E0', image: '/images/timeline/5221983279462949070.jpg', caption: 'Тиша' },
 ]
 
-function AlternatingTimeline() {
+type TimelineCategory = 'animals' | 'administrative' | 'publications' | 'quality'
+type TimelineEvent = (typeof events)[number] & { id?: string; category?: TimelineCategory }
+
+const eventCategory = (event: TimelineEvent): TimelineCategory => {
+    if ('category' in event && ['animals', 'administrative', 'publications', 'quality'].includes(String(event.category))) return event.category as TimelineCategory
+    if ('image' in event) return 'animals'
+    if (event.year === '1997') return 'publications'
+    if (event.year === '2013') return 'quality'
+    return 'administrative'
+}
+
+const timelineFilters: { id: TimelineCategory; label: string }[] = [
+    { id: 'animals', label: 'Животные' },
+    { id: 'administrative', label: 'Развитие компании' },
+    { id: 'publications', label: 'Научные публикации' },
+    { id: 'quality', label: 'Система менеджмента качества (СМК)' },
+]
+
+function TimelineFilterIcon({ category }: { category: TimelineCategory }) {
+    if (category === 'animals') return <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16" rx="5.2" ry="4.3" /><circle cx="6.4" cy="10.2" r="2.1" /><circle cx="10.2" cy="6.8" r="2.1" /><circle cx="14.6" cy="6.8" r="2.1" /><circle cx="18" cy="10.4" r="2.1" /></svg>
+    if (category === 'administrative') return <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18M10 12v2h4v-2" /></svg>
+    if (category === 'publications') return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5L2 9Z" /><path d="M6 11.5V16c3.6 2.7 8.4 2.7 12 0v-4.5M22 9v7" /></svg>
+    return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m7.5 12 3 3 6-6" /></svg>
+}
+
+function AlternatingTimeline({ items = events }: { items?: TimelineEvent[] }) {
+    const [activeFilter, setActiveFilter] = useState<TimelineCategory | 'all'>('all')
+    const [openedPhoto, setOpenedPhoto] = useState<{ src: string; alt: string } | null>(null)
+    const orderedEvents = [...items].sort((a, b) => {
+        const yearDifference = Number(a.year || 0) - Number(b.year || 0)
+        return yearDifference || items.indexOf(a) - items.indexOf(b)
+    })
+    const visibleEvents = activeFilter === 'all'
+        ? orderedEvents
+        : orderedEvents.filter((event) => eventCategory(event) === activeFilter)
+
     return (
-        <div style={{ position: 'relative' }}>
-            {/* Center vertical line */}
-            <div style={{
-                position: 'absolute',
-                left: '50%',
-                top: 0,
-                bottom: 0,
-                width: '2px',
-                background: 'linear-gradient(to bottom, #F28F20, #14B7E0, #146FA8, #F28F20, #14B7E0, #146FA8)',
-                transform: 'translateX(-50%)',
-            }} />
+        <section className="company-history" aria-labelledby="history-title">
+            <div className="company-history__intro">
+                <span className="company-history__eyebrow">Наш путь</span>
+                <h2 id="history-title">История компании</h2>
+                <p>Более тридцати лет развиваем научную экспертизу и инфраструктуру для фармацевтических исследований.</p>
+            </div>
 
-            {events.map((ev, i) => {
-                const isLeft = i % 2 === 0
-                return (
-                    <div key={i} style={{
-                        display: 'grid',
-                        gridTemplateColumns: '1fr 40px 1fr',
-                        alignItems: 'start',
-                        marginBottom: i < events.length - 1 ? '40px' : '0',
-                    }}>
-                        {/* Left column */}
-                        <div style={{ paddingRight: '20px' }}>
-                            {isLeft ? (
-                                <div style={{
-                                    background: '#fff',
-                                    border: '1px solid #e5e7eb',
-                                    borderRadius: '12px',
-                                    padding: '20px',
-                                    boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
-                                    borderRight: `3px solid ${ev.color}`,
-                                }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-                                        <span style={{ background: ev.color, color: '#fff', padding: '3px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: 700 }}>{ev.year}</span>
-                                        <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
-                                    </div>
-                                    <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#111827', margin: '0 0 6px', lineHeight: 1.4 }}>{ev.title}</h3>
-                                    <p style={{ fontSize: '13px', color: '#6b7280', lineHeight: 1.6, margin: 0 }}>{ev.text}</p>
-                                </div>
-                            ) : (
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', height: '100%', paddingTop: '8px' }}>
-                                    <span style={{ fontSize: '18px', fontWeight: 800, color: ev.color }}>{ev.year}</span>
-                                </div>
-                            )}
-                        </div>
+            <div className="company-history__filter-panel">
+                <span className="company-history__filter-label">Показать:</span>
+                <div className="company-history__filters" role="group" aria-label="Фильтры событий таймлайна">
+                <button type="button" className={activeFilter === 'all' ? 'is-active is-all' : 'is-all'} aria-pressed={activeFilter === 'all'} onClick={() => setActiveFilter('all')}>
+                    Все события
+                </button>
+                {timelineFilters.map((filter) => {
+                    const isActive = activeFilter === filter.id
+                    return <button key={filter.id} type="button" className={isActive ? 'is-active' : ''} aria-pressed={isActive} onClick={() => setActiveFilter(filter.id)}>
+                        <span>{filter.label}</span>
+                    </button>
+                })}
+                </div>
+            </div>
 
-                        {/* Center dot */}
-                        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '8px' }}>
-                            <div style={{
-                                width: '16px',
-                                height: '16px',
-                                borderRadius: '50%',
-                                background: ev.color,
-                                border: '3px solid #fff',
-                                boxShadow: `0 0 0 2px ${ev.color}40`,
-                                zIndex: 1,
-                            }} />
+            <div className="company-history__timeline">
+                {visibleEvents.map((event, visibleIndex) => {
+                    const timelineIndex = orderedEvents.indexOf(event)
+                    const previousVisibleEvent = visibleEvents[visibleIndex - 1]
+                    const showYear = Boolean(event.year) && (!previousVisibleEvent || previousVisibleEvent.year !== event.year)
+                    return (
+                    <article className={`company-history__event company-history__event--${eventCategory(event)}`} key={event.id || `${event.year}-${timelineIndex}-${event.title}`} style={{ '--event-color': event.color } as React.CSSProperties}>
+                        {showYear && <div className="company-history__year" aria-hidden="true"><span>{event.year}</span></div>}
+                        <div className={`company-history__marker company-history__marker--${eventCategory(event)}`}>
+                            <span>
+                                <TimelineFilterIcon category={eventCategory(event)} />
+                            </span>
                         </div>
-
-                        {/* Right column */}
-                        <div style={{ paddingLeft: '20px' }}>
-                            {!isLeft ? (
-                                <div style={{
-                                    background: '#fff',
-                                    border: '1px solid #e5e7eb',
-                                    borderRadius: '12px',
-                                    padding: '20px',
-                                    boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
-                                    borderLeft: `3px solid ${ev.color}`,
-                                }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-                                        <span style={{ background: ev.color, color: '#fff', padding: '3px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: 700 }}>{ev.year}</span>
-                                        <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
-                                    </div>
-                                    <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#111827', margin: '0 0 6px', lineHeight: 1.4 }}>{ev.title}</h3>
-                                    <p style={{ fontSize: '13px', color: '#6b7280', lineHeight: 1.6, margin: 0 }}>{ev.text}</p>
-                                </div>
-                            ) : (
-                                <div style={{ display: 'flex', alignItems: 'center', height: '100%', paddingTop: '8px' }}>
-                                    <span style={{ fontSize: '18px', fontWeight: 800, color: ev.color }}>{ev.year}</span>
-                                </div>
-                            )}
+                        <div className="company-history__content">
+                            <span className="company-history__number">{String(timelineIndex + 1).padStart(2, '0')}</span>
+                            {'image' in event && event.image && <button type="button" className="company-history__photo-button" onClick={() => setOpenedPhoto({ src: event.image, alt: event.caption || event.title })} aria-label={`Открыть фотографию: ${event.caption || event.title}`}>
+                                <img className="company-history__event-image" src={event.image} alt={event.caption} />
+                                <span className="company-history__photo-hint">Увеличить</span>
+                            </button>}
+                            <h3>{event.title}</h3>
+                            {event.text && <p>{event.text}</p>}
                         </div>
-                    </div>
-                )
-            })}
-        </div>
+                    </article>)
+                })}
+            </div>
+            {openedPhoto && <div className="company-history__lightbox" role="dialog" aria-modal="true" aria-label={openedPhoto.alt} onClick={() => setOpenedPhoto(null)}>
+                <button type="button" className="company-history__lightbox-close" onClick={() => setOpenedPhoto(null)} aria-label="Закрыть фотографию">×</button>
+                <img src={openedPhoto.src} alt={openedPhoto.alt} onClick={(event) => event.stopPropagation()} />
+            </div>}
+        </section>
     )
 }
 
 export default function ONas() {
+    const managedEvents = useManagedSection<TimelineEvent>('about', events)
     const [lang, setLang] = useState<Language>('ru')
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -245,43 +249,15 @@ export default function ONas() {
                             <div className="px-6 sm:px-8 py-6 sm:py-8" style={{ background: 'linear-gradient(to right, #F28F20, #e07d10)' }}>
                                 <h1 className="text-2xl sm:text-3xl font-bold text-white">О нас</h1>
                             </div>
-                            <div style={{ padding: '32px 24px' }}>
-                                <AlternatingTimeline />
+                            <div className="px-5 py-8 sm:px-8 sm:py-10">
+                                <AlternatingTimeline items={managedEvents} />
                             </div>
                         </div>
                     </article>
                 </div>
             </main>
 
-            <footer className="bg-gradient-to-br from-gray-900 to-gray-800 mt-12">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-12 mb-8 sm:mb-12">
-                        <div>
-                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerInfo}</h3>
-                            <ul className="space-y-3 sm:space-y-4 text-sm text-gray-300">
-                                <li><Link href="/o-nas" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerAbout}</Link></li>
-                                <li><Link href="/category/news" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerNews}</Link></li>
-                                <li><Link href="/kontakty" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerContacts}</Link></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerOurContacts}</h3>
-                            <div className="space-y-3 sm:space-y-4 text-sm text-gray-300">
-                                <p className="flex items-center gap-3"><svg className="w-4 h-4 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg><a href={`tel:${t.phone}`} className="hover:text-[#F28F20] transition font-medium">{t.phone}</a></p>
-                                <p className="flex items-center gap-3"><svg className="w-4 h-4 text-[#F28F20]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg><a href={`mailto:${t.email}`} className="hover:text-[#F28F20] transition break-all">{t.email}</a></p>
-                                <p className="flex items-start gap-3"><svg className="w-4 h-4 text-[#F28F20] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg><span>188663, Россия, Ленинградская область,<br/>Всеволожский район, г.п. Кузьмоловский,<br/>Заводская улица, 3-245</span></p>
-                            </div>
-                        </div>
-                        <div className="sm:col-span-2 md:col-span-1">
-                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerHowToGet}</h3>
-                            <iframe src="https://yandex.ru/map-widget/v1/?lang=ru_RU&scroll=true&source=constructor-api&um=constructor%3Adc7b04b68a41ad1bdf18c8112ff573806757e0f708dfd54378d8ba4859993f58" width="100%" height="180" frameBorder="0" allowFullScreen={true} className="rounded-xl sm:rounded-2xl shadow-lg" title="Карта" />
-                        </div>
-                    </div>
-                    <div className="pt-6 sm:pt-8 border-t border-gray-700 text-center text-xs sm:text-sm text-gray-400">
-                        <p className="font-medium">{t.footerCopyright}</p>
-                    </div>
-                </div>
-            </footer>
+            <SiteFooter lang={lang} />
 
             <ScrollToTop />
         </div>

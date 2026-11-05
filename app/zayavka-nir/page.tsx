@@ -5,6 +5,7 @@ import ScrollToTop from '@/components/ScrollToTop'
 import LanguageSwitcher from '@/translations/LanguageSwitcher'
 import { translations, Language } from '@/translations/translations'
 import Link from 'next/link'
+import SiteFooter from '@/components/SiteFooter'
 
 export default function ZayavkaNIR() {
     const [lang, setLang] = useState<Language>('ru')
@@ -63,11 +64,14 @@ export default function ZayavkaNIR() {
         excipients: '',
         primaryPackagingProvided: '',
         referenceProduct: '',
+        consent: false,
+        website: '',
     })
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = e.target
-        setFormData(prev => ({ ...prev, [name]: value }))
+        const { name, value, type } = e.target
+        const nextValue = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+        setFormData(prev => ({ ...prev, [name]: nextValue }))
     }
 
     const [submitting, setSubmitting] = useState(false)
@@ -125,12 +129,12 @@ export default function ZayavkaNIR() {
                 referenceProduct: 'Образцы референтного объекта',
             }
             const labeledData = Object.fromEntries(
-                Object.entries(formData).map(([k, v]) => [labelMap[k] || k, v])
+                Object.entries(formData).filter(([k]) => k !== 'consent' && k !== 'website').map(([k, v]) => [labelMap[k] || k, v])
             )
             const res = await fetch('/api/send-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ formType: 'nir', data: labeledData }),
+                body: JSON.stringify({ formType: 'nir', data: labeledData, website: formData.website, consent: formData.consent, consentVersion: '2026-09-07', privacyVersion: '2026-09-07' }),
             })
             if (res.ok) {
                 setSubmitStatus('success')
@@ -429,6 +433,11 @@ export default function ZayavkaNIR() {
                         </section>
 
                         <div className="pt-6 border-t border-gray-100">
+                            <input type="text" name="website" value={formData.website} onChange={handleInputChange} tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+                            <label className="mb-5 flex cursor-pointer items-start gap-3 rounded-xl border border-gray-200 bg-gray-50 p-4">
+                                <input type="checkbox" name="consent" checked={formData.consent} onChange={handleInputChange} required className="mt-1 h-5 w-5 flex-shrink-0 rounded text-[#14B7E0] focus:ring-[#14B7E0]" />
+                                <span className="text-sm leading-relaxed text-gray-700">Я даю АО «НПО «ДОМ ФАРМАЦИИ» <Link href="/soglasie-na-obrabotku-personalnyh-dannyh" target="_blank" className="font-medium text-[#146FA8] underline">согласие на обработку персональных данных</Link> и подтверждаю ознакомление с <Link href="/politika-obrabotki-personalnyh-dannyh" target="_blank" className="font-medium text-[#146FA8] underline">Политикой обработки персональных данных</Link>.</span>
+                            </label>
                             <button type="submit" disabled={submitting} className="w-full sm:w-auto px-8 py-4 bg-[#14B7E0] hover:bg-[#0ea5cc] disabled:opacity-60 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
                                 {submitting ? 'Отправка...' : 'Отправить заявку'}
                             </button>
@@ -444,35 +453,7 @@ export default function ZayavkaNIR() {
                 </div>
             </main>
 
-            <footer className="bg-gradient-to-br from-gray-900 to-gray-800 mt-12">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-12 mb-8 sm:mb-12">
-                        <div>
-                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerInfo}</h3>
-                            <ul className="space-y-3 sm:space-y-4 text-sm text-gray-300">
-                                <li><Link href="/o-nas" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerAbout}</Link></li>
-                                <li><Link href="/category/news" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerNews}</Link></li>
-                                <li><Link href="/kontakty" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerContacts}</Link></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerOurContacts}</h3>
-                            <div className="space-y-3 sm:space-y-4 text-sm text-gray-300">
-                                <p className="flex items-center gap-3"><span className="text-[#F28F20]">📞</span><a href={`tel:${t.phone}`} className="hover:text-[#F28F20] transition font-medium">{t.phone}</a></p>
-                                <p className="flex items-center gap-3"><span className="text-[#F28F20]">✉️</span><a href={`mailto:${t.email}`} className="hover:text-[#F28F20] transition break-all">{t.email}</a></p>
-                                <p className="flex items-start gap-3 leading-relaxed"><span className="text-[#F28F20] mt-0.5">📍</span><span>188663, Россия, Ленинградская область,<br/>Всеволожский район, г.п. Кузьмоловский,<br/>Заводская улица, 3-245</span></p>
-                            </div>
-                        </div>
-                        <div className="sm:col-span-2 md:col-span-1">
-                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerHowToGet}</h3>
-                            <iframe src="https://yandex.ru/map-widget/v1/?lang=ru_RU&scroll=true&source=constructor-api&um=constructor%3Adc7b04b68a41ad1bdf18c8112ff573806757e0f708dfd54378d8ba4859993f58" width="100%" height="180" frameBorder="0" allowFullScreen={true} className="rounded-xl sm:rounded-2xl shadow-lg" title="Карта" />
-                        </div>
-                    </div>
-                    <div className="pt-6 sm:pt-8 border-t border-gray-700 text-center text-xs sm:text-sm text-gray-400">
-                        <p className="font-medium">{t.footerCopyright}</p>
-                    </div>
-                </div>
-            </footer>
+            <SiteFooter lang={lang} />
 
             <ScrollToTop />
         </div>

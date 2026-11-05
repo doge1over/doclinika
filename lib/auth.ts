@@ -1,168 +1,142 @@
 import crypto from 'crypto'
+import fs from 'fs'
+import path from 'path'
 
-// ─── JWT (без внешних зависимостей) ───
+export const PERMISSIONS = ['education', 'documents', 'specialists', 'animals', 'about', 'news'] as const
+export type Permission = typeof PERMISSIONS[number]
+export type Role = 'admin' | 'editor'
 
-function base64UrlEncode(data: string): string {
-    return Buffer.from(data).toString('base64url')
+export interface UserRecord {
+    id: string
+    username: string
+    name: string
+    role: Role
+    permissions: Permission[]
+    passwordHash: string
+    salt: string
+    active: boolean
+    createdAt: string
 }
 
-function base64UrlDecode(str: string): string {
-    return Buffer.from(str, 'base64url').toString('utf-8')
+export interface SessionUser {
+    id: string
+    username: string
+    name: string
+    role: Role
+    permissions: Permission[]
 }
 
-function getSecret(): string {
-    const secret = process.env.SESSION_SECRET
-    if (!secret || secret.length < 16) {
-        throw new Error('SESSION_SECRET не задан или слишком короткий (мин. 16 символов)')
-    }
-    return secret
+const USERS_FILE = path.join(process.cwd(), 'data', 'users.json')
+const SESSION_TTL = (Number(process.env.SESSION_TTL_HOURS) || 8) * 60 * 60 * 1000
+
+function secret() {
+    const value = process.env.SESSION_SECRET || (process.env.NODE_ENV !== 'production' ? 'doclinika-local-development-secret-change-me' : '')
+    if (value.length < 32) throw new Error('SESSION_SECRET должен содержать минимум 32 символа')
+    return value
 }
 
-function sign(payload: Record<string, unknown>): string {
-    const secret = getSecret()
-    const header = base64UrlEncode(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
-    const body = base64UrlEncode(JSON.stringify(payload))
-    const signature = crypto
-        .createHmac('sha256', secret)
-        .update(`${header}.${body}`)
-        .digest('base64url')
+function encode(value: unknown) { return Buffer.from(JSON.stringify(value)).toString('base64url') }
+function sign(payload: Record<string, unknown>) {
+    const header = encode({ alg: 'HS256', typ: 'JWT' })
+    const body = encode(payload)
+    const signature = crypto.createHmac('sha256', secret()).update(`${header}.${body}`).digest('base64url')
     return `${header}.${body}.${signature}`
 }
 
 function verify(token: string): Record<string, unknown> | null {
     try {
-        const parts = token.split('.')
-        if (parts.length !== 3) return null
+        const [header, body, signature] = token.split('.')
+        if (!header || !body || !signature) return null
+        const expected = crypto.createHmac('sha256', secret()).update(`${header}.${body}`).digest()
+        const actual = Buffer.from(signature, 'base64url')
+        if (actual.length !== expected.length || !crypto.timingSafeEqual(actual, expected)) return null
+        const payload = JSON.parse(Buffer.from(body, 'base64url').toString('utf8'))
+        return typeof payload.exp === 'number' && Date.now() < payload.exp ? payload : null
+    } catch { return null }
+}
 
-        const [header, body, signature] = parts
-        const secret = getSecret()
+export function hashPassword(password: string, salt = crypto.randomBytes(16).toString('hex')) {
+    const hash = crypto.scryptSync(password, salt, 64).toString('hex')
+    return { hash, salt }
+}
 
-        // Проверяем подпись
-        const expectedSig = crypto
-            .createHmac('sha256', secret)
-            .update(`${header}.${body}`)
-            .digest('base64url')
+export function passwordIsStrong(password: string) {
+    return password.length >= 10 && /[A-Za-zА-Яа-я]/.test(password) && /\d/.test(password)
+}
 
-        // Timing-safe сравнение
-        if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSig))) {
-            return null
-        }
+export function readUsers(): UserRecord[] {
+    try { return JSON.parse(fs.readFileSync(USERS_FILE, 'utf8')) } catch { return [] }
+}
 
-        const payload = JSON.parse(base64UrlDecode(body))
+export function saveUsers(users: UserRecord[]) {
+    fs.mkdirSync(path.dirname(USERS_FILE), { recursive: true })
+    const temp = `${USERS_FILE}.${process.pid}.tmp`
+    fs.writeFileSync(temp, JSON.stringify(users, null, 2), { encoding: 'utf8', mode: 0o600 })
+    fs.renameSync(temp, USERS_FILE)
+}
 
-        // Проверяем срок действия
-        if (payload.exp && Date.now() > payload.exp) {
-            return null
-        }
-
-        return payload
-    } catch {
-        return null
+export function verifyCredentials(username: string, password: string): SessionUser | null {
+    const user = readUsers().find(item => item.username.toLowerCase() === username.toLowerCase() && item.active)
+    if (user) {
+        const candidate = crypto.scryptSync(password, user.salt, 64)
+        const stored = Buffer.from(user.passwordHash, 'hex')
+        if (candidate.length === stored.length && crypto.timingSafeEqual(candidate, stored)) return publicUser(user)
     }
-}
-
-// ─── Конфигурация ───
-const SESSION_TTL = (Number(process.env.SESSION_TTL_HOURS) || 8) * 60 * 60 * 1000
-
-// ─── Проверка пароля ───
-function hashPassword(password: string): string {
-    return crypto.createHash('sha256').update(password).digest('hex')
-}
-
-export function verifyPassword(inputPassword: string): boolean {
-    const storedPassword = process.env.ADMIN_PASSWORD
-    if (!storedPassword) {
-        console.error('ADMIN_PASSWORD не задан в переменных окружения')
-        return false
+    // Backward-compatible bootstrap admin. Set ADMIN_USERNAME and ADMIN_PASSWORD in production.
+    const adminPassword = process.env.ADMIN_PASSWORD
+    const adminUsername = process.env.ADMIN_USERNAME || 'admin'
+    if (adminPassword && username === adminUsername) {
+        const a = crypto.createHash('sha256').update(password).digest()
+        const b = crypto.createHash('sha256').update(adminPassword).digest()
+        if (crypto.timingSafeEqual(a, b)) return { id: 'environment-admin', username: adminUsername, name: 'Главный администратор', role: 'admin', permissions: [...PERMISSIONS] }
     }
-    try {
-        const inputHash = hashPassword(inputPassword)
-        const storedHash = hashPassword(storedPassword)
-        return crypto.timingSafeEqual(
-            Buffer.from(inputHash, 'hex'),
-            Buffer.from(storedHash, 'hex')
-        )
-    } catch {
-        return false
-    }
-}
-
-// ─── Создание токена ───
-export function createToken(): string {
-    return sign({
-        role: 'admin',
-        iat: Date.now(),
-        exp: Date.now() + SESSION_TTL,
-        jti: crypto.randomBytes(16).toString('hex'),
-    })
-}
-
-// ─── Проверка токена ───
-export function validateToken(token: string | null): boolean {
-    if (!token) return false
-    const payload = verify(token)
-    return payload !== null && payload.role === 'admin'
-}
-
-// ─── Rate Limiting (per-instance, частичная защита на serverless) ───
-const MAX_LOGIN_ATTEMPTS = 5
-const RATE_LIMIT_WINDOW = 15 * 60 * 1000
-const LOCKOUT_DURATION = 30 * 60 * 1000
-
-interface LoginAttempt {
-    count: number
-    firstAttempt: number
-    lockedUntil: number | null
-}
-
-const loginAttempts = new Map<string, LoginAttempt>()
-
-export function checkRateLimit(ip: string): { allowed: boolean; retryAfterSeconds?: number; attemptsLeft?: number } {
-    const now = Date.now()
-    const attempt = loginAttempts.get(ip)
-
-    if (!attempt) return { allowed: true, attemptsLeft: MAX_LOGIN_ATTEMPTS }
-
-    if (attempt.lockedUntil && now < attempt.lockedUntil) {
-        return { allowed: false, retryAfterSeconds: Math.ceil((attempt.lockedUntil - now) / 1000) }
-    }
-
-    if (now - attempt.firstAttempt > RATE_LIMIT_WINDOW || (attempt.lockedUntil && now >= attempt.lockedUntil)) {
-        loginAttempts.delete(ip)
-        return { allowed: true, attemptsLeft: MAX_LOGIN_ATTEMPTS }
-    }
-
-    const left = MAX_LOGIN_ATTEMPTS - attempt.count
-    return { allowed: left > 0, attemptsLeft: Math.max(0, left) }
-}
-
-export function recordFailedAttempt(ip: string): void {
-    const now = Date.now()
-    const attempt = loginAttempts.get(ip)
-
-    if (!attempt || now - attempt.firstAttempt > RATE_LIMIT_WINDOW) {
-        loginAttempts.set(ip, { count: 1, firstAttempt: now, lockedUntil: null })
-        return
-    }
-    attempt.count++
-    if (attempt.count >= MAX_LOGIN_ATTEMPTS) {
-        attempt.lockedUntil = now + LOCKOUT_DURATION
-    }
-}
-
-export function clearAttempts(ip: string): void {
-    loginAttempts.delete(ip)
-}
-
-// ─── Хелперы ───
-export function getTokenFromHeaders(headers: Headers): string | null {
-    const auth = headers.get('authorization')
-    if (auth && auth.startsWith('Bearer ')) return auth.slice(7)
     return null
 }
 
-export function getClientIP(headers: Headers): string {
-    return headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-        || headers.get('x-real-ip')
-        || '127.0.0.1'
+export function publicUser(user: UserRecord): SessionUser {
+    return { id: user.id, username: user.username, name: user.name, role: user.role, permissions: user.role === 'admin' ? [...PERMISSIONS] : user.permissions }
 }
+
+export function createToken(user: SessionUser) {
+    return sign({ ...user, iat: Date.now(), exp: Date.now() + SESSION_TTL, jti: crypto.randomBytes(16).toString('hex') })
+}
+
+export function getSession(token: string | null): SessionUser | null {
+    if (!token) return null
+    const payload = verify(token)
+    if (!payload || typeof payload.username !== 'string' || (payload.role !== 'admin' && payload.role !== 'editor')) return null
+    if (payload.id !== 'environment-admin') {
+        const current = readUsers().find(user => user.id === payload.id && user.active)
+        if (!current) return null
+        return publicUser(current)
+    }
+    return { id: String(payload.id), username: payload.username, name: String(payload.name), role: 'admin', permissions: [...PERMISSIONS] }
+}
+
+export function hasPermission(user: SessionUser | null, permission: Permission) {
+    return !!user && (user.role === 'admin' || user.permissions.includes(permission))
+}
+
+export function validateToken(token: string | null) { return getSession(token) !== null }
+export function getTokenFromHeaders(headers: Headers) {
+    const auth = headers.get('authorization')
+    if (auth?.startsWith('Bearer ')) return auth.slice(7)
+    const cookie = headers.get('cookie') || ''
+    const match = cookie.match(/(?:^|;\s*)admin_session=([^;]+)/)
+    return match ? decodeURIComponent(match[1]) : null
+}
+export function getClientIP(headers: Headers) { return headers.get('x-forwarded-for')?.split(',')[0]?.trim() || headers.get('x-real-ip') || '127.0.0.1' }
+
+const attempts = new Map<string, { count: number; first: number; lockedUntil: number }>()
+export function checkRateLimit(key: string) {
+    const now = Date.now(); const item = attempts.get(key)
+    if (!item || now - item.first > 15 * 60_000) { attempts.delete(key); return { allowed: true, attemptsLeft: 5 } }
+    if (item.lockedUntil > now) return { allowed: false, attemptsLeft: 0, retryAfterSeconds: Math.ceil((item.lockedUntil - now) / 1000) }
+    return { allowed: item.count < 5, attemptsLeft: Math.max(0, 5 - item.count) }
+}
+export function recordFailedAttempt(key: string) {
+    const now = Date.now(); const item = attempts.get(key)
+    if (!item || now - item.first > 15 * 60_000) attempts.set(key, { count: 1, first: now, lockedUntil: 0 })
+    else { item.count++; if (item.count >= 5) item.lockedUntil = now + 30 * 60_000 }
+}
+export function clearAttempts(key: string) { attempts.delete(key) }

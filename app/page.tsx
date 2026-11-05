@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import SiteFooter from '@/components/SiteFooter'
 import ScrollToTop from '@/components/ScrollToTop'
 import LanguageSwitcher from '@/translations/LanguageSwitcher'
 import PartnersCarousel from '@/components/PartnersCarousel'
@@ -12,6 +13,13 @@ export default function Home() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [videoModalOpen, setVideoModalOpen] = useState(false)
     const t = translations[lang]
+    const serviceCards = [
+        { href: '/doklinicheskie-issledovaniya', title: 'Фармакологические исследования', description: 'Изучение активности и безопасности препаратов', color: '#F28F20', icon: 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z' },
+        { href: '/doklinicheskie-issledovaniya', title: 'Токсикология', description: 'Комплексная оценка токсичности и безопасности', color: '#14B7E0', icon: 'M12 3.5S6 10 6 14a6 6 0 0012 0c0-4-6-10.5-6-10.5zM12 9v4m0 3h.01' },
+        { href: '/farmakokinetika', title: 'Фармакокинетика', description: 'Фармакокинетика, токсикокинетика и ADME', color: '#146FA8', icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z' },
+        { href: '/farmacevticheskaya-razrabotka', title: t.card6Title, description: t.card6Desc, color: '#F28F20', icon: 'M12 3l8 4-8 4-8-4 8-4zm-8 8l8 4 8-4m-16 4l8 4 8-4' },
+        { href: '/immunogennost-aktivnost', title: t.card5Title, description: t.card5Desc, color: '#14B7E0', icon: 'M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z' },
+    ]
 
     return (
         <div className="min-h-screen bg-white">
@@ -98,10 +106,27 @@ export default function Home() {
                 </div>
             </section>
 
-            <PartnersCarousel lang={lang} />
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col gap-10 sm:gap-16">
+                <section className="order-1">
+                    <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+                        <div className="w-1 h-6 sm:h-8 rounded-full bg-gradient-to-b from-[#F28F20] to-[#14B7E0]" />
+                        <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Наши услуги</h2>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                        {serviceCards.map((card) => (
+                            <Link key={card.title} href={card.href} className="group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col h-full border border-gray-100">
+                                <div className="absolute top-0 left-0 w-full h-1 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" style={{ backgroundColor: card.color }} />
+                                <div className="relative z-10 flex-1 flex flex-col">
+                                    <svg className="w-10 h-10 sm:w-12 sm:h-12 mb-3 sm:mb-4 group-hover:scale-110 transition-transform" style={{ color: card.color }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={card.icon} /></svg>
+                                    <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">{card.title}</h3>
+                                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed flex-1">{card.description}</p>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </section>
 
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-10 sm:space-y-16">
-                <section>
+                <section className="hidden">
                     <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
                         <div className="w-1 h-6 sm:h-8 bg-gradient-to-b from-[#146FA8] to-[#14B7E0] rounded-full"></div>
                         <h2 className="text-xl sm:text-2xl font-bold text-gray-900">О компании</h2>
@@ -142,7 +167,7 @@ export default function Home() {
                     </div>
                 </section>
 
-                <section>
+                <section className="order-4">
                     <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
                         <div className="w-1 h-6 sm:h-8 bg-gradient-to-b from-[#14B7E0] to-[#146FA8] rounded-full"></div>
                         <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Контакты и информация</h2>
@@ -183,13 +208,13 @@ export default function Home() {
                     </div>
                 </section>
 
-                <section>
+                <section className="order-2">
                     <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
                         <div className="w-1 h-6 sm:h-8 rounded-full" style={{ background: 'linear-gradient(to bottom, #F28F20, #c46a0a)' }}></div>
-                        <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Наши услуги и лаборатории</h2>
+                        <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Наши возможности</h2>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                        <Link href="/doklinicheskie-issledovaniya" className="order-1 group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col h-full border border-gray-100 hover:border-[#F28F20]">
+                        <Link href="/doklinicheskie-issledovaniya" className="hidden order-1 group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex-col h-full border border-gray-100 hover:border-[#F28F20]">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F28F20] to-[#e07d10] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
                             <div className="relative z-10 flex-1 flex flex-col">
                                 <svg className="w-10 h-10 sm:w-12 sm:h-12 text-[#F28F20] mb-3 sm:mb-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
@@ -205,7 +230,7 @@ export default function Home() {
                                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed flex-1">{t.card2Desc}</p>
                             </div>
                         </Link>
-                        <Link href="/immunogennost-aktivnost" className="order-5 group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col h-full border border-gray-100 hover:border-[#146FA8]">
+                        <Link href="/immunogennost-aktivnost" className="hidden order-5 group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex-col h-full border border-gray-100 hover:border-[#146FA8]">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#146FA8] to-[#0d5a8a] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
                             <div className="relative z-10 flex-1 flex flex-col">
                                 <svg className="w-10 h-10 sm:w-12 sm:h-12 text-[#146FA8] mb-3 sm:mb-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>
@@ -213,7 +238,7 @@ export default function Home() {
                                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed flex-1">{t.card5Desc}</p>
                             </div>
                         </Link>
-                        <Link href="/farmacevticheskaya-razrabotka" className="order-6 group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col h-full border border-gray-100 hover:border-[#F28F20]">
+                        <Link href="/farmacevticheskaya-razrabotka" className="hidden order-6 group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex-col h-full border border-gray-100 hover:border-[#F28F20]">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F28F20] to-[#e07d10] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
                             <div className="relative z-10 flex-1 flex flex-col">
                                 <svg className="w-10 h-10 sm:w-12 sm:h-12 text-[#F28F20] mb-3 sm:mb-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
@@ -253,7 +278,7 @@ export default function Home() {
                                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed flex-1">{t.card11Desc}</p>
                             </div>
                         </Link>
-                        <Link href="/farmakokinetika" className="order-7 group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col h-full border border-gray-100 hover:border-[#146FA8]">
+                        <Link href="/farmakokinetika" className="hidden order-7 group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex-col h-full border border-gray-100 hover:border-[#146FA8]">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#146FA8] to-[#0d5a8a] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
                             <div className="relative z-10 flex-1 flex flex-col">
                                 <svg className="w-10 h-10 sm:w-12 sm:h-12 text-[#146FA8] mb-3 sm:mb-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
@@ -261,12 +286,14 @@ export default function Home() {
                                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed flex-1">{t.card14Desc}</p>
                             </div>
                         </Link>
-                        <a href="http://labanimalsjournal.ru/contents/2018/2" target="_blank" rel="noopener noreferrer" className="order-10 group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col h-full border border-gray-100 hover:border-[#F28F20]">
+                        <a href="http://labanimalsjournal.ru/contents/2018/2" target="_blank" rel="noopener noreferrer" className="order-12 sm:col-span-2 lg:col-span-4 group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col h-full border-2 border-[#F28F20]/60 hover:border-[#F28F20]">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F28F20] to-[#e07d10] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
-                            <div className="relative z-10 flex-1 flex flex-col">
-                                <svg className="w-10 h-10 sm:w-12 sm:h-12 text-[#F28F20] mb-3 sm:mb-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
-                                <h4 className="text-base sm:text-lg font-bold text-gray-900 mb-2 group-hover:text-[#F28F20] transition-colors">{t.card15Title}</h4>
-                                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed flex-1">{t.card15Desc}</p>
+                            <div className="relative z-10 flex flex-1 flex-col sm:flex-row sm:items-center sm:gap-5">
+                                <svg className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 text-[#F28F20] mb-3 sm:mb-0 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                                <div className="flex-1">
+                                    <h4 className="text-base sm:text-lg font-bold text-gray-900 mb-1 group-hover:text-[#F28F20] transition-colors">{t.card15Title}</h4>
+                                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">{t.card15Desc}</p>
+                                </div>
                             </div>
                         </a>
                         <Link href="/provizorskaya-sluzhba" className="order-11 group relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col h-full border border-gray-100 hover:border-[#14B7E0]">
@@ -279,37 +306,12 @@ export default function Home() {
                         </Link>
                     </div>
                 </section>
+                <div className="order-3">
+                    <PartnersCarousel lang={lang} />
+                </div>
             </main>
 
-            <footer className="bg-gradient-to-br from-gray-900 to-gray-800 mt-12 sm:mt-20">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-12 mb-8 sm:mb-12">
-                        <div>
-                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerInfo}</h3>
-                            <ul className="space-y-3 sm:space-y-4 text-sm text-gray-300">
-                                <li><Link href="/o-nas" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerAbout}</Link></li>
-                                <li><Link href="/category/news" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerNews}</Link></li>
-                                <li><Link href="/kontakty" className="hover:text-[#F28F20] transition flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#F28F20] rounded-full"></span>{t.footerContacts}</Link></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerOurContacts}</h3>
-                            <div className="space-y-3 sm:space-y-4 text-sm text-gray-300">
-                                <p className="flex items-center gap-3"><span className="text-[#F28F20]">📞</span><a href={`tel:${t.phone}`} className="hover:text-[#F28F20] transition font-medium">{t.phone}</a></p>
-                                <p className="flex items-center gap-3"><span className="text-[#F28F20]">✉️</span><a href={`mailto:${t.email}`} className="hover:text-[#F28F20] transition break-all">{t.email}</a></p>
-                                <p className="flex items-start gap-3 leading-relaxed"><span className="text-[#F28F20] mt-0.5">📍</span><span>188663, Россия, Ленинградская область,<br/>Всеволожский район, г.п. Кузьмоловский,<br/>Заводская улица, 3-245</span></p>
-                            </div>
-                        </div>
-                        <div className="sm:col-span-2 md:col-span-1">
-                            <h3 className="text-sm font-bold text-[#F28F20] uppercase tracking-wider mb-4 sm:mb-6">{t.footerHowToGet}</h3>
-                            <iframe src="https://yandex.ru/map-widget/v1/?lang=ru_RU&scroll=true&source=constructor-api&um=constructor%3Adc7b04b68a41ad1bdf18c8112ff573806757e0f708dfd54378d8ba4859993f58" width="100%" height="180" frameBorder="0" allowFullScreen={true} className="rounded-xl sm:rounded-2xl shadow-lg" title="Карта" />
-                        </div>
-                    </div>
-                    <div className="pt-6 sm:pt-8 border-t border-gray-700 text-center text-xs sm:text-sm text-gray-400">
-                        <p className="font-medium">{t.footerCopyright}</p>
-                    </div>
-                </div>
-            </footer>
+            <SiteFooter lang={lang} />
 
             {/* Модальное окно видео */}
             {videoModalOpen && (
