@@ -45,3 +45,14 @@ consent-audit.log
 data/consent-audit.log
 data/audit.log
 data/backups/
+
+# local tooling and runtime artifacts
+/.idea.pre-clone-backup/
+/.xlsx-inspect/
+*.log
+~$*
+
+# local deployment bundles
+/doclinika-deploy-*.zip
+/doclinika-deploy-*.tar.gz
+/doclinika-timeline-update-*.zip
